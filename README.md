@@ -4,8 +4,6 @@ A discord bot that can move users from a channel to another.
 
 ### Requirements
 
-What things you need to install the software and how to install them
-
 ```
 node.js
 discord.js
@@ -28,3 +26,14 @@ CD into the project folder then run
 ```
 node main.js
 ```
+
+
+### Inside discord
+
+1. Create a voice channel with the name "Moveer"
+2. Join a channel (Can be locked/hidden from the user you want to move)
+3. Tell the user you want to move to join the "Moveer" voice channel.
+4. Write ```!move @username```
+5. The user should get moved and the bot should reply with: 
+
+```Moving: <@username>. By request of <@yourUsername>```
