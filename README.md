@@ -2,13 +2,6 @@
 
 A discord bot that can move users from a channel to another.
 
-### Requirements
-
-```
-node.js
-discord.js
-```
-
 ### Installing
 
 Start by installing node.js
