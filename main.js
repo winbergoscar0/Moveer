@@ -2,7 +2,8 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 // TOKEN
-const token = 'SUPER SECRET TOKEN';
+const config = require('./config.js');
+const token = config.discordToken;
 
 client.on('ready', () => {
   console.log('I am ready!');
