@@ -12,8 +12,6 @@ After that, install the requirements by running.
 npm install
 ```
 
-### Deployment
-
 CD into the project folder then run
 
 ```
