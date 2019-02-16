@@ -1,6 +1,6 @@
 {
   "name": "Moveer",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "A discord bot, that can move users! ",
   "main": "main.js",
   "scripts": {
