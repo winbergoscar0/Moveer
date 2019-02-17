@@ -12,14 +12,16 @@ After that, install the requirements by running.
 npm install
 ```
 
-CD into the project folder then run
+CD into the project folder and rename example.config.js to config.js and replace x with your Developer Bot token.
+
+Then run
 
 ```
 npm start
 ```
 ### Deploy using docker
 
-
+Start by renaming the example.config.js to config.js and replace x with your Developer Bot token
 ```
 docker build -t <your username>/moveer .
 docker run --restart always -d <your username>/moveer
