@@ -6,19 +6,12 @@ A discord bot that can move users from a channel to another.
 
 Start by installing node.js
 
-After that, install the requirements by running.
+After that, install the requirements by running ```npm install```
 
-```
-npm install
-```
+Then open the project folder and rename example.config.js to config.js and replace x with your Developer Bot token.
 
-CD into the project folder and rename example.config.js to config.js and replace x with your Developer Bot token.
+Then run ```npm start```
 
-Then run
-
-```
-npm start
-```
 ### Deploy using docker
 
 Start by renaming the example.config.js to config.js and replace x with your Developer Bot token
