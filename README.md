@@ -31,7 +31,7 @@ node main.js
 ### Inside discord
 
 1. Create a voice channel with the name "Moveer"
-2. Join a channel (Can be locked/hidden from the user you want to move)
+2. Join a channel (Can be locked/hidden from the user you want to move. The channel should also have a userlimit of 1)
 3. Tell the user you want to move to join the "Moveer" voice channel.
 4. Write ```!move @username```
 5. The user should get moved and the bot should reply with: 
