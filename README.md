@@ -10,7 +10,7 @@ After that, install the requirements by running ```npm install```
 
 Then open the project folder and rename example.config.js to config.js and replace x with your Developer Bot token.
 
-Then run ```npm start```
+After that run ```npm start```
 
 ### Deploy using docker
 
