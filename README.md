@@ -39,8 +39,7 @@ docker run --restart always -d <your username>/moveer
 
 ### Try it!
 
-Try it out with a friend by joining
-[Try me!](https://discord.gg/KqaEfhb)
+Try it out with a friend by joining [HERE](https://discord.gg/KqaEfhb)
 ### Invite Moveer
 
 Invite the bot using the link below or host it yourself!
