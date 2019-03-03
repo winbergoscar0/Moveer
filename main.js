@@ -6,7 +6,7 @@ const config = require('./config.js');
 const token = config.discordToken;
 
 client.on('ready', () => {
-  console.log('I am ready!');
+  console.log(new Date().toLocaleTimeString() + ' - I am ready!');
 });
 
 // Listen for messages
@@ -21,16 +21,17 @@ client.on('message', message => {
 
     // Mentions in the message
     const messageMentions = message.mentions.users.array();
-
-    const guildChannels = guild.channels.find('name', 'Moveer');
-    if (guildChannels === null) {
+    const guildChannels = guild.channels.find(channel => channel.name === 'Moveer');
+    if (guildChannels.members == undefined) {
       // There's no voice channel named "Moveer"
+      console.log(new Date().toLocaleTimeString() + ' - No voice channel called Moveer');
       message.channel.send('Theres no voice channel named Moveer');
     } else {
       const usersInMoveeer = guildChannels.members;
       // What to send in the discord channel
       for (var i = 0; i < messageMentions.length; i++) {
         if (usersInMoveeer.has(messageMentions[i].id)) {
+          console.log(new Date().toLocaleTimeString() + ' Moving a user');
           message.channel.send(
             'Moving: ' +
               messageMentions[i] +
@@ -41,6 +42,7 @@ client.on('message', message => {
           );
           guild.member(messageMentions[i].id).setVoiceChannel(userVoiceRoomID);
         } else {
+          console.log(new Date().toLocaleTimeString() + ' - Not moving a user. User in wrong channel.');
           message.channel.send(
             'Not moving: ' +
               messageMentions[i].username +
