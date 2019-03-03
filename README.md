@@ -1,3 +1,4 @@
+
 # Moveer
 
 A discord bot that can move users from a channel to another.
@@ -33,7 +34,7 @@ docker run --restart always -d <your username>/moveer
 
 
 ### Try it!
-
+[![Discord Chat](https://img.shields.io/discord/546695271242006549.svg)](https://discord.gg/KqaEfhb)  
 Try it out with a friend by joining [HERE](https://discord.gg/KqaEfhb)
 ### Invite Moveer
 
