@@ -31,7 +31,7 @@ client.on('message', message => {
       // What to send in the discord channel
       for (var i = 0; i < messageMentions.length; i++) {
         if (usersInMoveeer.has(messageMentions[i].id)) {
-          console.log(new Date().toLocaleTimeString() + ' Moving a user');
+          console.log(new Date().toLocaleTimeString() + ' - Moving a user');
           message.channel.send(
             'Moving: ' +
               messageMentions[i] +
