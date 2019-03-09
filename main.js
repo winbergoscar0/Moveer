@@ -22,7 +22,7 @@ client.on('message', message => {
     // Mentions in the message
     const messageMentions = message.mentions.users.array();
     const guildChannels = guild.channels.find(channel => channel.name === 'Moveer');
-    if (guildChannels.members == undefined) {
+    if (guildChannels === null || guildChannels.members == undefined) {
       // There's no voice channel named "Moveer"
       console.log(new Date().toLocaleTimeString() + ' - No voice channel called Moveer');
       message.channel.send('Theres no voice channel named Moveer');
