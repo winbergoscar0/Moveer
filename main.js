@@ -11,7 +11,14 @@ client.on('ready', () => {
 
 // Listen for messages
 client.on('message', message => {
-  if (message.content.indexOf('!move') >= 0) {
+  if (!message.content.startsWith(config.discordPrefix)) return;
+  const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+  if (command === 'move') {
+    if (args < 1) {
+      message.channel.send('I think you forgot to @mention someone?');
+      console.log(new Date().toLocaleTimeString() + ' - @Mention is missing');
+    }
     // The voice channel ID the author of the message sits in
     const userVoiceRoomID = message.member.voiceChannelID;
     // The authors ID
