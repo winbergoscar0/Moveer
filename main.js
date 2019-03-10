@@ -15,7 +15,6 @@ client.on('message', message => {
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   if (command === 'move') {
-    console.log(message.guild.name);
     if (args < 1) {
       message.channel.send('I think you forgot to @mention someone?');
       console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - @Mention is missing');
