@@ -15,9 +15,10 @@ client.on('message', message => {
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   if (command === 'move') {
+    console.log(message.guild.name);
     if (args < 1) {
       message.channel.send('I think you forgot to @mention someone?');
-      console.log(new Date().toLocaleTimeString() + ' - @Mention is missing');
+      console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - @Mention is missing');
     }
     // The voice channel ID the author of the message sits in
     const userVoiceRoomID = message.member.voiceChannelID;
@@ -31,14 +32,14 @@ client.on('message', message => {
     const guildChannels = guild.channels.find(channel => channel.name === 'Moveer');
     if (guildChannels === null || guildChannels.members == undefined) {
       // There's no voice channel named "Moveer"
-      console.log(new Date().toLocaleTimeString() + ' - No voice channel called Moveer');
+      console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - No voice channel called Moveer');
       message.channel.send('Theres no voice channel named Moveer');
     } else {
       const usersInMoveeer = guildChannels.members;
       // What to send in the discord channel
       for (var i = 0; i < messageMentions.length; i++) {
         if (usersInMoveeer.has(messageMentions[i].id)) {
-          console.log(new Date().toLocaleTimeString() + ' - Moving a user');
+          console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - Moving a user');
           message.channel.send(
             'Moving: ' +
               messageMentions[i] +
@@ -49,7 +50,7 @@ client.on('message', message => {
           );
           guild.member(messageMentions[i].id).setVoiceChannel(userVoiceRoomID);
         } else {
-          console.log(new Date().toLocaleTimeString() + ' - Not moving a user. User in wrong channel.');
+          console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - Not moving a user. User in wrong channel.');
           message.channel.send(
             'Not moving: ' +
               messageMentions[i].username +
