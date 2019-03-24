@@ -38,7 +38,10 @@ client.on('message', message => {
       // What to send in the discord channel
       for (var i = 0; i < messageMentions.length; i++) {
         if (usersInMoveeer.has(messageMentions[i].id)) {
-          console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - Moving a user');
+          if(messageMentions[i].id === authorID) {
+            message.channel.send("You can't move yourself.. :) " + messageMentions[i]);
+          } else {
+            console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - Moving a user');
           message.channel.send(
             'Moving: ' +
               messageMentions[i] +
@@ -48,6 +51,7 @@ client.on('message', message => {
               '>'
           );
           guild.member(messageMentions[i].id).setVoiceChannel(userVoiceRoomID);
+          }
         } else {
           console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - Not moving a user. User in wrong channel.');
           message.channel.send(
