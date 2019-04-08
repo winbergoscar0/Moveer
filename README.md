@@ -1,5 +1,7 @@
 
 # Moveer
+[![BuyMeACoffee](https://img.shields.io/badge/BuyMeACoffee-Donate-ff813f.svg?logo=CoffeeScript&style=flat-square)](https://www.buymeacoffee.com/Moveer)
+[![Discord Chat](https://img.shields.io/discord/546695271242006549.svg)](https://discord.gg/KqaEfhb)
 
 A discord bot that can move users from a channel to another.
 
@@ -34,7 +36,6 @@ docker run --restart always -d -e TZ=Your/Timezone moveer
 
 
 ### Try it!
-[![Discord Chat](https://img.shields.io/discord/546695271242006549.svg)](https://discord.gg/KqaEfhb)  
 Try it out with a friend by joining [HERE](https://discord.gg/KqaEfhb)
 ### Invite Moveer
 
