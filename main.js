@@ -17,6 +17,7 @@ client.on('ready', () => {
 // Listen for messages
 client.on('message', message => {
   if (!message.content.startsWith(config.discordPrefix)) return;
+  if (message.author.bot) return;
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   if (command === 'move') {
