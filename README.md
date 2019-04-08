@@ -17,8 +17,8 @@ After that run ```npm start```
 
 Start by renaming the example.config.js to config.js and replace x with your Developer Bot token
 ```
-docker build -t <your username>/moveer .
-docker run --restart always -d <your username>/moveer
+docker build -t moveer .
+docker run --restart always -d -e TZ=Your/Timezone moveer
 ```
 
 
