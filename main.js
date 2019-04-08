@@ -20,7 +20,7 @@ client.on('message', message => {
     const guild = message.guild; // The guild where the user sends its message
     const messageMentions = message.mentions.users.array(); // Mentions in the message
     const guildChannels = guild.channels.find(channel => channel.name === 'Moveer'); // Search for the voiceroom Moveer
-    const usersInMoveeer = guildChannels.members; // The members ofthe Moveer voice room
+
 
     // Check for errors in the message
     // Make sure there's a voice room called Moveer
@@ -29,12 +29,14 @@ client.on('message', message => {
       message.channel.send('Theres no voice channel named Moveer');
       return;
     }
+    const usersInMoveeer = guildChannels.members; // The members ofthe Moveer voice room
     // Make sure the user @mentions someone
     if (args < 1) {
       message.channel.send('I think you forgot to @mention someone?' + '<@' + authorID + '>');
       console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - @Mention is missing ');
       return;
     }
+    
     // Stop people from trying to move people into Moveer
     if (usersInMoveeer.has(authorID)){
       message.channel.send("You can't move people into this voice room " + '<@' + authorID + '>');
