@@ -1,12 +1,17 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
+const opts = {
+  timestampFormat:'YYYY-MM-DD HH:mm:ss'
+}
+const log = require('simple-node-logger').createSimpleLogger(opts);
+
 // TOKEN
 const config = require('./config.js');
 const token = config.discordToken;
 
 client.on('ready', () => {
-  console.log(new Date().toLocaleTimeString() + ' - I am ready!');
+  log.info('Startup successful.')
 });
 
 // Listen for messages
@@ -25,7 +30,7 @@ client.on('message', message => {
     // Check for errors in the message
     // Make sure there's a voice room called Moveer
     if (guildChannels === null || guildChannels.members == undefined) {
-      console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - No voice channel called Moveer');
+      log.info(message.guild.name + ' - No voice channel called Moveer')
       message.channel.send('Theres no voice channel named Moveer');
       return;
     }
@@ -33,31 +38,31 @@ client.on('message', message => {
     // Make sure the user @mentions someone
     if (args < 1) {
       message.channel.send('I think you forgot to @mention someone?' + '<@' + authorID + '>');
-      console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - @Mention is missing ');
+      log.info(message.guild.name + ' - @Mention is missing ')
       return;
     }
     
     // Stop people from trying to move people into Moveer
     if (usersInMoveeer.has(authorID)){
       message.channel.send("You can't move people into this voice room " + '<@' + authorID + '>');
-      console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - User trying to move people into Moveer');
+      log.info(message.guild.name + ' - User trying to move people into Moveer')
       return;
     }
 
     // No errors in the message, try moving everyone in the @mention
     for (var i = 0; i < messageMentions.length; i++) {
       if (usersInMoveeer.has(messageMentions[i].id)) {
-        console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - Moving a user');
+        log.info(message.guild.name + ' - Moving a user')
         message.channel.send('Moving: ' + messageMentions[i] + '. By request of ' + '<@' + authorID + '>');
         guild.member(messageMentions[i].id).setVoiceChannel(userVoiceRoomID);
       } else {
         if (messageMentions[i].id === authorID) {
           // Stop people from trying to move themself
           message.channel.send("You can't move yourself.. :) " + messageMentions[i]);
-          console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - User trying to move himself');
+          log.info(message.guild.name + ' - User trying to move himself')
           return;
         }
-        console.log(new Date().toLocaleTimeString() + ' - ' + message.guild.name + ' - User in wrong channel.');
+        log.info(message.guild.name + ' - User in wrong channel.')
         message.channel.send('Not moving: ' + messageMentions[i].username + '. Is the user in the correct voice channel? (Moveer)');
       }
     }
