@@ -26,8 +26,13 @@ client.on('message', message => {
     const guild = message.guild; // The guild where the user sends its message
     const messageMentions = message.mentions.users.array(); // Mentions in the message
     const guildChannels = guild.channels.find(channel => channel.name === 'Moveer'); // Search for the voiceroom Moveer
-
-
+    // Check for the correct permissions
+    if (!guild.me.hasPermission("ADMINISTRATOR")) {
+      message.channel.send('Im missing permission to do stuff...');
+      log.info(message.guild.name + ' - Im missing permissions...')
+      return;
+    }
+    
     // Check for errors in the message
     // Make sure there's a voice room called Moveer
     if (guildChannels === null || guildChannels.members == undefined) {
