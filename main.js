@@ -10,6 +10,20 @@ const log = require('simple-node-logger').createSimpleLogger(opts);
 const config = require('./config.js');
 const token = config.discordToken;
 
+if (config.discordBotListToken !== 'x') {
+  // Only run if bot is public at discordbotlist.com
+  const DBL = require("dblapi.js");
+  const dbl = new DBL(config.discordBotListToken, client);
+  dbl.on('posted', () => {
+    log.info('Posted Server count to DBL')
+  })
+
+  dbl.on('error', e => {
+    log.warn (`DBL Error!:  ${e}`)
+  })
+}
+
+
 client.on('ready', () => {
   log.info('Startup successful.')
 });
