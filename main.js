@@ -64,6 +64,13 @@ client.on('message', message => {
       return;
     }
 
+    // Stop people from trying to move people without being inside a voice room
+    if (userVoiceRoomID === undefined) {
+      message.channel.send("You need to join a voice room before moving people " + '<@' + authorID + '>');
+      log.info(message.guild.name + ' - User tried to move people without being inside a voice room')
+      return;
+    }
+
     // Check that moveer has access to the voice room
     if (!message.member.voiceChannel.memberPermissions(guild.me).has('CONNECT')) {
       message.channel.send("Hey! I'm not allowed to move people to this room. Please give me permissions to connect to this voice channel. " + '<@' + authorID + '>');
@@ -77,6 +84,7 @@ client.on('message', message => {
       log.info(message.guild.name + ' - Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot) ')
       return;
     }
+
     // No errors in the message, try moving everyone in the @mention
     for (var i = 0; i < messageMentions.length; i++) {
       if (usersInMoveeer.has(messageMentions[i].id)) {

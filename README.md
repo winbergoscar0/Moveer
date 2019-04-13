@@ -35,9 +35,9 @@ docker run --restart always -d -e TZ=Your/Timezone moveer
 ```Moving: <@username>. By request of <@yourUsername>```
 
 
-### Try it!
+### Want to try it out? Or do you need support? Join the official Moveer discord!
 Try it out with a friend by joining [HERE](https://discord.gg/KqaEfhb)
-### Invite Moveer
+### Invite Moveer to your discord using the link below!
 
 Invite the bot using the link below or host it yourself!
 
