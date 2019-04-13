@@ -71,6 +71,12 @@ client.on('message', message => {
       return;
     }
 
+    // Check that moveer has move members role 
+    if (!guild.me.hasPermission('MOVE_MEMBERS')) {
+      message.channel.send("Hey! I'm not allowed to move people in this discord :/ Please kick me and reinvite me with 'Move Members' checked. " + '<@' + authorID + '>');
+      log.info(message.guild.name + ' - Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot) ')
+      return;
+    }
     // No errors in the message, try moving everyone in the @mention
     for (var i = 0; i < messageMentions.length; i++) {
       if (usersInMoveeer.has(messageMentions[i].id)) {
