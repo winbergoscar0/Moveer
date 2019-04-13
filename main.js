@@ -65,7 +65,7 @@ client.on('message', message => {
     }
 
     // Stop people from trying to move people without being inside a voice room
-    if (userVoiceRoomID === undefined) {
+    if (userVoiceRoomID === undefined || userVoiceRoomID === null) {
       message.channel.send("You need to join a voice room before moving people " + '<@' + authorID + '>');
       log.info(message.guild.name + ' - User tried to move people without being inside a voice room')
       return;
