@@ -64,6 +64,13 @@ client.on('message', message => {
       return;
     }
 
+    // Check that moveer has access to the voice room
+    if (!message.member.voiceChannel.memberPermissions(guild.me).has('CONNECT')) {
+      message.channel.send("Hey! I'm not allowed to move people to this room. Please give me permissions to connect to this voice channel. " + '<@' + authorID + '>');
+      log.info(message.guild.name + ' - Moveer is missing CONNECT permission to ')
+      return;
+    }
+
     // No errors in the message, try moving everyone in the @mention
     for (var i = 0; i < messageMentions.length; i++) {
       if (usersInMoveeer.has(messageMentions[i].id)) {
