@@ -41,5 +41,5 @@ Try it out with a friend by joining [HERE](https://discord.gg/KqaEfhb)
 
 Invite the bot using the link below or host it yourself!
 
-[Invite me!](https://discordapp.com/api/oauth2/authorize?client_id=400724460203802624&permissions=8&scope=bot)
+[Invite me!](https://discordapp.com/api/oauth2/authorize?client_id=564773724520185856&permissions=16777216&scope=bot)
 
