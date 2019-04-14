@@ -46,13 +46,13 @@ client.on('message', message => {
     // Make sure there's a voice room called Moveer
     if (guildChannels === null || guildChannels.members == undefined) {
       log.info(message.guild.name + ' - No voice channel called Moveer')
-      message.channel.send('Theres no voice channel named Moveer');
+      message.channel.send('Hello, You need to create a voice channel named "Moveer"');
       return;
     }
     const usersInMoveeer = guildChannels.members; // The members ofthe Moveer voice room
     // Make sure the user @mentions someone
     if (args < 1) {
-      message.channel.send('I think you forgot to @mention someone?' + '<@' + authorID + '>');
+      message.channel.send('You need to @mention a friend!' + '<@' + authorID + '>');
       log.info(message.guild.name + ' - @Mention is missing ')
       return;
     }
@@ -94,7 +94,7 @@ client.on('message', message => {
       } else {
         if (messageMentions[i].id === authorID) {
           // Stop people from trying to move themself
-          message.channel.send("You can't move yourself.. :) " + messageMentions[i]);
+          message.channel.send("You need to @mention a friend you want to move, not yourself! :) " + messageMentions[i]);
           log.info(message.guild.name + ' - User trying to move himself')
           return;
         }
