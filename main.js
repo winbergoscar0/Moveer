@@ -39,7 +39,7 @@ client.on('message', message => {
     const authorID = message.author.id; // The author ID
     const guild = message.guild; // The guild where the user sends its message
     const messageMentions = message.mentions.users.array(); // Mentions in the message
-    const guildChannels = (guild.channels.find(channel => channel.name === 'Moveer') ? guild.channels.find(channel => channel.name === 'Moveer') : guild.channels.find(channel => channel.name === 'moveer')); // Search for the voiceroom Moveer
+    const guildChannels = guild.channels.find(channel => channel.name.toLowerCase() === 'moveer')
     
     if (guild.channels.find(channel => channel.name === 'Moveer') !== null && guild.channels.find(channel => channel.name === 'moveer') !== null) {
       log.info(message.guild.name + ' - User has two voice channels called moveer/Moveer')
