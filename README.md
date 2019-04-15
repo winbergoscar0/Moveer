@@ -36,10 +36,10 @@ docker run --restart always -d -e TZ=Your/Timezone moveer
 
 
 ### Want to try it out? Or do you need support? Join the official Moveer discord!
-Try it out with a friend by joining [HERE](https://discord.gg/KqaEfhb)
+Join us with the following link https://discord.gg/KqaEfhb and tag a moderator for assistance!
 ### Invite Moveer to your discord using the link below!
 
-Invite the bot using the link below or host it yourself!
+Invite the bot to your server using the link below or host it yourself!
 
 [Invite me!](https://discordapp.com/api/oauth2/authorize?client_id=400724460203802624&permissions=16777216&scope=bot)
 
