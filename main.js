@@ -42,7 +42,7 @@ client.on('message', message => {
     const guildChannels = (guild.channels.find(channel => channel.name === 'Moveer') ? guild.channels.find(channel => channel.name === 'Moveer') : guild.channels.find(channel => channel.name === 'moveer')); // Search for the voiceroom Moveer
     
     if (guild.channels.find(channel => channel.name === 'Moveer') !== null && guild.channels.find(channel => channel.name === 'moveer') !== null) {
-      log.info('User has two voice channels called moveer/Moveer')
+      log.info(message.guild.name + ' - User has two voice channels called moveer/Moveer')
       message.channel.send('You seem to be having two voice channels called Moveer, please remove one!');
       return;
     }
