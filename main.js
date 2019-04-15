@@ -56,6 +56,12 @@ client.on('message', message => {
       log.info(message.guild.name + ' - @Mention is missing ')
       return;
     }
+
+    if (message.mentions.users.has(authorID)) {
+      log.info(message.guild.name + ' - User trying to move himself')
+      message.channel.send("You need to @mention a friend you want to move, not yourself! :) " + '<@' + authorID + '>');
+      return;
+    }
     
     // Stop people from trying to move people into Moveer
     if (usersInMoveeer.has(authorID)){
@@ -92,14 +98,8 @@ client.on('message', message => {
         message.channel.send('Moving: ' + messageMentions[i] + '. By request of ' + '<@' + authorID + '>');
         guild.member(messageMentions[i].id).setVoiceChannel(userVoiceRoomID);
       } else {
-        if (messageMentions[i].id === authorID) {
-          // Stop people from trying to move themself
-          message.channel.send("You need to @mention a friend you want to move, not yourself! :) " + messageMentions[i]);
-          log.info(message.guild.name + ' - User trying to move himself')
-          return;
-        }
         log.info(message.guild.name + ' - User in wrong channel.')
-        message.channel.send('Not moving: ' + messageMentions[i].username + '. Is the user in the correct voice channel? (Moveer)');
+        message.channel.send('Not moving: ' + messageMentions[i].username + '. Is the user in the voice channel "Moveer"?');
       }
     }
   }
