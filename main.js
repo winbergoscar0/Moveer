@@ -46,7 +46,7 @@ client.on('message', message => {
     // Make sure there's a voice room called Moveer
     if (guildChannels === null || guildChannels.members == undefined) {
       log.info(message.guild.name + ' - No voice channel called Moveer')
-      message.channel.send('Hello, You need to create a voice channel named "Moveer"');
+      message.channel.send('Hello, You need to create a voice channel named "Moveer" \nDo you need support? Join us at the official discord and tag a moderator! https://discord.gg/m8gGKUF ');
       return;
     }
     const usersInMoveeer = guildChannels.members; // The members ofthe Moveer voice room
@@ -73,14 +73,14 @@ client.on('message', message => {
 
     // Check that moveer has access to the voice room
     if (!message.member.voiceChannel.memberPermissions(guild.me).has('CONNECT')) {
-      message.channel.send("Hey! I'm not allowed to move people to this room. Please give me permissions to connect to this voice channel. " + '<@' + authorID + '>');
+      message.channel.send("Hey! I'm not allowed to move people to this room. Please give me permissions to connect to this voice channel. \nDo you need support? Join us at the official discord and tag a moderator! https://discord.gg/m8gGKUF " + '<@' + authorID + '>');
       log.info(message.guild.name + ' - Moveer is missing CONNECT permission to ')
       return;
     }
 
     // Check that moveer has move members role 
     if (!guild.me.hasPermission('MOVE_MEMBERS')) {
-      message.channel.send("Hey! I'm not allowed to move people in this discord :/ Please kick me and reinvite me with 'Move Members' checked. " + '<@' + authorID + '>');
+      message.channel.send("Hey! I'm not allowed to move people in this discord :/ Please kick me and reinvite me with 'Move Members' checked. \nDo you need support? Join us at the official discord and tag a moderator! https://discord.gg/m8gGKUF " + '<@' + authorID + '>');
       log.info(message.guild.name + ' - Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot) ')
       return;
     }
