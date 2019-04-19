@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:10.15.3-stretch-slim
 
 # Create app directory
 WORKDIR /usr/src/app
