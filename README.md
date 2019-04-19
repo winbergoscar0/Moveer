@@ -32,7 +32,7 @@ docker run --restart always -d -e TZ=Your/Timezone moveer
 
 2. Instead of using many @tags to move people you can use our group function! In order for this to work you will have to create a voice channel called "gMoveer[insert name here]" then use the command ```!gmove[name of the channel].```
 
-3. In order to use the "admin" commands of the bot you will have to create a text channel named "adminmoveer". In this textchannel the bot will move people with the command ```!move @username``` (can be more than 1 user) even if they aren't in the "Moveer" channel.
+3. In order to use the "admin" version of the bot you will have to create a text channel named "adminmoveer". In this textchannel the bot will move people with the command ```!move @username``` (can be more than 1 user) even if they aren't in the "Moveer" channel.
 
 
 ### Want to try it out? Or do you need support? Join the official Moveer discord!
