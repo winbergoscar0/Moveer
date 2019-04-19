@@ -33,7 +33,6 @@ function mentions (args, message) {
     }
     
     if (textChannelName.toLowerCase() !== 'moveeradmin') {
-      console.log('iffing')
       // If the message comes from the admin room, don't require the users to be inside Moveer
 
       const userVoiceRoomName = guild.channels.get(userVoiceRoomID).name // Name of authors voice room
@@ -78,7 +77,6 @@ function mentions (args, message) {
   
     let usersMoved = 0
     // No errors in the message, try moving everyone in the @mention
-    console.log(textChannelName.toLowerCase())
     if (textChannelName.toLowerCase() === 'moveeradmin'){
       // START - Command came from moveeradmin, don't requrire users to be inside Moveer
       for (var i = 0; i < messageMentions.length; i++) {
