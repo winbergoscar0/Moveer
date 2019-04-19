@@ -58,7 +58,6 @@ function mentions (args, message) {
         message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/m8gGKUF")
         return;
       }
-      const usersInMoveeer = guildChannels.members; // The members ofthe Moveer voice room
     }
 
     // Check that moveer has access to the voice room
@@ -94,6 +93,7 @@ function mentions (args, message) {
     } else {
       // START - Command not sent from moveeradmin, make sure the users are inside Moveer
       for (var i = 0; i < messageMentions.length; i++) {
+        const usersInMoveeer = guildChannels.members; // The members ofthe Moveer voice room
         if (usersInMoveeer.has(messageMentions[i].id)) {
           guild.member(messageMentions[i].id).setVoiceChannel(userVoiceRoomID);
           usersMoved = usersMoved + 1
