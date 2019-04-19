@@ -10,22 +10,8 @@ function mentions (args, message) {
     const authorID = message.author.id; // The author ID
     const messageMentions = message.mentions.users.array(); // Mentions in the message
     const guildChannels = guild.channels.find(channel => channel.name.toLowerCase() === 'moveer')
+    const textChannelName = message.channel.name
 
-    if (guild.channels.find(channel => channel.name === 'Moveer') !== null && guild.channels.find(channel => channel.name === 'moveer') !== null) {
-      log.info(message.guild.name + ' - User has two voice channels called moveer/Moveer')
-      message.channel.send('You seem to be having two voice channels called Moveer, please remove one!');
-      return;
-    }
-    
-    // Check for errors in the message
-    // Make sure there's a voice room called Moveer
-    if (guildChannels === null || guildChannels.members == undefined) {
-      log.info(message.guild.name + ' - No voice channel called Moveer')
-      message.channel.send('Hello, You need to create a voice channel named "Moveer"');
-      message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/m8gGKUF")
-      return;
-    }
-    const usersInMoveeer = guildChannels.members; // The members ofthe Moveer voice room
     // Make sure the user @mentions someone
     if (args < 1 || messageMentions.length < 1) {
       message.channel.send('You need to @mention a friend!' + '<@' + authorID + '>');
@@ -45,13 +31,34 @@ function mentions (args, message) {
       log.info(message.guild.name + ' - User tried to move people without being inside a voice room')
       return;
     }
+    
+    if (textChannelName.toLowerCase() !== 'moveeradmin') {
+      console.log('iffing')
+      // If the message comes from the admin room, don't require the users to be inside Moveer
 
-    const userVoiceRoomName = guild.channels.get(userVoiceRoomID).name // Name of authors voice room
-    // Stop people from trying to move people into Moveer
-    if (userVoiceRoomName.toLowerCase().includes('moveer')){
-      message.channel.send("You can't move people into this voice room " + '<@' + authorID + '>');
-      log.info(message.guild.name + ' - User trying to move people into a moveer channel')
-      return;
+      const userVoiceRoomName = guild.channels.get(userVoiceRoomID).name // Name of authors voice room
+      // Stop people from trying to move people into Moveer
+      if (userVoiceRoomName.toLowerCase().includes('moveer')){
+        message.channel.send("You can't move people into this voice room " + '<@' + authorID + '>');
+        log.info(message.guild.name + ' - User trying to move people into a moveer channel')
+        return;
+      }
+
+      if (guild.channels.find(channel => channel.name === 'Moveer') !== null && guild.channels.find(channel => channel.name === 'moveer') !== null) {
+        log.info(message.guild.name + ' - User has two voice channels called moveer/Moveer')
+        message.channel.send('You seem to be having two voice channels called Moveer, please remove one!');
+        return;
+      }
+      
+      // Check for errors in the message
+      // Make sure there's a voice room called Moveer
+      if (guildChannels === null || guildChannels.members == undefined) {
+        log.info(message.guild.name + ' - No voice channel called Moveer')
+        message.channel.send('Hello, You need to create a voice channel named "Moveer"');
+        message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/m8gGKUF")
+        return;
+      }
+      const usersInMoveeer = guildChannels.members; // The members ofthe Moveer voice room
     }
 
     // Check that moveer has access to the voice room
@@ -69,22 +76,61 @@ function mentions (args, message) {
       log.info(message.guild.name + ' - Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot) ')
       return;
     }
-    usersMoved = 0
+  
+    let usersMoved = 0
     // No errors in the message, try moving everyone in the @mention
-    for (var i = 0; i < messageMentions.length; i++) {
-      if (usersInMoveeer.has(messageMentions[i].id)) {
+    console.log(textChannelName.toLowerCase())
+    if (textChannelName.toLowerCase() === 'moveeradmin'){
+      // START - Command came from moveeradmin, don't requrire users to be inside Moveer
+      for (var i = 0; i < messageMentions.length; i++) {
         guild.member(messageMentions[i].id).setVoiceChannel(userVoiceRoomID);
-        usersMoved += 1
-        console.log(usersMoved)
-      } else {
-        log.info(message.guild.name + ' - User in wrong channel.')
-        message.channel.send('Not moving: ' + messageMentions[i].username + '. Is the user in the voice channel "Moveer"?');
+        usersMoved = usersMoved + 1
       }
+      if (usersMoved > 0) {
+        log.info(message.guild.name + ' - Admin moved ' + usersMoved + ' users.')
+        message.channel.send('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of ' + '<@' + authorID + '>');
+      }
+      // END - Command came from moveeradmin, don't require users to be inside Moveer
+    } else {
+      // START - Command not sent from moveeradmin, make sure the users are inside Moveer
+      for (var i = 0; i < messageMentions.length; i++) {
+        if (usersInMoveeer.has(messageMentions[i].id)) {
+          guild.member(messageMentions[i].id).setVoiceChannel(userVoiceRoomID);
+          usersMoved = usersMoved + 1
+        } else {
+          log.info(message.guild.name + ' - User in wrong channel.')
+          message.channel.send('Not moving: ' + messageMentions[i].username + '. Is the user in the voice channel "Moveer"?');
+        }
+      }
+      if (usersMoved > 0) {
+        log.info(message.guild.name + ' - Moved ' + usersMoved + ' users.')
+        message.channel.send('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of ' + '<@' + authorID + '>');
+      }
+      // END - Command not sent from moveeradmin, make sure the users are inside Moveer
     }
-    log.info(message.guild.name + ' - Moved ' + usersMoved + ' users.')
-    message.channel.send('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of ' + '<@' + authorID + '>');
 
+
+
+
+    
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function group (args, message) {
