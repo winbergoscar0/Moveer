@@ -26,13 +26,13 @@ docker run --restart always -d -e TZ=Your/Timezone moveer
 
 ### How to operate the bot using commands.
 
-** You can't move people unless they are in the Moveer/gMoveer channel or if you have admin permission. **
+** You can only move people if they are in the Moveer/gMoveer channel unless you have access to "#adminmoveer" text channel, (then you can move them from any voicechannel). **
 
-1. If you want to move a single user they will have to join the voice channel called "Moveer". Then use the command !move @username. (Notice that you can also tag multiple people and it will still move all of them).
+1. If you want to move a single user they will have to join the voice channel called "Moveer". Then use the command ```!move @username.``` (Notice that you can also tag multiple people and it will still move all of them).
 
-2. Instead of using many @tags to move people you can use our group function! In order for this to work you will have to create a voice channel called "gMoveer[insert name here]" then use the command !gmove[name of the channel].
+2. Instead of using many @tags to move people you can use our group function! In order for this to work you will have to create a voice channel called "gMoveer[insert name here]" then use the command ```!gmove[name of the channel].```
 
-3. In order to use the "admin" commands of the bot you will have to create a text channel named "adminmoveer". In this textchannel the bot will move people with the command !move @username (can be more than 1 user) even if they aren't in the "Moveer" channel.
+3. In order to use the "admin" commands of the bot you will have to create a text channel named "adminmoveer". In this textchannel the bot will move people with the command ```!move @username``` (can be more than 1 user) even if they aren't in the "Moveer" channel.
 
 
 ### Want to try it out? Or do you need support? Join the official Moveer discord!
