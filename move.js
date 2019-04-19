@@ -44,8 +44,8 @@ function mentions (args, message) {
       }
 
       if (guild.channels.find(channel => channel.name === 'Moveer') !== null && guild.channels.find(channel => channel.name === 'moveer') !== null) {
-        log.info(message.guild.name + ' - User has two voice channels called moveer/Moveer')
-        message.channel.send('You seem to be having two voice channels called Moveer, please remove one!');
+        log.info(message.guild.name + ' - User has two channels called moveer/Moveer')
+        message.channel.send('You seem to be having two channels called Moveer, please remove one!');
         return;
       }
       
@@ -69,9 +69,9 @@ function mentions (args, message) {
 
     // Check that moveer has move members role 
     if (!guild.me.hasPermission('MOVE_MEMBERS')) {
-      message.channel.send("Hey! I'm not allowed to move people in this discord :/ Please kick me and reinvite me with 'Move Members' checked." + '<@' + authorID + '>');
+      message.channel.send("Hey! I'm not allowed to move people in this discord :/ Please kick me and reinvite me with 'Move Members' checked. Or double check that I have Move Members permissions in the room you're in!" + '<@' + authorID + '>');
       message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/m8gGKUF")
-      log.info(message.guild.name + ' - Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot) ')
+      log.info(message.guild.name + ' - Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot or check the room permissions) ')
       return;
     }
   
@@ -183,9 +183,9 @@ function group (args, message) {
   
   // Check that moveer has move members role 
   if (!guild.me.hasPermission('MOVE_MEMBERS')) {
-    message.channel.send("Hey! I'm not allowed to move people in this discord :/ Please kick me and reinvite me with 'Move Members' checked." + '<@' + authorID + '>');
+    message.channel.send("Hey! I'm not allowed to move people in this discord :/ Please kick me and reinvite me with 'Move Members' checked. Or double check that I have Move Members permissions in the room you're in!" + '<@' + authorID + '>');
     message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/m8gGKUF")
-    log.info(message.guild.name + ' - Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot) ')
+    log.info(message.guild.name + ' - Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot or check the room permissions) ')
     return;
   }
 
