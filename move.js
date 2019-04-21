@@ -57,6 +57,13 @@ function mentions (args, message) {
         log.info(message.guild.name + ' - No voice channel called Moveer')
         return;
       }
+
+      // Make sure there are users inside Moveer
+        if (guildChannels.members.length < 1) {
+          message.channel.send(moveerMessage.NO_USERS_INSIDE_ROOM + ' Moveer <@' + authorID + '>');
+          log.info(message.guild.name + ' - No users inside the Moveer channel ')
+          return;
+        }
     }
 
     // Check that moveer has access to the voice room
@@ -191,7 +198,7 @@ function group (args, message) {
 
   const groupMembersToMove = guildChannels.members.array()
   if (groupMembersToMove.length < 1) {
-    message.channel.send(moveerMessage.NO_USERS_INSIDE_ROOM + args[0] + ' <@' + authorID + '>');
+    message.channel.send(moveerMessage.NO_USERS_INSIDE_ROOM + ' gMoveer' + args[0] + ' <@' + authorID + '>');
     log.info(message.guild.name + ' - No users inside the gMoveer channel ')
     return;
   }
