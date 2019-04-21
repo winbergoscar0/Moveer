@@ -2,7 +2,7 @@
 # Moveer
 [![Discord Bots](https://discordbots.org/api/widget/status/400724460203802624.svg?noavatar=true)](https://discordbots.org/bot/400724460203802624)
 [![BuyMeACoffee](https://img.shields.io/badge/BuyMeACoffee-Donate-ff813f.svg?logo=CoffeeScript&style=flat-square)](https://www.buymeacoffee.com/Moveer)
-[![Discord Chat](https://img.shields.io/discord/546695271242006549.svg)](https://discord.gg/KqaEfhb)
+[![Discord Chat](https://img.shields.io/discord/546695271242006549.svg)](https://discord.gg/YjWV6gt)
 
 A discord bot that can move users from one channel to another. Inlcuding locked and hidden voice rooms!
 
@@ -36,7 +36,7 @@ docker run --restart always -d -e TZ=Your/Timezone moveer
 
 
 ### Want to try it out? Or do you need support? Join the official Moveer discord!
-Join us with the following link https://discord.gg/KqaEfhb and tag a moderator for assistance!
+Join us with the following link https://discord.gg/YjWV6gt and tag a moderator for assistance!
 ### Invite Moveer to your discord using the link below!
 
 Invite the bot to your server using the link below or host it yourself!
