@@ -38,7 +38,7 @@ function mentions (args, message) {
       const userVoiceRoomName = guild.channels.get(userVoiceRoomID).name // Name of authors voice room
       // Stop people from trying to move people into Moveer
       if (userVoiceRoomName.toLowerCase().includes('moveer')){
-        message.channel.send(moveerMessage.USER_INSIDE_MOVEER_VOICE_CHANEL + '<@' + authorID + '>');
+        message.channel.send(moveerMessage.USER_INSIDE_MOVEER_VOICE_CHANNEL + '<@' + authorID + '>');
         log.info(message.guild.name + ' - User trying to move people into a moveer channel')
         return;
       }
@@ -175,7 +175,7 @@ function group (args, message) {
 
   const userVoiceRoomName = guild.channels.get(userVoiceRoomID).name // Name of authors voice room
   if (userVoiceRoomName.toLowerCase().includes('moveer')){
-    message.channel.send(moveerMessage.USER_INSIDE_MOVEER_VOICE_CHANEL + '<@' + authorID + '>');
+    message.channel.send(moveerMessage.USER_INSIDE_MOVEER_VOICE_CHANNEL + '<@' + authorID + '>');
     log.info(message.guild.name + ' - User trying to move people into a moveer channel')
     return;
   }
