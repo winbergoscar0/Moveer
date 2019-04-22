@@ -1,10 +1,10 @@
 const USER_MOVING_SELF = 'You need to @mention a friend you want to move, not yourself! :)'
 const MESSAGE_MISSING_MENTION = 'You need to @mention a friend!'
-const USER_NOT_IN_ANY_VOICE_CHANNEL = 'You need to join a voice channel before moving people'
-const USER_INSIDE_MOVEER_VOICE_CHANNEL = "You can't move people into this voice channel"
+const USER_NOT_IN_ANY_VOICE_CHANNEL = 'You need to join a voice channel before moving people.'
+const USER_INSIDE_MOVEER_VOICE_CHANNEL = "You can't move people into this voice channel."
 const SERVER_HAS_TWO_MOVEER_VOICE_CHANNELS = 'You seem to be having two channels called Moveer, please remove one!'
-const SERVER_IS_MISSING_MOVEER_VOICE_CHANNEL = 'Hello, You need to create a voice channel named "Moveer'
-const SUPPORT_MESSAGE = 'Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/m8gGKUF'
+const SERVER_IS_MISSING_MOVEER_VOICE_CHANNEL = 'Hello, You need to create a voice channel named "Moveer"'
+const SUPPORT_MESSAGE = 'Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/8BXKe9g'
 const MOVEER_MISSING_CONNECT_PERMISSION = "Hey! I'm not allowed to move people to this room. I won't join you but discord requires me to have CONNECT privileges to move people!"
 const MOVEER_MISSING_MOVE_PERMISSION = "Hey! I'm not allowed to move people in this discord :/ Please kick me and reinvite me with 'Move Members' checked. Or double check that I have Move Members permissions in the room you're in!"
 const MESSAGE_MISSING_ROOM_IDENTIFER = 'You need to write a number to identify a gMoveer room!'

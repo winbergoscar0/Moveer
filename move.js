@@ -14,20 +14,20 @@ function mentions (args, message) {
 
     // Make sure the user @mentions someone
     if (args < 1 || messageMentions.length < 1) {  
-      message.channel.send(moveerMessage.MESSAGE_MISSING_MENTION + '<@' + authorID + '>');
+      message.channel.send(moveerMessage.MESSAGE_MISSING_MENTION + ' <@' + authorID + '>');
       log.info(message.guild.name + ' - @Mention is missing ')
       return;
     }
 
     if (message.mentions.users.has(authorID)) {
-      message.channel.send(moveerMessage.USER_MOVING_SELF + '<@' + authorID + '>');
+      message.channel.send(moveerMessage.USER_MOVING_SELF + ' <@' + authorID + '>');
       log.info(message.guild.name + ' - User trying to move himself')
       return;
     }
 
     // Stop people from trying to move people without being inside a voice room
     if (userVoiceRoomID === undefined || userVoiceRoomID === null) {
-      message.channel.send(moveerMessage.USER_NOT_IN_ANY_VOICE_CHANNEL + '<@' + authorID + '>');
+      message.channel.send(moveerMessage.USER_NOT_IN_ANY_VOICE_CHANNEL + ' <@' + authorID + '>');
       log.info(message.guild.name + ' - User tried to move people without being inside a voice room')
       return;
     }
@@ -38,7 +38,7 @@ function mentions (args, message) {
       const userVoiceRoomName = guild.channels.get(userVoiceRoomID).name // Name of authors voice room
       // Stop people from trying to move people into Moveer
       if (userVoiceRoomName.toLowerCase().includes('moveer')){
-        message.channel.send(moveerMessage.USER_INSIDE_MOVEER_VOICE_CHANNEL + '<@' + authorID + '>');
+        message.channel.send(moveerMessage.USER_INSIDE_MOVEER_VOICE_CHANNEL + ' <@' + authorID + '>');
         log.info(message.guild.name + ' - User trying to move people into a moveer channel')
         return;
       }
@@ -68,7 +68,7 @@ function mentions (args, message) {
 
     // Check that moveer has access to the voice room
     if (!message.member.voiceChannel.memberPermissions(guild.me).has('CONNECT')) {
-      message.channel.send(moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + '<@' + authorID + '>');
+      message.channel.send(moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' <@' + authorID + '>');
       message.channel.send(moveerMessage.SUPPORT_MESSAGE)
       log.info(message.guild.name + ' - Moveer is missing CONNECT permission to ')
       return;
@@ -76,7 +76,7 @@ function mentions (args, message) {
 
     // Check that moveer has move members role 
     if (!guild.me.hasPermission('MOVE_MEMBERS')) {
-      message.channel.send(moveerMessage.MOVEER_MISSING_MOVE_PERMISSION + '<@' + authorID + '>');
+      message.channel.send(moveerMessage.MOVEER_MISSING_MOVE_PERMISSION + ' <@' + authorID + '>');
       message.channel.send(moveerMessage.SUPPORT_MESSAGE)
       log.info(message.guild.name + ' - Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot or check the room permissions) ')
       return;
@@ -92,7 +92,7 @@ function mentions (args, message) {
       }
       if (usersMoved > 0) {
         log.info(message.guild.name + ' - Admin moved ' + usersMoved + ' users.')
-        message.channel.send('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of ' + '<@' + authorID + '>');
+        message.channel.send('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of ' + ' <@' + authorID + '>');
       }
       // END - Command came from moveeradmin, don't require users to be inside Moveer
     } else {
@@ -109,7 +109,7 @@ function mentions (args, message) {
       }
       if (usersMoved > 0) {
         log.info(message.guild.name + ' - Moved ' + usersMoved + ' users.')
-        message.channel.send('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of ' + '<@' + authorID + '>');
+        message.channel.send('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of' + ' <@' + authorID + '>');
       }
       // END - Command not sent from moveeradmin, make sure the users are inside Moveer
     }
@@ -147,7 +147,7 @@ function group (args, message) {
   const messageMentions = message.mentions.users.array(); // Mentions in the message
 
   if (args.length < 1 || args === undefined || args === null || args === []) {
-    message.channel.send(moveerMessage.MESSAGE_MISSING_ROOM_IDENTIFER + '<@' + authorID + '>');
+    message.channel.send(moveerMessage.MESSAGE_MISSING_ROOM_IDENTIFER + ' <@' + authorID + '>');
     log.info(message.guild.name + ' - room identifier is missing ')
     return;
   }
@@ -155,34 +155,34 @@ function group (args, message) {
   const guildChannels = guild.channels.find(channel => channel.name.toLowerCase() === 'gmoveer' + args[0].toLowerCase())
 
   if (messageMentions.length > 0) {
-    message.channel.send(moveerMessage.GROUP_MOVE_MESSAGE_CONTAINS_MENTIONS + '<@' + authorID + '>');
+    message.channel.send(moveerMessage.GROUP_MOVE_MESSAGE_CONTAINS_MENTIONS + ' <@' + authorID + '>');
     log.info(message.guild.name + ' - User tried to mention while moving groups ')
     return;
   }
 
   if (guildChannels === null || guildChannels.members == undefined) {
-    message.channel.send(moveerMessage.NO_VOICE_CHANNEL_NAMED_X + args[0] + '<@' + authorID + '>');
+    message.channel.send(moveerMessage.NO_VOICE_CHANNEL_NAMED_X + args[0] + ' <@' + authorID + '>');
     log.info(message.guild.name + ' - No voice channel called gMoveer' + args[0])
     return;
   }
 
   // Stop people from trying to move people without being inside a voice room
   if (userVoiceRoomID === undefined || userVoiceRoomID === null) {
-    message.channel.send(moveerMessage.USER_NOT_IN_ANY_VOICE_CHANNEL + '<@' + authorID + '>');
+    message.channel.send(moveerMessage.USER_NOT_IN_ANY_VOICE_CHANNEL + ' <@' + authorID + '>');
     log.info(message.guild.name + ' - User tried to move people without being inside a voice room')
     return;
   }
 
   const userVoiceRoomName = guild.channels.get(userVoiceRoomID).name // Name of authors voice room
   if (userVoiceRoomName.toLowerCase().includes('moveer')){
-    message.channel.send(moveerMessage.USER_INSIDE_MOVEER_VOICE_CHANNEL + '<@' + authorID + '>');
+    message.channel.send(moveerMessage.USER_INSIDE_MOVEER_VOICE_CHANNEL + ' <@' + authorID + '>');
     log.info(message.guild.name + ' - User trying to move people into a moveer channel')
     return;
   }
 
   // Check that moveer has access to the voice room
   if (!message.member.voiceChannel.memberPermissions(guild.me).has('CONNECT')) {
-    message.channel.send(moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + '<@' + authorID + '>');
+    message.channel.send(moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' <@' + authorID + '>');
     message.channel.send(moveerMessage.SUPPORT_MESSAGE)
     log.info(message.guild.name + ' - Moveer is missing CONNECT permission to ')
     return;
@@ -190,7 +190,7 @@ function group (args, message) {
   
   // Check that moveer has move members role 
   if (!guild.me.hasPermission('MOVE_MEMBERS')) {
-    message.channel.send(moveerMessage.MOVEER_MISSING_MOVE_PERMISSION + '<@' + authorID + '>');
+    message.channel.send(moveerMessage.MOVEER_MISSING_MOVE_PERMISSION + ' <@' + authorID + '>');
     message.channel.send(moveerMessage.SUPPORT_MESSAGE)
     log.info(message.guild.name + ' - Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot or check the room permissions) ')
     return;
@@ -211,7 +211,7 @@ function group (args, message) {
     usersMoved += 1
   }
   log.info(message.guild.name + ' - Group moved ' + usersMoved + ' users.')
-  message.channel.send('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of ' + '<@' + authorID + '>');
+  message.channel.send('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of' + ' <@' + authorID + '>');
   
 
 
