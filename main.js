@@ -64,6 +64,12 @@ client.on('message', message => {
     move.group(args, message)
     log.info('------------------------------------------------------')
   }
+
+  if (command === 'cmove') {
+    log.info('-------------------- Moving Cmove --------------------')
+    move.cmove(args, message)
+    log.info('------------------------------------------------------')
+  }
 });
 
 client.login(token);
