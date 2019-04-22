@@ -121,22 +121,7 @@ function mentions (args, message) {
     
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// NEW FUNCTION
 
 function group (args, message) {
 
@@ -161,7 +146,7 @@ function group (args, message) {
   }
 
   if (guildChannels === null || guildChannels.members == undefined) {
-    message.channel.send(moveerMessage.NO_VOICE_CHANNEL_NAMED_X + args[0] + ' <@' + authorID + '>');
+    message.channel.send(moveerMessage.NO_VOICE_CHANNEL_NAMED_X + 'gMoveer' + args[0] + ' <@' + authorID + '>');
     log.info(message.guild.name + ' - No voice channel called gMoveer' + args[0])
     return;
   }
@@ -213,8 +198,64 @@ function group (args, message) {
   log.info(message.guild.name + ' - Group moved ' + usersMoved + ' users.')
   message.channel.send('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of' + ' <@' + authorID + '>');
   
+}
+
+// NEW FUNCTION
+
+function cmove (args, message) {
+  const guild = message.guild
+  const userVoiceRoomID = message.member.voiceChannelID; // ID of the authors voice room
+  const authorID = message.author.id; // The author ID
+  const messageMentions = message.mentions.users.array(); // Mentions in the message
+  const textChannelName = message.channel.name
+
+  // Check for room identifer
+  if (args.length < 1 || args === undefined || args === null || args === []) {
+    message.channel.send(moveerMessage.CMOVE_MESSAGE_MISSING_ROOM_IDENTIFER + ' <@' + authorID + '>');
+    log.info(message.guild.name + ' - room identifier is missing ')
+    return;
+  }
+
+  // Check for a channel named X
+  const guildChannels = guild.channels.find(channel => channel.name.toLowerCase() === args[0].toLowerCase())
+  if (guildChannels === null || guildChannels.members == undefined) {
+    message.channel.send(moveerMessage.NO_VOICE_CHANNEL_NAMED_X + args[0] + ' <@' + authorID + '>');
+    log.info(message.guild.name + ' - No voice channel called ' + args[0])
+    return;
+  }
+
+  // Make sure the command comes from moveeradmin
+  if (textChannelName.toLowerCase() !== 'moveeradmin') {
+    message.channel.send(moveerMessage.CMOVE_OUTSIDE_MOVEERADMIN + ' <@' + authorID + '>');
+    log.info(message.guild.name + ' - Command made outside moveeradmin')
+    return;
+  }
+
+  // Make sure the user @mentions someone
+  if (args < 1 || messageMentions.length < 1) {  
+    message.channel.send(moveerMessage.MESSAGE_MISSING_MENTION + ' <@' + authorID + '>');
+    log.info(message.guild.name + ' - @Mention is missing ')
+    return;
+  }
+  
 
 
+  // All godd, lets get moving!
+  usersMoved = 0
+  for (var i = 0; i < messageMentions.length; i++) {
+    if (message.guild.members.get(messageMentions[i].id).voiceChannelID === undefined) {
+      log.info(message.guild.name + ' Not moving user, not in any voice channel!')
+      message.channel.send(messageMentions[i] + ' ' + moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL);
+    } else {
+      guild.member(messageMentions[i].id).setVoiceChannel(guildChannels);
+      usersMoved = usersMoved + 1
+    }
+  }
+  // Done moving send finish message
+  if (usersMoved > 0) {
+    log.info(message.guild.name + ' - Cmoved ' + usersMoved + ' users.')
+    message.channel.send('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of ' + ' <@' + authorID + '>');
+  }
 }
 
 
@@ -228,5 +269,6 @@ function group (args, message) {
 
 module.exports = {
     mentions,
-    group
+    group,
+    cmove
   };
