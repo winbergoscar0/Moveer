@@ -209,13 +209,14 @@ function cmove (args, message) {
   const messageMentions = message.mentions.users.array(); // Mentions in the message
   const textChannelName = message.channel.name
 
-
+  // Check for room identifer
   if (args.length < 1 || args === undefined || args === null || args === []) {
     message.channel.send(moveerMessage.CMOVE_MESSAGE_MISSING_ROOM_IDENTIFER + ' <@' + authorID + '>');
     log.info(message.guild.name + ' - room identifier is missing ')
     return;
   }
 
+  // Check for a channel named X
   const guildChannels = guild.channels.find(channel => channel.name.toLowerCase() === args[0].toLowerCase())
   if (guildChannels === null || guildChannels.members == undefined) {
     message.channel.send(moveerMessage.NO_VOICE_CHANNEL_NAMED_X + args[0] + ' <@' + authorID + '>');
@@ -223,6 +224,7 @@ function cmove (args, message) {
     return;
   }
 
+  // Make sure the command comes from moveeradmin
   if (textChannelName.toLowerCase() !== 'moveeradmin') {
     message.channel.send(moveerMessage.CMOVE_OUTSIDE_MOVEERADMIN + ' <@' + authorID + '>');
     log.info(message.guild.name + ' - Command made outside moveeradmin')
@@ -236,11 +238,11 @@ function cmove (args, message) {
     return;
   }
   
-  
+
+
+  // All godd, lets get moving!
   usersMoved = 0
-
   for (var i = 0; i < messageMentions.length; i++) {
-
     if (message.guild.members.get(messageMentions[i].id).voiceChannelID === undefined) {
       log.info(message.guild.name + ' Not moving user, not in any voice channel!')
       message.channel.send(messageMentions[i] + ' ' + moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL);
@@ -249,11 +251,11 @@ function cmove (args, message) {
       usersMoved = usersMoved + 1
     }
   }
+  // Done moving send finish message
   if (usersMoved > 0) {
     log.info(message.guild.name + ' - Cmoved ' + usersMoved + ' users.')
     message.channel.send('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of ' + ' <@' + authorID + '>');
   }
-
 }
 
 
