@@ -34,7 +34,7 @@ docker run --restart always -d -e TZ=Your/Timezone moveer
 
 3. In order to use the "admin" version of the bot you will have to create a text channel named "adminmoveer". In this textchannel the bot will move people with the command ```!move @username``` (can be more than 1 user) even if they aren't in the "Moveer" channel.
 
-4. As an admin user (Access to the textchannel "adminmoveer"), you can use the command !cmove [name of channel] @tagYourFriend @tagYourOtherFriend, which will move the tagged person('s) to the designated channel (the one mentioned after "!cmove". You can do this without being in the room yourself aswell!
+4. If you got access to the "moveeradmin" textchannel, you can use the command !cmove [name of channel] @tagYourFriend @tagYourOtherFriend, which will move the tagged person('s) to the designated channel (the one after "!cmove"). You can do this without being in the room yourself! (The voice channel can't  contain a space!)
 
 
 ### Want to try it out? Or do you need support? Join the official Moveer discord!
