@@ -146,7 +146,7 @@ function group (args, message) {
   }
 
   if (guildChannels === null || guildChannels.members == undefined) {
-    message.channel.send(moveerMessage.NO_VOICE_CHANNEL_NAMED_X + 'gMoveer' + args[0] + ' <@' + authorID + '>');
+    message.channel.send(moveerMessage.NO_VOICE_CHANNEL_NAMED_X + 'the name "gMoveer' + args[0] + '" <@' + authorID + '>');
     log.info(message.guild.name + ' - No voice channel called gMoveer' + args[0])
     return;
   }
@@ -216,13 +216,18 @@ function cmove (args, message) {
     return;
   }
 
-  // Check for a channel named X
-  const guildChannels = guild.channels.find(channel => channel.name.toLowerCase() === args[0].toLowerCase())
-  if (guildChannels === null || guildChannels.members == undefined) {
-    message.channel.send(moveerMessage.NO_VOICE_CHANNEL_NAMED_X + args[0] + ' <@' + authorID + '>');
-    log.info(message.guild.name + ' - No voice channel called ' + args[0])
-    return;
+  // Try find channel using ID
+  let guildChannels = guild.channels.find(channel => channel.id === args[0])
+  if (guildChannels === null) {
+    // Check for a channel named X since no channel could be found using ID search
+    guildChannels = guild.channels.find(channel => channel.name.toLowerCase() === args[0].toLowerCase())
+    if (guildChannels === null || guildChannels.members == undefined) {
+      message.channel.send(moveerMessage.NO_VOICE_CHANNEL_NAMED_X + 'that name or id "' + args[0] + '" <@' + authorID + '>');
+      log.info(message.guild.name + ' - No voice channel called ' + args[0])
+      return;
+    }
   }
+
 
   // Make sure the command comes from moveeradmin
   if (textChannelName.toLowerCase() !== 'moveeradmin') {
