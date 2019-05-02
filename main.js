@@ -42,8 +42,15 @@ client.on('guildCreate', (guild) => {
       }
     }
   })
-  defaultChannel.send(welcomeMessage)
-  defaultChannel.send(supportMessage)
+  try {
+    defaultChannel.send(welcomeMessage)
+    defaultChannel.send(supportMessage)
+  } 
+  catch(error) {
+    log.warn('Error sending welcome message')
+    log.warn(error)
+  }
+  
 })
 
 
