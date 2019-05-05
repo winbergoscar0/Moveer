@@ -1,6 +1,6 @@
 module.exports = {
     discordToken: 'x',
     discordPrefix: '!',
-    discordBotListToken: 'x'
+    discordBotListToken: 'x' // <---- DON'T CHANGE THIS X
   
   };
