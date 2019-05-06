@@ -85,15 +85,16 @@ client.on('message', message => {
   if (command === 'help') {
     log.info('-------------------- Help Command --------------------')
     if (args.length < 1) {
+      log.info(message.guild.name + ' - Help message')
       message.channel.send(moveerMessage.HELP_MESSAGE)
     } else if (args[0] === 'cmove') {
-      log.info('cmove')
+      log.info(message.guild.name + ' - Cmove help')
       message.channel.send(moveerMessage.HELP_CMOVE)
     } else if (args[0] === 'move') {
-      log.info('move')
+      log.info(message.guild.name + ' - Move help')
       message.channel.send(moveerMessage.HELP_MOVE)
     } else if (args[0] === 'gmove') {
-      log.info('gmove')
+      log.info(message.guild.name + ' - Gmove help')
       message.channel.send(moveerMessage.HELP_GMOVE)
     }
     
