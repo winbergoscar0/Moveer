@@ -19,7 +19,7 @@ Fragstealern is required to be inside the “Moveer” voice channel
 #### !gmove: Moves users inside  GmoveerX to you with one command
 Example command `!gmove overwatch`
 Moves users inside “GmoveerOverwatch” voice channel
-↓ For more information use the !help command inside discord or join us with the link below ↓
+##### ↓ For more information use the !help command inside discord or join us with the link below ↓
 
 
 ### Want to try it out? Got any questions or features thats missing? Join the official Moveer discord!
