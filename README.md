@@ -7,7 +7,7 @@
 
 A bot that moves users from one voice channel to another. Including locked and hidden voice channels!
 
-# We currently got 3 commands that all move users in different ways.
+## We currently got 3 commands that all move users in different ways.
 
 #### !cmove: Moves users spread across multiple voice channels to one without the need of joining a voice channel, this command listens to bots so you can automate movement! 
 Example command: `!cmove channel#1 @Fragstealern#2543 @user2`
