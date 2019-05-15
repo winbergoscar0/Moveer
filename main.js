@@ -10,6 +10,8 @@ const config = require('./config.js');
 const token = config.discordToken;
 
 const move = require('./move.js')
+const cmove = require('./cmove.js')
+const gmove = require('./gmove.js')
 const moveerMessage = require('./moveerMessage.js')
 
 if (config.discordBotListToken !== 'x') {
@@ -64,17 +66,17 @@ client.on('message', message => {
   const command = args.shift().toLowerCase();
   if (command === 'move') {
     if (message.author.bot) return; // Dont allow bot as author in this message
-    move.mentions(args, message, 'Move')
+    move.move(args, message, 'Move')
   }
 
   if (command === 'gmove') {
     if (message.author.bot) return; // Dont allow bot as author in this message
-    move.group(args, message, 'Gmove')
+    gmove.move(args, message, 'Gmove')
   }
 
   // This command allows bots
   if (command === 'cmove') {
-    move.cmove(args, message, 'Cmove')
+    cmove.move(args, message, 'Cmove')
   }
 
   if (command === 'help') {
