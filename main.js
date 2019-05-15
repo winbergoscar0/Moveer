@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-
 const opts = {
   timestampFormat:'YYYY-MM-DD HH:mm:ss'
 }
@@ -65,23 +64,17 @@ client.on('message', message => {
   const command = args.shift().toLowerCase();
   if (command === 'move') {
     if (message.author.bot) return; // Dont allow bot as author in this message
-    log.info('------------------ Moving @mentions ------------------')
-    move.mentions(args, message)
-    log.info('------------------------------------------------------')
+    move.mentions(args, message, 'Move')
   }
 
   if (command === 'gmove') {
     if (message.author.bot) return; // Dont allow bot as author in this message
-    log.info('-------------------- Moving Group --------------------')
-    move.group(args, message)
-    log.info('------------------------------------------------------')
+    move.group(args, message, 'Gmove')
   }
 
   // This command allows bots
   if (command === 'cmove') {
-    log.info('-------------------- Moving Cmove --------------------')
-    move.cmove(args, message)
-    log.info('------------------------------------------------------')
+    move.cmove(args, message, 'Cmove')
   }
 
   if (command === 'help') {
