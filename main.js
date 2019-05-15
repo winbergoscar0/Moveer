@@ -64,17 +64,20 @@ client.on('message', message => {
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   if (command === 'move') {
+    if (message.author.bot) return; // Dont allow bot as author in this message
     log.info('------------------ Moving @mentions ------------------')
     move.mentions(args, message)
     log.info('------------------------------------------------------')
   }
 
   if (command === 'gmove') {
+    if (message.author.bot) return; // Dont allow bot as author in this message
     log.info('-------------------- Moving Group --------------------')
     move.group(args, message)
     log.info('------------------------------------------------------')
   }
 
+  // This command allows bots
   if (command === 'cmove') {
     log.info('-------------------- Moving Cmove --------------------')
     move.cmove(args, message)

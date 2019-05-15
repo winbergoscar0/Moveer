@@ -5,7 +5,6 @@ const log = require('simple-node-logger').createSimpleLogger(opts);
 const moveerMessage = require('./moveerMessage.js')
 
 function mentions (args, message) {
-    if (message.author.bot) return; // Dont allow bots in this message
     const guild = message.guild; // The guild where the user sends its message
     const userVoiceRoomID = message.member.voiceChannelID; // ID of the authors voice room
     const authorID = message.author.id; // The author ID
@@ -125,8 +124,6 @@ function mentions (args, message) {
 // NEW FUNCTION
 
 function group (args, message) {
-  if (message.author.bot) return; // Dont allow bots in this message
-
   const guild = message.guild; // The guild where the user sends its message
   const userVoiceRoomID = message.member.voiceChannelID; // ID of the authors voice room
   const authorID = message.author.id; // The author ID
@@ -204,7 +201,6 @@ function group (args, message) {
 // NEW FUNCTION
 
 function cmove (args, message) {
-  // THIS COMMAND ALLOWS BOT TO BE THE AUTHOR TO AUTOMATE MOVING
   const guild = message.guild
   const userVoiceRoomID = message.member.voiceChannelID; // ID of the authors voice room
   const authorID = message.author.id; // The author ID
