@@ -1,3 +1,9 @@
+const opts = {
+  timestampFormat:'YYYY-MM-DD HH:mm:ss'
+}
+const log = require('simple-node-logger').createSimpleLogger(opts);
+
+
 const USER_MOVING_SELF = 'You need to @mention a friend you want to move, not yourself! :)'
 const MESSAGE_MISSING_MENTION = 'You need to @mention a friend!'
 const USER_NOT_IN_ANY_VOICE_CHANNEL = 'You need to join a voice channel before moving people.'
@@ -63,6 +69,19 @@ const HELP_MOVE = {
   }
 }
 
+
+function sendMessage (message, sendMessage) {
+  message.channel.send(sendMessage)
+  .catch((e) => { 
+    logger(message, 'SendMsgError', e)
+  });
+}
+
+function logger (message, command, logMessage) {
+  log.info(message.guild.name + ' (' + command + ') - ' + logMessage)
+}
+
+
 module.exports = {
   USER_MOVING_SELF,
   MESSAGE_MISSING_MENTION,
@@ -83,5 +102,7 @@ module.exports = {
   HELP_CMOVE,
   HELP_GMOVE,
   HELP_MESSAGE,
-  HELP_MOVE
+  HELP_MOVE,
+  logger,
+  sendMessage
 };

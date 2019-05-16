@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-
 const opts = {
   timestampFormat:'YYYY-MM-DD HH:mm:ss'
 }
@@ -11,6 +10,8 @@ const config = require('./config.js');
 const token = config.discordToken;
 
 const move = require('./move.js')
+const cmove = require('./cmove.js')
+const gmove = require('./gmove.js')
 const moveerMessage = require('./moveerMessage.js')
 
 if (config.discordBotListToken !== 'x') {
@@ -64,21 +65,18 @@ client.on('message', message => {
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   if (command === 'move') {
-    log.info('------------------ Moving @mentions ------------------')
-    move.mentions(args, message)
-    log.info('------------------------------------------------------')
+    if (message.author.bot) return; // Dont allow bot as author in this message
+    move.move(args, message, 'Move')
   }
 
   if (command === 'gmove') {
-    log.info('-------------------- Moving Group --------------------')
-    move.group(args, message)
-    log.info('------------------------------------------------------')
+    if (message.author.bot) return; // Dont allow bot as author in this message
+    gmove.move(args, message, 'Gmove')
   }
 
+  // This command allows bots
   if (command === 'cmove') {
-    log.info('-------------------- Moving Cmove --------------------')
-    move.cmove(args, message)
-    log.info('------------------------------------------------------')
+    cmove.move(args, message, 'Cmove')
   }
 
   if (command === 'help') {
