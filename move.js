@@ -83,8 +83,13 @@ function move (args, message, command) {
     if (textChannelName.toLowerCase() === 'moveeradmin'){
       // START - Command came from moveeradmin, don't requrire users to be inside Moveer
       for (var i = 0; i < messageMentions.length; i++) {
-        guild.member(messageMentions[i].id).setVoiceChannel(userVoiceRoomID);
-        usersMoved = usersMoved + 1
+        if(message.guild.members.get(messageMentions[i].id).voiceChannelID !== undefined) {
+          guild.member(messageMentions[i].id).setVoiceChannel(userVoiceRoomID);
+          usersMoved = usersMoved + 1
+        } else {
+          moveerMessage.logger(message, command, 'User not inside "Moveer"')
+          moveerMessage.sendMessage(message, ('Not moving: ' + messageMentions[i].username + '. Is the user in the voice channel "Moveer"?'))
+        }
       }
       if (usersMoved > 0) {
         moveerMessage.logger(message, command, ('Admin moved ' + usersMoved + ' users.'))
@@ -95,12 +100,12 @@ function move (args, message, command) {
       // START - Command not sent from moveeradmin, make sure the users are inside Moveer
       for (var i = 0; i < messageMentions.length; i++) {
         const usersInMoveeer = guildChannels.members; // The members ofthe Moveer voice room
-        if (usersInMoveeer.has(messageMentions[i].id)) {
-          guild.member(messageMentions[i].id).setVoiceChannel(userVoiceRoomID);
-          usersMoved = usersMoved + 1
-        } else {
+        if (!usersInMoveeer.has(messageMentions[i].id) || message.guild.members.get(messageMentions[i].id).voiceChannelID === undefined) {
           moveerMessage.logger(message, command, 'User not inside "Moveer"')
           moveerMessage.sendMessage(message, ('Not moving: ' + messageMentions[i].username + '. Is the user in the voice channel "Moveer"?'))
+        } else {
+          guild.member(messageMentions[i].id).setVoiceChannel(userVoiceRoomID);
+          usersMoved = usersMoved + 1
         }
       }
       if (usersMoved > 0) {
