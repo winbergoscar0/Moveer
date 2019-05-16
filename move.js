@@ -64,7 +64,7 @@ function move (args, message, command) {
 
     // Check that moveer has access to the voice room
     if (!message.member.voiceChannel.memberPermissions(guild.me).has('CONNECT')) {
-      moveerMessage.logger(message, command, ('Moveer is missing CONNECT permission to ' + args[0]))
+      moveerMessage.logger(message, command, 'Moveer is missing CONNECT permission')
       moveerMessage.sendMessage(message, (moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' <@' + authorID + '>'))
       moveerMessage.sendMessage(message, moveerMessage.SUPPORT_MESSAGE)
       return;
@@ -88,7 +88,7 @@ function move (args, message, command) {
       }
       if (usersMoved > 0) {
         moveerMessage.logger(message, command, ('Admin moved ' + usersMoved + ' users.'))
-        moveerMessage.sendMessage(message, command ('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of ' + ' <@' + authorID + '>'))
+        moveerMessage.sendMessage(message, ('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of ' + ' <@' + authorID + '>'))
       }
       // END - Command came from moveeradmin, don't require users to be inside Moveer
     } else {
