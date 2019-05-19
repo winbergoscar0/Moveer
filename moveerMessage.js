@@ -72,8 +72,8 @@ const HELP_MOVE = {
 
 function sendMessage (message, sendMessage) {
   message.channel.send(sendMessage)
-  .catch((e) => { 
-    logger(message, 'SendMsgError', e)
+  .catch((e) => {
+    logger(message, message.content, e)
   });
 }
 

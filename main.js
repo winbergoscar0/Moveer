@@ -82,13 +82,13 @@ client.on('message', message => {
   if (command === 'help') {
     if (message.author.bot) return;
     if (args.length < 1) {
-      message.channel.send(moveerMessage.HELP_MESSAGE)
+      moveerMessage.sendMessage(message, moveerMessage.HELP_MESSAGE)
     } else if (args[0] === 'cmove') {
-      message.channel.send(moveerMessage.HELP_CMOVE)
+      moveerMessage.sendMessage(message, moveerMessage.HELP_CMOVE)
     } else if (args[0] === 'move') {
-      message.channel.send(moveerMessage.HELP_MOVE)
+      moveerMessage.sendMessage(message, moveerMessage.HELP_MOVE)
     } else if (args[0] === 'gmove') {
-      message.channel.send(moveerMessage.HELP_GMOVE)
+      moveerMessage.sendMessage(message, moveerMessage.HELP_GMOVE)
     }
   }
 });
