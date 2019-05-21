@@ -44,11 +44,11 @@ client.on('guildCreate', (guild) => {
     }
   })
 
-  defaultChannel.send(sendMessage)
+  defaultChannel.send(welcomeMessage)
   .catch((e) => {
     logger(message, 'Welcome Guide', e)
     })
-  defaultChannel.send(sendMessage)
+  defaultChannel.send(supportMessage)
   .catch((e) => {
     logger(message, 'Welcome Support', e)
   })
