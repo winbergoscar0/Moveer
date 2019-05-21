@@ -29,7 +29,6 @@ if (config.discordBotListToken !== 'x') {
 
 client.on('ready', () => {
   log.info('Startup successful.')
-  console.log()
 });
 
 client.on('guildCreate', (guild) => {
