@@ -43,14 +43,15 @@ client.on('guildCreate', (guild) => {
       }
     }
   })
-  try {
-    defaultChannel.send(welcomeMessage)
-    defaultChannel.send(supportMessage)
-  } 
-  catch(error) {
-    log.warn('Error sending welcome message')
-    log.warn(error)
-  }
+
+  defaultChannel.send(sendMessage)
+  .catch((e) => {
+    logger(message, 'Welcome Guide', e)
+    })
+  defaultChannel.send(sendMessage)
+  .catch((e) => {
+    logger(message, 'Welcome Support', e)
+  })
 })
 
 client.on('guildDelete', (guild) => {
