@@ -29,7 +29,6 @@ if (config.discordBotListToken !== 'x') {
 
 client.on('ready', () => {
   log.info('Startup successful.')
-  console.log()
 });
 
 client.on('guildCreate', (guild) => {
@@ -44,14 +43,15 @@ client.on('guildCreate', (guild) => {
       }
     }
   })
-  try {
-    defaultChannel.send(welcomeMessage)
-    defaultChannel.send(supportMessage)
-  } 
-  catch(error) {
-    log.warn('Error sending welcome message')
-    log.warn(error)
-  }
+
+  defaultChannel.send(welcomeMessage)
+  .catch((e) => {
+    logger(message, 'Welcome Guide', e)
+    })
+  defaultChannel.send(supportMessage)
+  .catch((e) => {
+    logger(message, 'Welcome Support', e)
+  })
 })
 
 client.on('guildDelete', (guild) => {
