@@ -46,11 +46,11 @@ client.on('guildCreate', (guild) => {
 
   defaultChannel.send(welcomeMessage)
   .catch((e) => {
-    logger(message, 'Welcome Guide', e)
+    moveerMessage.logger(message, 'Welcome Guide', e)
     })
   defaultChannel.send(supportMessage)
   .catch((e) => {
-    logger(message, 'Welcome Support', e)
+    moveerMessage.logger(message, 'Welcome Support', e)
   })
 })
 
