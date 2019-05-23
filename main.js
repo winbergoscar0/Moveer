@@ -43,7 +43,8 @@ client.on('guildCreate', (guild) => {
       }
     }
   })
-
+  let message = []
+  message.push(guild)
   defaultChannel.send(welcomeMessage)
   .catch((e) => {
     moveerMessage.logger(message, 'Welcome Guide', e)
