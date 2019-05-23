@@ -43,15 +43,14 @@ client.on('guildCreate', (guild) => {
       }
     }
   })
-
+  let message = []
+  message.push(guild)
+  if (defaultChannel === "") {
+    log.info('Failed to find defaultchannel, not sending welcome message.')
+    return;
+  }
   defaultChannel.send(welcomeMessage)
-  .catch((e) => {
-    moveerMessage.logger(message, 'Welcome Guide', e)
-    })
   defaultChannel.send(supportMessage)
-  .catch((e) => {
-    moveerMessage.logger(message, 'Welcome Support', e)
-  })
 })
 
 client.on('guildDelete', (guild) => {
