@@ -49,8 +49,13 @@ function move (args, message, command) {
     if (message.guild.members.get(messageMentions[i].id).voiceChannelID === undefined) {
       moveerMessage.logger(message, command, 'Not moving user, not in any voice channel!')
       moveerMessage.sendMessage(message, (messageMentions[i] + ' ' + moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL))
+    } else if (message.guild.members.get(messageMentions[i].id).voiceChannelID === guildChannels.id) {
+      moveerMessage.logger(message, command, 'Not moving user, user already in the channel!')
+      moveerMessage.sendMessage(message, (messageMentions[i].username + ' ' + moveerMessage.USER_ALREADY_IN_CHANNEL))
     } else {
-      guild.member(messageMentions[i].id).setVoiceChannel(guildChannels);
+      guild.member(messageMentions[i].id).setVoiceChannel(guildChannels).catch(err => {
+        moveerMessage.logger(message, command, err)
+      })
       usersMoved = usersMoved + 1
     }
   }
