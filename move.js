@@ -55,7 +55,7 @@ function mentions (args, message) {
       if (guildChannels === null || guildChannels.members == undefined) {
         log.info(message.guild.name + ' - No voice channel called Moveer')
         message.channel.send('Hello, You need to create a voice channel named "Moveer"');
-        message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/m8gGKUF")
+        message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/dTdH3gD")
         return;
       }
     }
@@ -63,7 +63,7 @@ function mentions (args, message) {
     // Check that moveer has access to the voice room
     if (!message.member.voiceChannel.memberPermissions(guild.me).has('CONNECT')) {
       message.channel.send("Hey! I'm not allowed to move people to this room. I won't join you but discord requires me to have CONNECT privileges to move people! " + '<@' + authorID + '>');
-      message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/m8gGKUF")
+      message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/dTdH3gD")
       log.info(message.guild.name + ' - Moveer is missing CONNECT permission to ')
       return;
     }
@@ -71,7 +71,7 @@ function mentions (args, message) {
     // Check that moveer has move members role 
     if (!guild.me.hasPermission('MOVE_MEMBERS')) {
       message.channel.send("Hey! I'm not allowed to move people in this discord :/ Please kick me and reinvite me with 'Move Members' checked." + '<@' + authorID + '>');
-      message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/m8gGKUF")
+      message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/dTdH3gD")
       log.info(message.guild.name + ' - Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot) ')
       return;
     }
@@ -178,7 +178,7 @@ function group (args, message) {
   // Check that moveer has access to the voice room
   if (!message.member.voiceChannel.memberPermissions(guild.me).has('CONNECT')) {
     message.channel.send("Hey! I'm not allowed to move people to this room. I won't join you but discord requires me to have CONNECT privileges to move people! " + '<@' + authorID + '>');
-    message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/m8gGKUF")
+    message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/dTdH3gD")
     log.info(message.guild.name + ' - Moveer is missing CONNECT permission to ')
     return;
   }
@@ -186,7 +186,7 @@ function group (args, message) {
   // Check that moveer has move members role 
   if (!guild.me.hasPermission('MOVE_MEMBERS')) {
     message.channel.send("Hey! I'm not allowed to move people in this discord :/ Please kick me and reinvite me with 'Move Members' checked." + '<@' + authorID + '>');
-    message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/m8gGKUF")
+    message.channel.send("Do you need support? Join us at the official discord and tag a moderator! https://discord.gg/dTdH3gD")
     log.info(message.guild.name + ' - Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot) ')
     return;
   }
@@ -211,7 +211,7 @@ function group (args, message) {
   catch (error){
     log.error('Error moving people..')
     log.error(error)
-    message.channel.send('Something went wrong... Please contact an Moderator at https://discord.gg/m8gGKUF');
+    message.channel.send('Something went wrong... Please contact an Moderator at https://discord.gg/dTdH3gD');
   }
 
 
