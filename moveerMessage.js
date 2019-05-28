@@ -20,7 +20,7 @@ const NO_USERS_INSIDE_ROOM = "There's no users inside the voice channel"
 const CMOVE_OUTSIDE_MOVEERADMIN = 'This is an admin command, please use this inside the textchannel "moveeradmin"'
 const CMOVE_MESSAGE_MISSING_ROOM_IDENTIFER = 'You need to specify a voice channel!'
 const USER_MENTION_NOT_IN_ANY_CHANNEL = 'is not inside any voice channel!'
-const USER_ALREADY_IN_CHANNEL = ' is already inside that voice channel.'
+const USER_ALREADY_IN_CHANNEL = 'is already inside that voice channel.'
 
 const HELP_MESSAGE = 'Possible commands I can perform:\n!help move\n!help cmove\n!help gmove'
 // CMOVE
