@@ -83,9 +83,9 @@ function move (args, message, command) {
     if (textChannelName.toLowerCase() === 'moveeradmin'){
       // START - Command came from moveeradmin, don't requrire users to be inside Moveer
       for (var i = 0; i < messageMentions.length; i++) {
-        if (message.guild.members.get(messageMentions[i].id).voiceChannelID === undefined) {
-          moveerMessage.logger(message, command, 'User not inside "Moveer"')
-          moveerMessage.sendMessage(message, ('Not moving: ' + messageMentions[i].username + '. Is the user in the voice channel "Moveer"?'))
+        if (message.guild.members.get(messageMentions[i].id).voiceChannelID === undefined || message.guild.members.get(messageMentions[i].id).voiceChannelID === null) {
+          moveerMessage.logger(message, command, 'Not moving user, not in any voice channel!')
+          moveerMessage.sendMessage(message, (messageMentions[i] + ' ' + moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL))
         } else if (message.guild.members.get(messageMentions[i].id).voiceChannelID === userVoiceRoomID) {
           moveerMessage.logger(message, command, 'Not moving user, user already in the channel!')
           moveerMessage.sendMessage(message, (messageMentions[i].username + ' ' + moveerMessage.USER_ALREADY_IN_CHANNEL))
