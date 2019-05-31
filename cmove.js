@@ -46,7 +46,7 @@ function move (args, message, command) {
   // All godd, lets get moving!
   usersMoved = 0
   for (var i = 0; i < messageMentions.length; i++) {
-    if (message.guild.members.get(messageMentions[i].id).voiceChannelID === undefined) {
+    if (message.guild.members.get(messageMentions[i].id).voiceChannelID === undefined || message.guild.members.get(messageMentions[i].id).voiceChannelID === null) {
       moveerMessage.logger(message, command, 'Not moving user, not in any voice channel!')
       moveerMessage.sendMessage(message, (messageMentions[i] + ' ' + moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL))
     } else if (message.guild.members.get(messageMentions[i].id).voiceChannelID === guildChannels.id) {
