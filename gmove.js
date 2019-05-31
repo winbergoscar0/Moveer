@@ -70,8 +70,8 @@ function move (args, message, command) {
     guild.member(groupMembersToMove[i].user.id).setVoiceChannel(userVoiceRoomID);
     usersMoved += 1
   }
-  moveerMessage.logger(message, command, ('Moved ' + usersMoved + ' users.'))
-  moveerMessage.sendMessage(message, ('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of' + ' <@' + authorID + '>'))
+  moveerMessage.logger(message, command, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users")))
+  moveerMessage.sendMessage(message, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users") + ' by request of' + ' <@' + authorID + '>'))
 }
 
 module.exports = {

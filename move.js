@@ -96,8 +96,8 @@ function move (args, message, command) {
         }
       }
       if (usersMoved > 0) {
-        moveerMessage.logger(message, command, ('Admin moved ' + usersMoved + ' users.'))
-        moveerMessage.sendMessage(message, ('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of ' + ' <@' + authorID + '>'))
+        moveerMessage.logger(message, command, ('Admin moved ' + usersMoved + (usersMoved === 1 ? " user" : " users")))
+        moveerMessage.sendMessage(message, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users") + ' by request of ' + ' <@' + authorID + '>'))
       }
       // END - Command came from moveeradmin, don't require users to be inside Moveer
     } else {
@@ -113,8 +113,8 @@ function move (args, message, command) {
         }
       }
       if (usersMoved > 0) {
-        moveerMessage.logger(message, command, ('Moved ' + usersMoved + ' users.'))
-        moveerMessage.sendMessage(message, ('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of' + ' <@' + authorID + '>'))
+        moveerMessage.logger(message, command, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users")))
+        moveerMessage.sendMessage(message, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users") + ' by request of' + ' <@' + authorID + '>'))
       }
       // END - Command not sent from moveeradmin, make sure the users are inside Moveer
     } 

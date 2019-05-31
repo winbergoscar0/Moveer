@@ -61,8 +61,8 @@ function move (args, message, command) {
   }
   // Done moving send finish message
   if (usersMoved > 0) {
-    moveerMessage.logger(message, command, ('Moved ' + usersMoved + ' users.'))
-    moveerMessage.sendMessage(message, ('Moved ' + usersMoved + ' user' + (usersMoved === 1 ? "" : "s") + ' by request of ' + ' <@' + authorID + '>'))
+    moveerMessage.logger(message, command, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users")))
+    moveerMessage.sendMessage(message, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users") + ' by request of ' + ' <@' + authorID + '>'))
   }
 }
 
