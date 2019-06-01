@@ -12,6 +12,7 @@ const token = config.discordToken;
 const move = require('./move.js')
 const cmove = require('./cmove.js')
 const gmove = require('./gmove.js')
+const fmove = require('./fmove.js')
 const moveerMessage = require('./moveerMessage.js')
 
 if (config.discordBotListToken !== 'x') {
@@ -76,6 +77,11 @@ client.on('message', message => {
   // This command allows bots
   if (command === 'cmove') {
     cmove.move(args, message, 'Cmove')
+  }
+
+  // This command allows bots
+  if (command === 'fmove') {
+    fmove.move(args, message, 'Fmove')
   }
 
   if (command === 'help') {

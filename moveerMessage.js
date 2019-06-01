@@ -21,6 +21,7 @@ const CMOVE_OUTSIDE_MOVEERADMIN = 'This is an admin command, please use this ins
 const CMOVE_MESSAGE_MISSING_ROOM_IDENTIFER = 'You need to specify a voice channel!'
 const USER_MENTION_NOT_IN_ANY_CHANNEL = 'is not inside any voice channel!'
 const USER_ALREADY_IN_CHANNEL = 'is already inside that voice channel.'
+const VOICE_CHANNEL_NAMES_THE_SAME = 'Please specify one channel to move from, and one to move to'
 
 const HELP_MESSAGE = 'Possible commands I can perform:\n!help move\n!help cmove\n!help gmove'
 // CMOVE
@@ -106,5 +107,6 @@ module.exports = {
   HELP_MOVE,
   logger,
   sendMessage,
-  USER_ALREADY_IN_CHANNEL
+  USER_ALREADY_IN_CHANNEL,
+  VOICE_CHANNEL_NAMES_THE_SAME
 };
