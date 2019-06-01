@@ -2,7 +2,7 @@ const moveerMessage = require('./moveerMessage.js')
 
 function checkIfVoiceChannelExist(message, voiceChannel, channelName) {
   if (voiceChannel === null || voiceChannel.members == undefined) throw {
-    'logMessage': 'Cant find fromVoiceChannel: ' + channelName,
+    'logMessage': 'Cant find voiceChannel: ' + channelName,
     'sendMessage': moveerMessage.NO_VOICE_CHANNEL_NAMED_X + 'the name: "' + channelName + '" <@' + message.author.id + '>'
   }
 }
@@ -29,7 +29,6 @@ function checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoice
   }
 }
 
-
 function checkIfTextChannelIsMoveerAdmin(message) {
   if (message.channel.name.toLowerCase() !== 'moveeradmin') throw {
     'logMessage': 'Command made outside moveeradmin',
@@ -41,6 +40,13 @@ function checkForUserMentions(message, messageMentions) {
   if (messageMentions.length < 1) throw {
     'logMessage': '@Mention is missing',
     'sendMessage': moveerMessage.MESSAGE_MISSING_MENTION + ' <@' + message.author.id + '>'
+  }
+}
+
+function checkIfMessageContainsMentions(message) {
+  if (message.mentions.users.array().length > 0) throw {
+    'logMessage': 'User tried to mention while moving groups',
+    'sendMessage': moveerMessage.GROUP_MOVE_MESSAGE_CONTAINS_MENTIONS + ' <@' + message.author.id + '>'
   }
 }
 
@@ -72,43 +78,24 @@ function checkIfGuildHasTwoMoveerChannels(message) {
   }
 }
 
-
-
-
-
-
 function checkForConnectPerms(message) {
   if (!message.member.voiceChannel.memberPermissions(message.guild.me).has('CONNECT')) throw {
     'logMessage': 'Moveer is missing CONNECT permission',
-    'sendMessage': moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' <@' + authorID + '> \n' + moveerMessage.SUPPORT_MESSAGE
+    'sendMessage': moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' <@' + message.author.id + '> \n' + moveerMessage.SUPPORT_MESSAGE
   }
 }
 
 function checkForMovePerms(message) {
   if (!message.member.voiceChannel.memberPermissions(message.guild.me).has('CONNECT')) throw {
     'logMessage': 'Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot or check the room permissions)',
-    'sendMessage': moveerMessage.MOVEER_MISSING_MOVE_PERMISSION + ' <@' + authorID + '> \n' + moveerMessage.SUPPORT_MESSAGE
+    'sendMessage': moveerMessage.MOVEER_MISSING_MOVE_PERMISSION + ' <@' + message.author.id + '> \n' + moveerMessage.SUPPORT_MESSAGE
   }
 }
 
-
-
-
-
-
-
-
-
-
-
 // Helper functions
-
-
 function getNameOfVoiceChannel(message, voiceChannelId) {
   return message.guild.channels.get(voiceChannelId).name
 }
-
-
 
 
 module.exports = {
@@ -124,5 +111,6 @@ module.exports = {
   checkIfVoiceChannelContainsMoveer,
   checkIfGuildHasTwoMoveerChannels,
   getNameOfVoiceChannel,
-  checkIfSelfMention
+  checkIfSelfMention,
+  checkIfMessageContainsMentions
 }
