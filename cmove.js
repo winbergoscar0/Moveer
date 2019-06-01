@@ -1,59 +1,35 @@
 const moveerMessage = require('./moveerMessage.js')
+const helper = require('./helper.js')
 
-function move (args, message, command) {
-  const guild = message.guild
-  const userVoiceRoomID = message.member.voiceChannelID; // ID of the authors voice room
-  const authorID = message.author.id; // The author ID
+function move(args, message, command) {
   const messageMentions = message.mentions.users.array(); // Mentions in the message
-  const textChannelName = message.channel.name
+  const fromVoiceChannelName = args[0]
+  const fromVoiceChannel = message.guild.channels.find(channel => channel.name.toLowerCase() === args[0])
 
-  // Check for room identifer
-  if (args.length < 1 || args === undefined || args === null || args === []) {
-    moveerMessage.logger(message, command, 'room identifier is missing')
-    moveerMessage.sendMessage(message, (moveerMessage.CMOVE_MESSAGE_MISSING_ROOM_IDENTIFER + ' <@' + authorID + '>'))
-    return;
+  try {
+    helper.checkIfTextChannelIsMoveerAdmin(message)
+    helper.checkArgsLength(args, 1)
+    helper.checkForUserMentions(message, messageMentions)
+    helper.checkIfVoiceChannelExist(message, fromVoiceChannel, fromVoiceChannelName)
+  }
+  catch (err) {
+    console.log(err)
+    moveerMessage.logger(message, command, err.logMessage)
+    moveerMessage.sendMessage(message, err.sendMessage)
+    return
   }
 
-  // Try find channel using ID
-  let guildChannels = guild.channels.find(channel => channel.id === args[0])
-  if (guildChannels === null) {
-    // Check for a channel named X since no channel could be found using ID search
-    guildChannels = guild.channels.find(channel => channel.name.toLowerCase() === args[0].toLowerCase())
-    if (guildChannels === null || guildChannels.members == undefined) {
-      moveerMessage.logger(message, command, ('No voice channel called ' + args[0]))
-      moveerMessage.sendMessage(message, (moveerMessage.NO_VOICE_CHANNEL_NAMED_X + 'that name or id "' + args[0] + '" <@' + authorID + '>'))
-      return;
-    }
-  }
-
-
-  // Make sure the command comes from moveeradmin
-  if (textChannelName.toLowerCase() !== 'moveeradmin') {
-    moveerMessage.logger(message, command, 'Command made outside moveeradmin')
-    moveerMessage.sendMessage(message, (moveerMessage.CMOVE_OUTSIDE_MOVEERADMIN + ' <@' + authorID + '>'))
-    return;
-  }
-
-  // Make sure the user @mentions someone
-  if (args < 1 || messageMentions.length < 1) {
-    moveerMessage.logger(message, command, '@Mention is missing')
-    moveerMessage.sendMessage(message, (moveerMessage.MESSAGE_MISSING_MENTION + ' <@' + authorID + '>'))
-    return;
-  }
-  
-
-
-  // All godd, lets get moving!
+  // No errors in the message, lets get moving!
   usersMoved = 0
   for (var i = 0; i < messageMentions.length; i++) {
     if (message.guild.members.get(messageMentions[i].id).voiceChannelID === undefined || message.guild.members.get(messageMentions[i].id).voiceChannelID === null) {
       moveerMessage.logger(message, command, 'Not moving user, not in any voice channel!')
       moveerMessage.sendMessage(message, (messageMentions[i] + ' ' + moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL))
-    } else if (message.guild.members.get(messageMentions[i].id).voiceChannelID === guildChannels.id) {
+    } else if (message.guild.members.get(messageMentions[i].id).voiceChannelID === fromVoiceChannel.id) {
       moveerMessage.logger(message, command, 'Not moving user, user already in the channel!')
       moveerMessage.sendMessage(message, (messageMentions[i].username + ' ' + moveerMessage.USER_ALREADY_IN_CHANNEL))
     } else {
-      guild.member(messageMentions[i].id).setVoiceChannel(guildChannels).catch(err => {
+      message.guild.member(messageMentions[i].id).setVoiceChannel(fromVoiceChannel).catch(err => {
         moveerMessage.logger(message, command, err)
       })
       usersMoved = usersMoved + 1
@@ -62,7 +38,7 @@ function move (args, message, command) {
   // Done moving send finish message
   if (usersMoved > 0) {
     moveerMessage.logger(message, command, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users")))
-    moveerMessage.sendMessage(message, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users") + ' by request of ' + ' <@' + authorID + '>'))
+    moveerMessage.sendMessage(message, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users") + ' by request of ' + ' <@' + message.author.id + '>'))
   }
 }
 

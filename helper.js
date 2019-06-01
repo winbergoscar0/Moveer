@@ -104,7 +104,7 @@ function checkForMovePerms(message) {
 // Helper functions
 
 
-function getNameOfVoiceChannel (message, voiceChannelId) {
+function getNameOfVoiceChannel(message, voiceChannelId) {
   return message.guild.channels.get(voiceChannelId).name
 }
 
