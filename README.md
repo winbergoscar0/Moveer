@@ -10,15 +10,19 @@ A bot that moves users from one voice channel to another. Including locked and h
 ## We currently got 3 commands that all move users in different ways.
 
 #### !cmove: Moves users spread across multiple voice channels to one without the need of joining a voice channel, this command listens to bots so you can automate movement! 
-Example command: `!cmove channel#1 @Fragstealern#2543 @user2`
+Example command: `!cmove channel#1 @Fragstealern#2543 @user2`.
 
 #### !move: Moves @mentions of users inside the Moveer voice channel to you
 Example command `!move @Fragstealern#2453`
-Fragstealern is required to be inside the “Moveer” voice channel
+Fragstealern is required to be inside the “Moveer” voice channel.
 
 #### !gmove: Moves users inside  GmoveerX to you with one command
 Example command `!gmove overwatch`
-Moves users inside “GmoveerOverwatch” voice channel
+Moves users inside “gMoveerOverwatch” voice channel to you.
+
+### !fmove: Moves users inside one voicechannel to another
+Example command `!fmove overwatch pubg`
+Moves users inside overwatch to pubg.
 ##### ↓ For more information use the !help command inside discord or join us with the link below ↓
 
 
