@@ -94,6 +94,8 @@ client.on('message', message => {
       moveerMessage.sendMessage(message, moveerMessage.HELP_MOVE)
     } else if (args[0] === 'gmove') {
       moveerMessage.sendMessage(message, moveerMessage.HELP_GMOVE)
+    } else if (args[0] === 'fmove') {
+      moveerMessage.sendMessage(message, moveerMessage.HELP_FMOVE)
     }
   }
 });

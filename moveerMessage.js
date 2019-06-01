@@ -23,7 +23,7 @@ const USER_MENTION_NOT_IN_ANY_CHANNEL = 'is not inside any voice channel!'
 const USER_ALREADY_IN_CHANNEL = 'is already inside that voice channel.'
 const VOICE_CHANNEL_NAMES_THE_SAME = 'Please specify one channel to move from, and one to move to'
 
-const HELP_MESSAGE = 'Possible commands I can perform:\n!help move\n!help cmove\n!help gmove'
+const HELP_MESSAGE = 'Possible commands I can perform:\n!help move\n!help cmove\n!help gmove\n!help fmove'
 // CMOVE
 const HELP_CMOVE = {
   "embed": {
@@ -70,7 +70,21 @@ const HELP_MOVE = {
     ]
   }
 }
-
+// FMOVE
+const HELP_FMOVE = {
+  "embed": {
+    "color": 2387002,
+    "footer": {
+      "text": "Support server: https://discord.gg/dTdH3gD"
+    },
+    "fields": [
+      {
+        "name": "!fmove",
+        "value": "1. Tell users you want to move to join voice channel A\n2. Write `!fmove A B` where B is the voice channel you want to move them\n \nThis command requires to be sent from the text channel 'moveeradmin'.\n "     
+      }
+    ]
+  }
+}
 
 function sendMessage (message, sendMessage) {
   message.channel.send(sendMessage)
@@ -105,6 +119,7 @@ module.exports = {
   HELP_GMOVE,
   HELP_MESSAGE,
   HELP_MOVE,
+  HELP_FMOVE,
   logger,
   sendMessage,
   USER_ALREADY_IN_CHANNEL,
