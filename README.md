@@ -29,7 +29,7 @@ Moves users inside overwatch to pubg.
 ### Want to try it out? Got any questions or features thats missing? Join the official Moveer discord!
 Join us with the following link https://discord.gg/dTdH3gD and tag a moderator!
 
-### Invite Moveer to your discord using the link below!
+### Invite Moveer to your discord using the link below! Happy Moving! :)
 Invite the bot to your server using this [LINK](https://discordapp.com/api/oauth2/authorize?client_id=400724460203802624&permissions=16777216&scope=bot)
 
 The bot ONLY requires "Use members" when inviting. Inside your server you can then specify which rooms Moveer can read messages from!
