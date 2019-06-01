@@ -97,6 +97,19 @@ function getNameOfVoiceChannel(message, voiceChannelId) {
   return message.guild.channels.get(voiceChannelId).name
 }
 
+function moveUsers(message, command, usersToMove, toVoiceChannelId) {
+  let usersMoved = 0
+  for (var i = 0; i < usersToMove.length; i++) {
+    message.guild.member(usersToMove[i].user.id).setVoiceChannel(toVoiceChannelId)
+      .catch(err => {
+        console.log(err)
+        moveerMessage.logger(message, command, err)
+      })
+    usersMoved += 1
+  }
+  moveerMessage.logger(message, command, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users")))
+  moveerMessage.sendMessage(message, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users") + ' by request of' + ' <@' + message.author.id + '>'))
+}
 
 module.exports = {
   checkIfTextChannelIsMoveerAdmin,
@@ -112,5 +125,6 @@ module.exports = {
   checkIfGuildHasTwoMoveerChannels,
   getNameOfVoiceChannel,
   checkIfSelfMention,
-  checkIfMessageContainsMentions
+  checkIfMessageContainsMentions,
+  moveUsers
 }

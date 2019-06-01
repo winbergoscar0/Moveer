@@ -34,13 +34,7 @@ function move(args, message, command) {
   }
 
   // No errors in the message, lets get moving!
-  usersMoved = 0
-  for (var i = 0; i < fromVoiceChannel.members.array().length; i++) {
-    message.guild.member(fromVoiceChannel.members.array()[i].user.id).setVoiceChannel(authorVoiceChannelId);
-    usersMoved += 1
-  }
-  moveerMessage.logger(message, command, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users")))
-  moveerMessage.sendMessage(message, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users") + ' by request of' + ' <@' + message.author.id + '>'))
+  helper.moveUsers(message, command, fromVoiceChannel.members.array(), authorVoiceChannelId)
 }
 
 module.exports = {
