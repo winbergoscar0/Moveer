@@ -3,14 +3,14 @@ const helper = require('./helper.js')
 
 function move(args, message, command) {
   const messageMentions = message.mentions.users.array(); // Mentions in the message
-  const fromVoiceChannelName = args[0]
-  const fromVoiceChannel = message.guild.channels.find(channel => channel.name.toLowerCase() === args[0])
+  const toVoiceChannelName = args[0]
+  const toVoiceChannel = message.guild.channels.find(channel => channel.name.toLowerCase() === args[0])
 
   try {
     helper.checkIfTextChannelIsMoveerAdmin(message)
     helper.checkArgsLength(args, 1)
     helper.checkForUserMentions(message, messageMentions)
-    helper.checkIfVoiceChannelExist(message, fromVoiceChannel, fromVoiceChannelName)
+    helper.checkIfVoiceChannelExist(message, toVoiceChannel, toVoiceChannelName)
   }
   catch (err) {
     console.log(err)
@@ -25,11 +25,11 @@ function move(args, message, command) {
     if (message.guild.members.get(messageMentions[i].id).voiceChannelID === undefined || message.guild.members.get(messageMentions[i].id).voiceChannelID === null) {
       moveerMessage.logger(message, command, 'Not moving user, not in any voice channel!')
       moveerMessage.sendMessage(message, (messageMentions[i] + ' ' + moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL))
-    } else if (message.guild.members.get(messageMentions[i].id).voiceChannelID === fromVoiceChannel.id) {
+    } else if (message.guild.members.get(messageMentions[i].id).voiceChannelID === toVoiceChannel.id) {
       moveerMessage.logger(message, command, 'Not moving user, user already in the channel!')
       moveerMessage.sendMessage(message, (messageMentions[i].username + ' ' + moveerMessage.USER_ALREADY_IN_CHANNEL))
     } else {
-      message.guild.member(messageMentions[i].id).setVoiceChannel(fromVoiceChannel).catch(err => {
+      message.guild.member(messageMentions[i].id).setVoiceChannel(toVoiceChannel).catch(err => {
         moveerMessage.logger(message, command, err)
       })
       usersMoved = usersMoved + 1
