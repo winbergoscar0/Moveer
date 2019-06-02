@@ -31,7 +31,7 @@ function move(args, message, command) {
 
   // No errors in the message, lets get moving!
   const userIdsToMove = messageMentions.map(({ id }) => id );
-  if (messageMentions.length > 0) helper.moveUsers(message, command, userIdsToMove, message.member.voiceChannelID)
+  if (userIdsToMove.length > 0) helper.moveUsers(message, command, userIdsToMove, message.member.voiceChannelID)
 }
 
 module.exports = {

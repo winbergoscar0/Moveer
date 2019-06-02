@@ -89,9 +89,9 @@ function checkIfMentionsInsideVoiceChannel(message, command, messageMentions) {
   return messageMentions
 }
 
-function checkIfUsersAlreadyInChannel(message, command, messageMentions, toVoiceChannel) {
+function checkIfUsersAlreadyInChannel(message, command, messageMentions, toVoiceChannelId) {
   for (var i = 0; i < messageMentions.length; i++) {
-    if (message.guild.members.get(messageMentions[i].id).voiceChannelID === toVoiceChannel.id) {
+    if (message.guild.members.get(messageMentions[i].id).voiceChannelID === toVoiceChannelId) {
       moveerMessage.logger(message, command, 'Not moving user, user already in the channel!')
       moveerMessage.sendMessage(message, (messageMentions[i].username + ' ' + moveerMessage.USER_ALREADY_IN_CHANNEL))
       messageMentions.splice(i, 1)
