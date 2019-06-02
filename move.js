@@ -3,8 +3,9 @@ const helper = require('./helper.js')
 
 function move(args, message, command) {
   let messageMentions = message.mentions.users.array(); // Mentions in the message
-  const fromVoiceChannel = message.guild.channels.find(channel => channel.name.toLowerCase() === 'moveer')
+  let fromVoiceChannel
   try {
+    fromVoiceChannel = helper.getChannelByName(message, 'moveer')
     helper.checkIfAuthorInsideAVoiceChannel(message, message.member.voiceChannelID)
     helper.checkArgsLength(args, 1)
     helper.checkForUserMentions(message, messageMentions)

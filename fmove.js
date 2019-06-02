@@ -4,10 +4,12 @@ const helper = require('./helper.js')
 function move(args, message, command) {
   const fromVoiceChannelName = args[0]
   const toVoiceChannelName = args[1]
-  const fromVoiceChannel = message.guild.channels.find(channel => channel.name.toLowerCase() === fromVoiceChannelName)
-  const toVoiceChannel = message.guild.channels.find(channel => channel.name.toLowerCase() === toVoiceChannelName)
+  let fromVoiceChannel
+  let toVoiceChannel
 
   try {
+    fromVoiceChannel = helper.getChannelByName(message, fromVoiceChannelName)
+    toVoiceChannel = helper.getChannelByName(message, toVoiceChannelName)
     helper.checkIfTextChannelIsMoveerAdmin(message)
     helper.checkArgsLength(args, 2)
     helper.checkIfVoiceChannelExist(message, fromVoiceChannel, fromVoiceChannelName)

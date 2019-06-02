@@ -119,6 +119,14 @@ function getNameOfVoiceChannel(message, voiceChannelId) {
   return message.guild.channels.get(voiceChannelId).name
 }
 
+function getChannelByName(message, findByName) {
+  let voiceChannel = message.guild.channels.find(channel => channel.id === findByName)
+  if (voiceChannel === null) {
+    voiceChannel = message.guild.channels.find(channel => channel.name.toLowerCase() === findByName.toLowerCase())
+  }
+  return voiceChannel
+}
+
 function moveUsers(message, command, usersToMove, toVoiceChannelId) {
   let usersMoved = 0
   for (var i = 0; i < usersToMove.length; i++) {
@@ -150,5 +158,6 @@ module.exports = {
   checkIfMessageContainsMentions,
   moveUsers,
   checkIfMentionsInsideVoiceChannel,
-  checkIfUsersAlreadyInChannel
+  checkIfUsersAlreadyInChannel,
+  getChannelByName
 }
