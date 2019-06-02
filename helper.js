@@ -100,9 +100,6 @@ function checkIfUsersAlreadyInChannel(message, command, messageMentions, toVoice
   return messageMentions
 }
 
-
-
-
 function checkForConnectPerms(message) {
   if (!message.member.voiceChannel.memberPermissions(message.guild.me).has('CONNECT')) throw {
     'logMessage': 'Moveer is missing CONNECT permission',
