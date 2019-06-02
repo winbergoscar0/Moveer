@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const opts = {
-  timestampFormat:'YYYY-MM-DD HH:mm:ss'
+  timestampFormat: 'YYYY-MM-DD HH:mm:ss'
 }
 const log = require('simple-node-logger').createSimpleLogger(opts);
 
@@ -24,7 +24,7 @@ if (config.discordBotListToken !== 'x') {
   })
 
   dbl.on('error', e => {
-    log.warn (`DBL Error!:  ${e}`)
+    log.warn(`DBL Error!:  ${e}`)
   })
 }
 
@@ -33,29 +33,26 @@ client.on('ready', () => {
 });
 
 client.on('guildCreate', (guild) => {
-  const welcomeMessage = 'Hello and thanks for inviting me! If you need help or got any questions, please head over to the official Moveer discord at https://discord.gg/dTdH3gD'
+  const welcomeMessage = 'Hello and thanks for inviting me! If you need help or got any questions, please head over to the official Moveer discord at https://discord.gg/dTdH3gD\n'
   const supportMessage = 'I got multiple commands, but to get started with !move, please follow the guide below\n 1. Create a voice channel and name it "Moveer".\n 2. Ask your friends to join "Moveer"\n 3. Join any voice channel except "Moveer"\n 4. Write `!move @friend1 @friend2`\n 5. Thats it! @friend1 & @friend2 should be moved to your voice channel.\n \n We got more commands! Write !help to see them all.'
-  log.info('Joined a new server: ' + guild.name)
+  log.info('Joined server: ' + guild.name)
   let defaultChannel = "";
   guild.channels.forEach((channel) => {
-    if(channel.type == "text" && defaultChannel == "") {
-      if(channel.permissionsFor(guild.me).has("SEND_MESSAGES")) {
+    if (channel.type == "text" && defaultChannel == "") {
+      if (channel.permissionsFor(guild.me).has("SEND_MESSAGES") && channel.permissionsFor(guild.me).has("READ_MESSAGES")) {
         defaultChannel = channel;
       }
     }
   })
-  let message = []
-  message.push(guild)
   if (defaultChannel === "") {
     log.info('Failed to find defaultchannel, not sending welcome message.')
     return;
   }
-  defaultChannel.send(welcomeMessage)
-  defaultChannel.send(supportMessage)
+  defaultChannel.send(welcomeMessage + supportMessage)
 })
 
 client.on('guildDelete', (guild) => {
-  log.info('Leaving ' + guild.name)
+  log.info('Leaving server: ' + guild.name)
 })
 
 

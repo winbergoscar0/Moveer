@@ -1,8 +1,8 @@
 const opts = {
-  timestampFormat:'YYYY-MM-DD HH:mm:ss'
+  timestampFormat: 'YYYY-MM-DD HH:mm:ss'
 }
 const log = require('simple-node-logger').createSimpleLogger(opts);
-
+const config = require('./config.js')
 
 const USER_MOVING_SELF = 'You need to @mention a friend you want to move, not yourself! :)'
 const MESSAGE_MISSING_MENTION = 'You need to @mention a friend!'
@@ -21,7 +21,7 @@ const CMOVE_OUTSIDE_MOVEERADMIN = 'This is an admin command, please use this ins
 const CMOVE_MESSAGE_MISSING_ROOM_IDENTIFER = 'You need to specify a voice channel!'
 const USER_MENTION_NOT_IN_ANY_CHANNEL = 'is not inside any voice channel!'
 const USER_ALREADY_IN_CHANNEL = 'is already inside that voice channel.'
-const VOICE_CHANNEL_NAMES_THE_SAME = 'Please specify one channel to move from, and one to move to'
+const VOICE_CHANNEL_NAMES_THE_SAME = "Please specify one channel to move from, and one to move to. It can't be the same"
 
 const HELP_MESSAGE = 'Possible commands I can perform:\n!help move\n!help cmove\n!help gmove\n!help fmove'
 // CMOVE
@@ -35,7 +35,7 @@ const HELP_CMOVE = {
       {
         "name": "!cmove",
         "value": "1. Create a text channel named 'moveeradmin'\n2. Tell your friends to join any voice channel.\n3. Write `!cmove <voicechannel name or id> @user1 @user2`\n \nThis command doesn't require the author to be inside a voice channel. All `!cmove` commands has to be sent inside 'moveeradmin' since this is an admin only command.\nExample usage:\n`!cmove Channel1 Fragstealern#2543`\n`!cmove 569909202437406750 Fragstealern#2543`\n "
-        
+
       }
     ]
   }
@@ -65,7 +65,7 @@ const HELP_MOVE = {
     "fields": [
       {
         "name": "!move",
-        "value": "1. Create a voice channel named 'Moveer'\n2. Join a voice channel (Not 'Moveer')\n3. Tell users you want to move to join the channel 'Moveer'\n4. Write `!move @user1 @user2`\n \nThis command also contains an admin version that requires a text channel named 'moveeradmin'. `!move` commands sent inside this channel removes the requirement of @user1 & @user2 to join the 'Moveer' channel.\nThe author of the command can move people from any channel to any other channel.\n "     
+        "value": "1. Create a voice channel named 'Moveer'\n2. Join a voice channel (Not 'Moveer')\n3. Tell users you want to move to join the channel 'Moveer'\n4. Write `!move @user1 @user2`\n \nThis command also contains an admin version that requires a text channel named 'moveeradmin'. `!move` commands sent inside this channel removes the requirement of @user1 & @user2 to join the 'Moveer' channel.\nThe author of the command can move people from any channel to any other channel.\n "
       }
     ]
   }
@@ -80,20 +80,26 @@ const HELP_FMOVE = {
     "fields": [
       {
         "name": "!fmove",
-        "value": "1. Tell users you want to move to join voice channel A\n2. Write `!fmove A B` where B is the voice channel you want to move them\n \nThis command requires to be sent from the text channel 'moveeradmin'.\n "     
+        "value": "1. Tell users you want to move to join voice channel A\n2. Write `!fmove A B` where B is the voice channel you want to move them\n \nThis command requires to be sent from the text channel 'moveeradmin'.\n "
       }
     ]
   }
 }
 
-function sendMessage (message, sendMessage) {
+function sendMessage(message, sendMessage) {
   message.channel.send(sendMessage)
-  .catch((e) => {
-    logger(message, message.content, e)
-  });
+    .catch((e) => {
+      logger(message, message.content, e)
+      message.channel.send("You've made Moveer go 💥. If this keeps happening please contact our moderators here: https://discord.gg/dTdH3gD")
+      if (config.discordBotListToken !== '') {
+        const Discord = require("discord.js");
+        const hook = new Discord.WebhookClient(config.discordHookIdentifier, config.discordHookToken);
+        hook.send('New Moveer error reported. Check the logs for information.\nCommand: ' + message.content + '\nInside server: ' + message.guild.name + '\n @everyone');
+      }
+    });
 }
 
-function logger (message, command, logMessage) {
+function logger(message, command, logMessage) {
   log.info(message.guild.name + ' (' + command + ') - ' + logMessage)
 }
 
