@@ -4,12 +4,12 @@ const helper = require('./helper.js')
 function move(args, message, command) {
   let messageMentions = message.mentions.users.array(); // Mentions in the message
   const toVoiceChannelName = args[0]
-  const toVoiceChannel = message.guild.channels.find(channel => channel.name.toLowerCase() === args[0].toLowerCase())
-
+  
   try {
     helper.checkIfTextChannelIsMoveerAdmin(message)
     helper.checkArgsLength(args, 1)
     helper.checkForUserMentions(message, messageMentions)
+    const toVoiceChannel = message.guild.channels.find(channel => channel.name.toLowerCase() === args[0].toLowerCase())
     helper.checkIfVoiceChannelExist(message, toVoiceChannel, toVoiceChannelName)
     messageMentions = helper.checkIfMentionsInsideVoiceChannel(message, command, messageMentions)
     messageMentions = helper.checkIfUsersAlreadyInChannel(message, command, messageMentions, toVoiceChannel.id)
