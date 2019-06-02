@@ -84,7 +84,7 @@ function checkIfMentionsInsideVoiceChannel(message, command, messageMentions) {
       moveerMessage.logger(message, command, 'Not moving user, not in any voice channel!')
       moveerMessage.sendMessage(message, (messageMentions[i] + ' ' + moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL))
       messageMentions.splice(i, 1)
-    } 
+    }
   }
   return messageMentions
 }
@@ -128,7 +128,7 @@ function moveUsers(message, command, usersToMove, toVoiceChannelId) {
     message.guild.member(usersToMove[i]).setVoiceChannel(toVoiceChannelId)
       .catch(err => {
         console.log(err)
-        moveerMessage.logger(message, command, err)
+        moveerMessage.logger(message, command, 'Got above error when moving people...')
       })
     usersMoved += 1
   }
