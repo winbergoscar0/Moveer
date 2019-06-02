@@ -4,7 +4,7 @@ const helper = require('./helper.js')
 function move(args, message, command) {
   if (args.length < 1 || args === undefined || args === null || args === []) {
     moveerMessage.logger(message, command, 'room identifier is missing')
-    moveerMessage.sendMessage(message, (moveerMessage.MESSAGE_MISSING_ROOM_IDENTIFER + ' <@' + authorID + '>'))
+    moveerMessage.sendMessage(message, (moveerMessage.MESSAGE_MISSING_ROOM_IDENTIFER + ' <@' + message.author.id + '>'))
     return
   }
   const authorVoiceChannelId = message.member.voiceChannelID; // ID of the authors voice room
