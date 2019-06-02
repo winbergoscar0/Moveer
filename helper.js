@@ -78,6 +78,31 @@ function checkIfGuildHasTwoMoveerChannels(message) {
   }
 }
 
+function checkIfMentionsInsideVoiceChannel(message, command, messageMentions) {
+  for (var i = 0; i < messageMentions.length; i++) {
+    if (message.guild.members.get(messageMentions[i].id).voiceChannelID === undefined || message.guild.members.get(messageMentions[i].id).voiceChannelID === null) {
+      moveerMessage.logger(message, command, 'Not moving user, not in any voice channel!')
+      moveerMessage.sendMessage(message, (messageMentions[i] + ' ' + moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL))
+      messageMentions.splice(i, 1)
+    } 
+  }
+  return messageMentions
+}
+
+function checkIfUsersAlreadyInChannel(message, command, messageMentions, toVoiceChannel) {
+  for (var i = 0; i < messageMentions.length; i++) {
+    if (message.guild.members.get(messageMentions[i].id).voiceChannelID === toVoiceChannel.id) {
+      moveerMessage.logger(message, command, 'Not moving user, user already in the channel!')
+      moveerMessage.sendMessage(message, (messageMentions[i].username + ' ' + moveerMessage.USER_ALREADY_IN_CHANNEL))
+      messageMentions.splice(i, 1)
+    }
+  }
+  return messageMentions
+}
+
+
+
+
 function checkForConnectPerms(message) {
   if (!message.member.voiceChannel.memberPermissions(message.guild.me).has('CONNECT')) throw {
     'logMessage': 'Moveer is missing CONNECT permission',
@@ -100,7 +125,7 @@ function getNameOfVoiceChannel(message, voiceChannelId) {
 function moveUsers(message, command, usersToMove, toVoiceChannelId) {
   let usersMoved = 0
   for (var i = 0; i < usersToMove.length; i++) {
-    message.guild.member(usersToMove[i].user.id).setVoiceChannel(toVoiceChannelId)
+    message.guild.member(usersToMove[i]).setVoiceChannel(toVoiceChannelId)
       .catch(err => {
         console.log(err)
         moveerMessage.logger(message, command, err)
@@ -126,5 +151,7 @@ module.exports = {
   getNameOfVoiceChannel,
   checkIfSelfMention,
   checkIfMessageContainsMentions,
-  moveUsers
+  moveUsers,
+  checkIfMentionsInsideVoiceChannel,
+  checkIfUsersAlreadyInChannel
 }
