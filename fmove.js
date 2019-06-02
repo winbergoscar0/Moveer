@@ -8,13 +8,14 @@ function move(args, message, command) {
   let toVoiceChannel
 
   try {
+    helper.checkIfTextChannelIsMoveerAdmin(message)
+    helper.checkIfMessageContainsMentions(message)
+    helper.checkIfArgsTheSame(message, args)
+    helper.checkArgsLength(args, 2)
     fromVoiceChannel = helper.getChannelByName(message, fromVoiceChannelName)
     toVoiceChannel = helper.getChannelByName(message, toVoiceChannelName)
-    helper.checkIfTextChannelIsMoveerAdmin(message)
-    helper.checkArgsLength(args, 2)
     helper.checkIfVoiceChannelExist(message, fromVoiceChannel, fromVoiceChannelName)
     helper.checkIfVoiceChannelExist(message, toVoiceChannel, toVoiceChannelName)
-    helper.checkIfArgsTheSame(message, args)
     helper.checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
   }
   catch (err) {

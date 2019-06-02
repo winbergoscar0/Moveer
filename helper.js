@@ -46,7 +46,7 @@ function checkForUserMentions(message, messageMentions) {
 function checkIfMessageContainsMentions(message) {
   if (message.mentions.users.array().length > 0) throw {
     'logMessage': 'User tried to mention while moving groups',
-    'sendMessage': moveerMessage.GROUP_MOVE_MESSAGE_CONTAINS_MENTIONS + ' <@' + message.author.id + '>'
+    'sendMessage': moveerMessage.MOVE_MESSAGE_CONTAINS_MENTIONS + ' <@' + message.author.id + '>'
   }
 }
 
