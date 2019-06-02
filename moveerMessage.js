@@ -22,6 +22,7 @@ const CMOVE_MESSAGE_MISSING_ROOM_IDENTIFER = 'You need to specify a voice channe
 const USER_MENTION_NOT_IN_ANY_CHANNEL = 'is not inside any voice channel!'
 const USER_ALREADY_IN_CHANNEL = 'is already inside that voice channel.'
 const VOICE_CHANNEL_NAMES_THE_SAME = "Please specify one channel to move from, and one to move to. It can't be the same"
+const MISSING_FNUTTS_IN_ARGS = 'There is either too many or too few quotation marks (")'
 
 const HELP_MESSAGE = 'Possible commands I can perform:\n!help move\n!help cmove\n!help gmove\n!help fmove'
 // CMOVE
@@ -103,7 +104,6 @@ function logger(message, command, logMessage) {
   log.info(message.guild.name + ' (' + command + ') - ' + logMessage)
 }
 
-
 module.exports = {
   USER_MOVING_SELF,
   MESSAGE_MISSING_MENTION,
@@ -129,5 +129,6 @@ module.exports = {
   logger,
   sendMessage,
   USER_ALREADY_IN_CHANNEL,
-  VOICE_CHANNEL_NAMES_THE_SAME
+  VOICE_CHANNEL_NAMES_THE_SAME,
+  MISSING_FNUTTS_IN_ARGS
 };

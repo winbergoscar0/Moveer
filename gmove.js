@@ -8,12 +8,14 @@ function move(args, message, command) {
     return
   }
 
-  const fromVoiceChannel = message.guild.channels.find(channel => channel.name.toLowerCase() === (message.channel.name.toLowerCase() !== 'moveeradmin'
-    ? 'gmoveer' + args[0].toLowerCase()
-    : args[0].toLowerCase()))
-  const fromVoiceChannelName = message.channel.name.toLowerCase() !== 'moveeradmin'
-    ? 'gMoveer' + args[0].toLowerCase()
-    : args[0].toLowerCase()
+  let fromVoiceChannelName = args[0]
+  if ((new String(args).includes('"'))) {
+    const names = helper.getChannelWithSpacesName(message, command, args)
+    fromVoiceChannelName = names[0]
+  }
+  if (message.channel.name.toLowerCase() !== 'moveeradmin') fromVoiceChannelName = 'gMoveer' + fromVoiceChannelName
+
+  const fromVoiceChannel = helper.getChannelByName(message, fromVoiceChannelName)
 
   try {
     helper.checkIfAuthorInsideAVoiceChannel(message, message.member.voiceChannelID)

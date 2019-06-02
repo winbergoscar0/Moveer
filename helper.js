@@ -141,6 +141,41 @@ function moveUsers(message, command, usersToMove, toVoiceChannelId) {
   moveerMessage.sendMessage(message, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users") + ' by request of' + ' <@' + message.author.id + '>'))
 }
 
+function getChannelWithSpacesName(message, command, args) {
+  let string = new String(args)
+  let fnuttCounter = (string[0] === '"' ? 0 : 2)
+  let testFrom = ''
+  let testTo = ''
+
+  for (i = (string[0] === '"' ? 0 : 0 + args[0].length); i < string.length; i++) {
+
+    if (string[i] === '"') {
+      fnuttCounter += 1
+    } else if (string[i] !== ' ') {
+      if (fnuttCounter === 2 && string[i] === ',') {
+        //skip
+      } else {
+        if (fnuttCounter < 2) {
+          testFrom = testFrom + (string[i] === ',' ? ' ' : string[i])
+        } else {
+          testTo = testTo + (string[i] === ',' ? ' ' : string[i])
+        }
+      }
+
+    }
+  }
+
+  if (parseFloat(fnuttCounter) ? !(fnuttCounter % 2) : void 0) {
+    fromVoiceChannelName = (string[0] === '"' ? testFrom : args[0])
+    toVoiceChannelName = testTo
+  } else {
+    moveerMessage.logger(message, command, moveerMessage.MISSING_FNUTTS_IN_ARGS)
+    moveerMessage.sendMessage(message, moveerMessage.MISSING_FNUTTS_IN_ARGS)
+    return
+  }
+  return [fromVoiceChannelName, toVoiceChannelName]
+}
+
 module.exports = {
   checkIfTextChannelIsMoveerAdmin,
   checkIfVoiceChannelExist,
@@ -159,5 +194,6 @@ module.exports = {
   moveUsers,
   checkIfMentionsInsideVoiceChannel,
   checkIfUsersAlreadyInChannel,
-  getChannelByName
+  getChannelByName,
+  getChannelWithSpacesName
 }
