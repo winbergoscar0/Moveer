@@ -9,7 +9,7 @@ function move(args, message, command) {
     helper.checkArgsLength(args, 1)
     helper.checkForUserMentions(message, messageMentions)
     helper.checkIfSelfMention(message)
-    if (message.channel.name.toLowerCase() !== 'moveeradmin') { 
+    if (message.channel.name.toLowerCase() !== 'moveeradmin') {
       const authorVoiceChannelName = helper.getNameOfVoiceChannel(message, message.member.voiceChannelID)
       helper.checkIfVoiceChannelExist(message, fromVoiceChannel, 'Moveer')
       const fromVoiceChannelName = helper.getNameOfVoiceChannel(message, fromVoiceChannel.id)
@@ -30,7 +30,7 @@ function move(args, message, command) {
   }
 
   // No errors in the message, lets get moving!
-  const userIdsToMove = messageMentions.map(({ id }) => id );
+  const userIdsToMove = messageMentions.map(({ id }) => id);
   if (userIdsToMove.length > 0) helper.moveUsers(message, command, userIdsToMove, message.member.voiceChannelID)
 }
 

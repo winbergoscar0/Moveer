@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const opts = {
-  timestampFormat:'YYYY-MM-DD HH:mm:ss'
+  timestampFormat: 'YYYY-MM-DD HH:mm:ss'
 }
 const log = require('simple-node-logger').createSimpleLogger(opts);
 
@@ -24,7 +24,7 @@ if (config.discordBotListToken !== 'x') {
   })
 
   dbl.on('error', e => {
-    log.warn (`DBL Error!:  ${e}`)
+    log.warn(`DBL Error!:  ${e}`)
   })
 }
 
@@ -38,8 +38,8 @@ client.on('guildCreate', (guild) => {
   log.info('Joined server: ' + guild.name)
   let defaultChannel = "";
   guild.channels.forEach((channel) => {
-    if(channel.type == "text" && defaultChannel == "") {
-      if(channel.permissionsFor(guild.me).has("SEND_MESSAGES") && channel.permissionsFor(guild.me).has("READ_MESSAGES")) {
+    if (channel.type == "text" && defaultChannel == "") {
+      if (channel.permissionsFor(guild.me).has("SEND_MESSAGES") && channel.permissionsFor(guild.me).has("READ_MESSAGES")) {
         defaultChannel = channel;
       }
     }

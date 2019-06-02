@@ -7,7 +7,7 @@ function move(args, message, command) {
     moveerMessage.sendMessage(message, (moveerMessage.MESSAGE_MISSING_ROOM_IDENTIFER + ' <@' + message.author.id + '>'))
     return
   }
-  
+
   const fromVoiceChannel = message.guild.channels.find(channel => channel.name.toLowerCase() === (message.channel.name.toLowerCase() !== 'moveeradmin'
     ? 'gmoveer' + args[0].toLowerCase()
     : args[0].toLowerCase()))
