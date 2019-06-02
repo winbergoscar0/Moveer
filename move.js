@@ -23,6 +23,7 @@ function move(args, message, command) {
     }
   }
   catch (err) {
+    if (!err.logMessage) console.log(err)
     moveerMessage.logger(message, command, err.logMessage)
     moveerMessage.sendMessage(message, err.sendMessage)
     return

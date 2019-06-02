@@ -28,6 +28,7 @@ function move(args, message, command) {
     helper.checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
   }
   catch (err) {
+    if (!err.logMessage) console.log(err)
     moveerMessage.logger(message, command, err.logMessage)
     moveerMessage.sendMessage(message, err.sendMessage)
     return

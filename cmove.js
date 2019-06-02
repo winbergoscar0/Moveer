@@ -15,7 +15,7 @@ function move(args, message, command) {
     messageMentions = helper.checkIfUsersAlreadyInChannel(message, command, messageMentions, toVoiceChannel)
   }
   catch (err) {
-    console.log(err)
+    if (!err.logMessage) console.log(err)
     moveerMessage.logger(message, command, err.logMessage)
     moveerMessage.sendMessage(message, err.sendMessage)
     return
