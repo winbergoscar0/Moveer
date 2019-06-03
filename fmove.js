@@ -2,8 +2,7 @@ const moveerMessage = require('./moveerMessage.js')
 const helper = require('./helper.js')
 
 function move(args, message, command) {
-
-
+  try {
   let fromVoiceChannelName = args[0]
   let toVoiceChannelName = args[1]
   if ((new String(args).includes('"'))) {
@@ -14,7 +13,7 @@ function move(args, message, command) {
 
   let fromVoiceChannel
   let toVoiceChannel
-  try {
+
     helper.checkIfTextChannelIsMoveerAdmin(message)
     helper.checkIfMessageContainsMentions(message)
     helper.checkIfArgsTheSame(message, args)

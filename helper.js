@@ -176,9 +176,10 @@ function getChannelWithSpacesName(message, command, args) {
     fromVoiceChannelName = (string[0] === '"' ? testFrom : args[0])
     toVoiceChannelName = testTo
   } else {
-    moveerMessage.logger(message, command, moveerMessage.MISSING_FNUTTS_IN_ARGS)
-    moveerMessage.sendMessage(message, moveerMessage.MISSING_FNUTTS_IN_ARGS)
-    return
+    throw {
+      'logMessage': moveerMessage.MISSING_FNUTTS_IN_ARGS,
+      'sendMessage': moveerMessage.MISSING_FNUTTS_IN_ARGS
+    }
   }
   return [fromVoiceChannelName, toVoiceChannelName]
 }
