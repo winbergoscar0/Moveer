@@ -25,6 +25,8 @@ function move(args, message, command) {
     helper.checkIfChannelIsTextChannel(message, toVoiceChannel)
     helper.checkIfChannelIsTextChannel(message, fromVoiceChannel)
     helper.checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
+    helper.checkForMovePerms(message)
+    helper.checkForConnectPerms(message)
 
     // No errors in the message, lets get moving!
     helper.moveUsers(message, command, fromVoiceChannel.members.array(), toVoiceChannel.id)
