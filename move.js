@@ -22,6 +22,10 @@ function move(args, message, command) {
     helper.checkForConnectPerms(message)
     messageMentions = helper.checkIfMentionsInsideVoiceChannel(message, command, messageMentions)
     messageMentions = helper.checkIfUsersAlreadyInChannel(message, command, messageMentions, message.member.voiceChannelID)
+
+    // No errors in the message, lets get moving!
+    const userIdsToMove = messageMentions.map(({ id }) => id);
+    if (userIdsToMove.length > 0) helper.moveUsers(message, command, userIdsToMove, message.member.voiceChannelID)
   }
   catch (err) {
     if (!err.logMessage) console.log(err)
@@ -29,10 +33,6 @@ function move(args, message, command) {
     moveerMessage.sendMessage(message, err.sendMessage)
     return
   }
-
-  // No errors in the message, lets get moving!
-  const userIdsToMove = messageMentions.map(({ id }) => id);
-  if (userIdsToMove.length > 0) helper.moveUsers(message, command, userIdsToMove, message.member.voiceChannelID)
 }
 
 module.exports = {

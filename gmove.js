@@ -29,6 +29,9 @@ function move(args, message, command) {
     helper.checkForConnectPerms(message)
     helper.checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
     helper.checkIfChannelIsTextChannel(message, fromVoiceChannel)
+
+    // No errors in the message, lets get moving!
+    helper.moveUsers(message, command, fromVoiceChannel.members.array(), message.member.voiceChannelID)
   }
   catch (err) {
     if (!err.logMessage) console.log(err)
@@ -36,9 +39,6 @@ function move(args, message, command) {
     moveerMessage.sendMessage(message, err.sendMessage)
     return
   }
-
-  // No errors in the message, lets get moving!
-  helper.moveUsers(message, command, fromVoiceChannel.members.array(), message.member.voiceChannelID)
 }
 
 module.exports = {

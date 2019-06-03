@@ -131,6 +131,10 @@ function getChannelByName(message, findByName) {
   if (voiceChannel === null) {
     voiceChannel = message.guild.channels.find(channel => channel.name.toLowerCase() === findByName.toLowerCase())
   }
+  if (voiceChannel === null) throw {
+    'logMessage': 'Cant find voiceChannel: ' + findByName,
+    'sendMessage': moveerMessage.NO_VOICE_CHANNEL_NAMED_X + 'the name: "' + findByName + '" <@' + message.author.id + '>'
+  }
   return voiceChannel
 }
 

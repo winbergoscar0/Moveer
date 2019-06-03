@@ -3,16 +3,16 @@ const helper = require('./helper.js')
 
 function move(args, message, command) {
   try {
-  let fromVoiceChannelName = args[0]
-  let toVoiceChannelName = args[1]
-  if ((new String(args).includes('"'))) {
-    const names = helper.getChannelWithSpacesName(message, command, args)
-    fromVoiceChannelName = names[0]
-    toVoiceChannelName = names[1]
-  }
+    let fromVoiceChannelName = args[0]
+    let toVoiceChannelName = args[1]
+    if ((new String(args).includes('"'))) {
+      const names = helper.getChannelWithSpacesName(message, command, args)
+      fromVoiceChannelName = names[0]
+      toVoiceChannelName = names[1]
+    }
 
-  let fromVoiceChannel
-  let toVoiceChannel
+    let fromVoiceChannel
+    let toVoiceChannel
 
     helper.checkIfTextChannelIsMoveerAdmin(message)
     helper.checkIfMessageContainsMentions(message)
@@ -22,9 +22,12 @@ function move(args, message, command) {
     toVoiceChannel = helper.getChannelByName(message, toVoiceChannelName)
     helper.checkIfVoiceChannelExist(message, fromVoiceChannel, fromVoiceChannelName)
     helper.checkIfVoiceChannelExist(message, toVoiceChannel, toVoiceChannelName)
-    helper.checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
     helper.checkIfChannelIsTextChannel(message, toVoiceChannel)
     helper.checkIfChannelIsTextChannel(message, fromVoiceChannel)
+    helper.checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
+
+    // No errors in the message, lets get moving!
+    helper.moveUsers(message, command, fromVoiceChannel.members.array(), toVoiceChannel.id)
   }
   catch (err) {
     if (!err.logMessage) console.log(err)
@@ -32,8 +35,6 @@ function move(args, message, command) {
     moveerMessage.sendMessage(message, err.sendMessage)
     return
   }
-  // No errors in the message, lets get moving!
-  helper.moveUsers(message, command, fromVoiceChannel.members.array(), toVoiceChannel.id)
 }
 
 module.exports = {
