@@ -52,7 +52,7 @@ const HELP_GMOVE = {
     "fields": [
       {
         "name": "!gmove",
-        "value": "Group moving without using @tags!\n1. Create a voice channel named 'gMoveer[name here]' ← Notice that there is no space between the name and 'gMoveer'.\n2. Join the voice channel you want to move users to\n3. Tell your friends to join your 'gMoveer' channel.\n4. Write `!gmove [name of the channel]`, do not include 'gMoveer'\n\nExample: Let's say I have a 'gMoveer' channel named 'gMoveerIce'. The command would look like this; `!gmove Ice` and it would move the members to your voice channel. "
+        "value": "Group moving without using @tags!\n1. Create a voice channel named 'gMoveer[name here]' ← Notice that there is no space between the name and 'gMoveer'.\n2. Join the voice channel you want to move users to\n3. Tell your friends to join your 'gMoveer' channel.\n4. Write `!gmove [name of the channel]`, do not include 'gMoveer'\n\nExample: Let's say I have a 'gMoveer' channel named 'gMoveerIce'. The command would look like this; `!gmove Ice` and it would move the members to your voice channel.\n(If your voice channel contains spaces use \n" + '`!gmove "channel 1"`)'
       }
     ]
   }
@@ -82,7 +82,7 @@ const HELP_FMOVE = {
     "fields": [
       {
         "name": "!fmove",
-        "value": "1. Tell users you want to move to join voice channel A\n2. Write `!fmove A B` where B is the voice channel you want to move them\n \nThis command requires to be sent from the text channel 'moveeradmin'.\n "
+        "value": "1. Tell users you want to move to join voice channel A\n2. Write `!fmove A B` where B is the voice channel you want to move them\n \nThis command requires to be sent from the text channel 'moveeradmin'.\n(If your voice channel contains spaces use" + '\n`!fmove "channel 1" "channel 2"`)'
       }
     ]
   }
