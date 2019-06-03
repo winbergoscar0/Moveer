@@ -95,7 +95,7 @@ function sendMessage(message, sendMessage) {
       if (config.discordBotListToken !== '' && message.channel.permissionsFor(message.guild.me).has("SEND_MESSAGES") === true) {
         const Discord = require("discord.js");
         const hook = new Discord.WebhookClient(config.discordHookIdentifier, config.discordHookToken);
-        // hook.send('New Moveer error reported. Check the logs for information.\nCommand: ' + message.content + '\nInside textChannel: ' + message.channel.name + '\nInside server: ' + message.guild.name + '\n @everyone');
+        hook.send('New Moveer error reported. Check the logs for information.\nCommand: ' + message.content + '\nInside textChannel: ' + message.channel.name + '\nInside server: ' + message.guild.name + '\n @everyone');
       }
     });
 }
