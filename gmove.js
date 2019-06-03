@@ -28,6 +28,7 @@ function move(args, message, command) {
     helper.checkForMovePerms(message)
     helper.checkForConnectPerms(message)
     helper.checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
+    helper.checkIfChannelIsTextChannel(message, fromVoiceChannel)
   }
   catch (err) {
     if (!err.logMessage) console.log(err)

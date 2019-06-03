@@ -114,6 +114,13 @@ function checkForMovePerms(message) {
   }
 }
 
+function checkIfChannelIsTextChannel(message, channel) {
+  if (channel.type === 'text') throw {
+    'logMessage': 'User tried to move with textchannels',
+    'sendMessage': channel.name + moveerMessage.USER_MOVED_WITH_TEXT_CHANNEL + ' <@' + message.author.id + '> \n'
+  }
+}
+
 // Helper functions
 function getNameOfVoiceChannel(message, voiceChannelId) {
   return message.guild.channels.get(voiceChannelId).name
@@ -195,5 +202,6 @@ module.exports = {
   checkIfMentionsInsideVoiceChannel,
   checkIfUsersAlreadyInChannel,
   getChannelByName,
-  getChannelWithSpacesName
+  getChannelWithSpacesName,
+  checkIfChannelIsTextChannel
 }

@@ -14,6 +14,7 @@ function move(args, message, command) {
     helper.checkIfVoiceChannelExist(message, toVoiceChannel, toVoiceChannelName)
     messageMentions = helper.checkIfMentionsInsideVoiceChannel(message, command, messageMentions)
     messageMentions = helper.checkIfUsersAlreadyInChannel(message, command, messageMentions, toVoiceChannel.id)
+    helper.checkIfChannelIsTextChannel(message, toVoiceChannel)
   }
   catch (err) {
     if (!err.logMessage) console.log(err)

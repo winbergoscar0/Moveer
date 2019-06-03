@@ -23,6 +23,7 @@ const USER_MENTION_NOT_IN_ANY_CHANNEL = 'is not inside any voice channel!'
 const USER_ALREADY_IN_CHANNEL = 'is already inside that voice channel.'
 const VOICE_CHANNEL_NAMES_THE_SAME = "Please specify one channel to move from, and one to move to. It can't be the same"
 const MISSING_FNUTTS_IN_ARGS = 'There is either too many or too few quotation marks (")'
+const USER_MOVED_WITH_TEXT_CHANNEL = " <- seems to be a text channel. I can only move people inside voice channels!"
 
 const HELP_MESSAGE = 'Possible commands I can perform:\n!help move\n!help cmove\n!help gmove\n!help fmove'
 // CMOVE
@@ -94,7 +95,7 @@ function sendMessage(message, sendMessage) {
       if (config.discordBotListToken !== '' && message.channel.permissionsFor(message.guild.me).has("SEND_MESSAGES") === true) {
         const Discord = require("discord.js");
         const hook = new Discord.WebhookClient(config.discordHookIdentifier, config.discordHookToken);
-        hook.send('New Moveer error reported. Check the logs for information.\nCommand: ' + message.content + '\nInside textChannel: ' + message.channel.name + '\nInside server: ' + message.guild.name + '\n @everyone');
+        // hook.send('New Moveer error reported. Check the logs for information.\nCommand: ' + message.content + '\nInside textChannel: ' + message.channel.name + '\nInside server: ' + message.guild.name + '\n @everyone');
       }
     });
 }
@@ -129,5 +130,6 @@ module.exports = {
   sendMessage,
   USER_ALREADY_IN_CHANNEL,
   VOICE_CHANNEL_NAMES_THE_SAME,
-  MISSING_FNUTTS_IN_ARGS
+  MISSING_FNUTTS_IN_ARGS,
+  USER_MOVED_WITH_TEXT_CHANNEL
 };
