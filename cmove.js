@@ -4,7 +4,7 @@ const helper = require('./helper.js')
 function move(args, message, command) {
   let messageMentions = message.mentions.users.array(); // Mentions in the message
   const toVoiceChannelName = args[0]
-  let toVoiceChannel 
+  let toVoiceChannel
 
   try {
     helper.checkIfTextChannelIsMoveerAdmin(message)
@@ -15,6 +15,10 @@ function move(args, message, command) {
     messageMentions = helper.checkIfMentionsInsideVoiceChannel(message, command, messageMentions)
     messageMentions = helper.checkIfUsersAlreadyInChannel(message, command, messageMentions, toVoiceChannel.id)
     helper.checkIfChannelIsTextChannel(message, toVoiceChannel)
+
+    // No errors in the message, lets get moving!
+    const userIdsToMove = messageMentions.map(({ id }) => id);
+    if (userIdsToMove.length > 0) helper.moveUsers(message, command, userIdsToMove, toVoiceChannel.id)
   }
   catch (err) {
     if (!err.logMessage) console.log(err)
@@ -22,10 +26,6 @@ function move(args, message, command) {
     moveerMessage.sendMessage(message, err.sendMessage)
     return
   }
-
-  // No errors in the message, lets get moving!
-  const userIdsToMove = messageMentions.map(({ id }) => id );
-  if (userIdsToMove.length > 0) helper.moveUsers(message, command, userIdsToMove, toVoiceChannel.id)
 }
 
 module.exports = {
