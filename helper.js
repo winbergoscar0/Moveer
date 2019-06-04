@@ -1,4 +1,5 @@
 const moveerMessage = require('./moveerMessage.js')
+const config = require('./config.js')
 
 function checkIfVoiceChannelExist(message, voiceChannel, channelName) {
   if (voiceChannel === null || voiceChannel.members == undefined) throw {
@@ -152,6 +153,7 @@ function moveUsers(message, command, usersToMove, toVoiceChannelId) {
   }
   moveerMessage.logger(message, command, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users")))
   moveerMessage.sendMessage(message, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users") + ' by request of' + ' <@' + message.author.id + '>'))
+  if (config.postgreSQLConnection !== 'x') successfullmove(usersMoved)
 }
 
 function getChannelWithSpacesName(message, command, args) {
@@ -190,6 +192,31 @@ function getChannelWithSpacesName(message, command, args) {
   return [fromVoiceChannelName, toVoiceChannelName]
 }
 
+async function successfullmove(usersMoved) {
+  const { Client } = require('pg')
+  const client = new Client({
+    connectionString: config.postgreSQLConnection,
+  })
+  try {
+    await client.connect()
+    await client.query('UPDATE moves SET successCount = successCount + ' + usersMoved + ' WHERE id = 1')
+    await client.end()
+  } catch (err) {
+    console.log(err)
+    reportMoveerError('DB')
+  }
+}
+
+function reportMoveerError(message) {
+  const Discord = require("discord.js");
+  const hook = new Discord.WebhookClient(config.discordHookIdentifier, config.discordHookToken);
+  if (message === 'DB') {
+    hook.send('New Moveer DB error reported. Check the logs for information.\nError adding successful move to postgreSQL\n@everyone');
+  } else {
+    hook.send('New Moveer error reported. Check the logs for information.\nCommand: ' + message.content + '\nInside textChannel: ' + message.channel.name + '\nInside server: ' + message.guild.name + '\n@everyone');
+  }
+}
+
 module.exports = {
   checkIfTextChannelIsMoveerAdmin,
   checkIfVoiceChannelExist,
@@ -210,5 +237,6 @@ module.exports = {
   checkIfUsersAlreadyInChannel,
   getChannelByName,
   getChannelWithSpacesName,
-  checkIfChannelIsTextChannel
+  checkIfChannelIsTextChannel,
+  reportMoveerError
 }
