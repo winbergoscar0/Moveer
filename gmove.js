@@ -8,16 +8,15 @@ function move(args, message, command) {
     return
   }
 
-  let fromVoiceChannelName = args[0]
-  if ((new String(args).includes('"'))) {
-    const names = helper.getChannelWithSpacesName(message, command, args)
-    fromVoiceChannelName = names[0]
-  }
-  if (message.channel.name.toLowerCase() !== 'moveeradmin') fromVoiceChannelName = 'gMoveer' + fromVoiceChannelName
-
-  const fromVoiceChannel = helper.getChannelByName(message, fromVoiceChannelName)
-
   try {
+    let fromVoiceChannelName = args[0]
+    if ((new String(args).includes('"'))) {
+      const names = helper.getChannelWithSpacesName(message, command, args)
+      fromVoiceChannelName = names[0]
+    }
+    if (message.channel.name.toLowerCase() !== 'moveeradmin') fromVoiceChannelName = 'gMoveer' + fromVoiceChannelName
+    const fromVoiceChannel = helper.getChannelByName(message, fromVoiceChannelName)
+
     helper.checkIfAuthorInsideAVoiceChannel(message, message.member.voiceChannelID)
     const authorVoiceChannelName = helper.getNameOfVoiceChannel(message, message.member.voiceChannelID)
     if (message.channel.name.toLowerCase() !== 'moveeradmin') {
@@ -25,13 +24,14 @@ function move(args, message, command) {
     }
     helper.checkIfMessageContainsMentions(message)
     helper.checkIfVoiceChannelExist(message, fromVoiceChannel, fromVoiceChannelName)
-    helper.checkForMovePerms(message)
-    helper.checkForConnectPerms(message)
     helper.checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
     helper.checkIfChannelIsTextChannel(message, fromVoiceChannel)
+    const userIdsToMove = fromVoiceChannel.members.map(({ id }) => id);
+    helper.checkForMovePerms(message, userIdsToMove)
+    helper.checkForConnectPerms(message, userIdsToMove)
 
     // No errors in the message, lets get moving!
-    helper.moveUsers(message, command, fromVoiceChannel.members.array(), message.member.voiceChannelID)
+    helper.moveUsers(message, command, userIdsToMove, message.member.voiceChannelID)
   }
   catch (err) {
     if (!err.logMessage) console.log(err)
