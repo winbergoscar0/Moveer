@@ -116,8 +116,8 @@ function checkForMovePerms(message, users) {
     const userVoiceChannelId = message.guild.members.get(users[i]).voiceChannelID
     const userVoiceChannel = message.guild.channels.get(userVoiceChannelId)
     if (!userVoiceChannel.memberPermissions(message.guild.me).has('MOVE_MEMBERS')) throw {
-      'logMessage': 'Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot or check the room permissions)',
-      'sendMessage': moveerMessage.MOVEER_MISSING_MOVE_PERMISSION + ' <@' + message.author.id + '> \n' + moveerMessage.SUPPORT_MESSAGE
+      'logMessage': 'Moveer is missing Move Members permission',
+      'sendMessage': moveerMessage.MOVEER_MISSING_MOVE_PERMISSION + ' <@' + message.author.id + '> \n \n' + moveerMessage.SUPPORT_MESSAGE
     }
   }
 }
