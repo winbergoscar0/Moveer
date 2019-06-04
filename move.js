@@ -18,13 +18,13 @@ function move(args, message, command) {
       helper.checkIfGuildHasTwoMoveerChannels(message)
       helper.checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
     }
-    helper.checkForMovePerms(message)
-    helper.checkForConnectPerms(message)
     messageMentions = helper.checkIfMentionsInsideVoiceChannel(message, command, messageMentions)
     messageMentions = helper.checkIfUsersAlreadyInChannel(message, command, messageMentions, message.member.voiceChannelID)
+    const userIdsToMove = messageMentions.map(({ id }) => id);
+    helper.checkForMovePerms(message, userIdsToMove)
+    helper.checkForConnectPerms(message, userIdsToMove)
 
     // No errors in the message, lets get moving!
-    const userIdsToMove = messageMentions.map(({ id }) => id);
     if (userIdsToMove.length > 0) helper.moveUsers(message, command, userIdsToMove, message.member.voiceChannelID)
   }
   catch (err) {

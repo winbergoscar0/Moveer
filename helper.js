@@ -102,7 +102,7 @@ function checkIfUsersAlreadyInChannel(message, command, messageMentions, toVoice
 
 function checkForConnectPerms(message, users) {
   for (var i = 0; i < users.length; i++) {
-    const userVoiceChannelId = message.guild.members.get(users[i].id).voiceChannelID
+    const userVoiceChannelId = message.guild.members.get(users[i]).voiceChannelID
     const userVoiceChannel = message.guild.channels.get(userVoiceChannelId)
     if (!userVoiceChannel.memberPermissions(message.guild.me).has('CONNECT')) throw {
       'logMessage': 'Moveer is missing CONNECT permission',
@@ -113,7 +113,7 @@ function checkForConnectPerms(message, users) {
 
 function checkForMovePerms(message, users) {
   for (var i = 0; i < users.length; i++) {
-    const userVoiceChannelId = message.guild.members.get(users[i].id).voiceChannelID
+    const userVoiceChannelId = message.guild.members.get(users[i]).voiceChannelID
     const userVoiceChannel = message.guild.channels.get(userVoiceChannelId)
     if (!userVoiceChannel.memberPermissions(message.guild.me).has('MOVE_MEMBERS')) throw {
       'logMessage': 'Moveer is missing Move Members permission (Missing when adding to the discord, reinvite the bot or check the room permissions)',

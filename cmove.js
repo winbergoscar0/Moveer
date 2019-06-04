@@ -15,11 +15,11 @@ function move(args, message, command) {
     messageMentions = helper.checkIfMentionsInsideVoiceChannel(message, command, messageMentions)
     messageMentions = helper.checkIfUsersAlreadyInChannel(message, command, messageMentions, toVoiceChannel.id)
     helper.checkIfChannelIsTextChannel(message, toVoiceChannel)
-    helper.checkForMovePerms(message, messageMentions)
-    helper.checkForConnectPerms(message, messageMentions)
+    const userIdsToMove = messageMentions.map(({ id }) => id);
+    helper.checkForMovePerms(message, userIdsToMove)
+    helper.checkForConnectPerms(message, userIdsToMove)
     
     // No errors in the message, lets get moving!
-    const userIdsToMove = messageMentions.map(({ id }) => id);
     if (userIdsToMove.length > 0) helper.moveUsers(message, command, userIdsToMove, toVoiceChannel.id)
   }
   catch (err) {
