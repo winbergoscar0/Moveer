@@ -83,10 +83,9 @@ function checkIfMentionsInsideVoiceChannel(message, command, messageMentions) {
     if (message.guild.members.get(messageMentions[i].id).voiceChannelID === undefined || message.guild.members.get(messageMentions[i].id).voiceChannelID === null) {
       moveerMessage.logger(message, command, 'Not moving user, not in any voice channel!')
       moveerMessage.sendMessage(message, (messageMentions[i] + ' ' + moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL))
-      messageMentions.splice(i, 1)
     }
   }
-  return messageMentions
+  return messageMentions.filter(user => message.guild.members.get(user.id).voiceChannelID !== undefined && message.guild.members.get(user.id).voiceChannelID !== null)
 }
 
 function checkIfUsersAlreadyInChannel(message, command, messageMentions, toVoiceChannelId) {
@@ -94,10 +93,9 @@ function checkIfUsersAlreadyInChannel(message, command, messageMentions, toVoice
     if (message.guild.members.get(messageMentions[i].id).voiceChannelID === toVoiceChannelId) {
       moveerMessage.logger(message, command, 'Not moving user, user already in the channel!')
       moveerMessage.sendMessage(message, (messageMentions[i].username + ' ' + moveerMessage.USER_ALREADY_IN_CHANNEL))
-      messageMentions.splice(i, 1)
     }
   }
-  return messageMentions
+  return messageMentions.filter(user => message.guild.members.get(user.id).voiceChannelID !== toVoiceChannelId)
 }
 
 function checkForConnectPerms(message, users) {
