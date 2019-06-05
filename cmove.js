@@ -3,10 +3,15 @@ const helper = require('./helper.js')
 
 function move(args, message, command) {
   let messageMentions = message.mentions.users.array(); // Mentions in the message
-  const toVoiceChannelName = args[0]
   let toVoiceChannel
 
   try {
+    let toVoiceChannelName = args[0]
+    if ((new String(args).includes('"'))) {
+      const names = helper.getChannelWithSpacesName(message, command, args)
+      toVoiceChannelName = names[0]
+    }
+
     helper.checkIfTextChannelIsMoveerAdmin(message)
     helper.checkArgsLength(args, 1)
     helper.checkForUserMentions(message, messageMentions)

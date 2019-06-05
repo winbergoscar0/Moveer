@@ -148,6 +148,7 @@ function moveUsers(message, command, usersToMove, toVoiceChannelId) {
       .catch(err => {
         console.log(err)
         moveerMessage.logger(message, command, 'Got above error when moving people...')
+        moveerMessage.sendMessage(message, 'Got an error moving people :( If this keeps happening, please contact a moderator in the official discord: https://discord.gg/dTdH3gD')
       })
     usersMoved += 1
   }
