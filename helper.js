@@ -99,7 +99,7 @@ function checkIfUsersAlreadyInChannel(message, command, messageMentions, toVoice
   return messageMentions.filter(user => message.guild.members.get(user.id).voiceChannelID !== toVoiceChannelId)
 }
 
-function checkForConnectPerms(message, users) {
+function checkForConnectPerms(message, users, voiceChannel) {
   for (var i = 0; i < users.length; i++) {
     const userVoiceChannelId = message.guild.members.get(users[i]).voiceChannelID
     const userVoiceChannel = message.guild.channels.get(userVoiceChannelId)
@@ -108,9 +108,13 @@ function checkForConnectPerms(message, users) {
       'sendMessage': moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' <@' + message.author.id + '> \n' + moveerMessage.SUPPORT_MESSAGE
     }
   }
+  if (!voiceChannel.memberPermissions(message.guild.me).has('CONNECT')) throw {
+    'logMessage': 'Moveer is missing CONNECT permission',
+    'sendMessage': moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' <@' + message.author.id + '> \n' + moveerMessage.SUPPORT_MESSAGE
+  }
 }
 
-function checkForMovePerms(message, users) {
+function checkForMovePerms(message, users, voiceChannel) {
   for (var i = 0; i < users.length; i++) {
     const userVoiceChannelId = message.guild.members.get(users[i]).voiceChannelID
     const userVoiceChannel = message.guild.channels.get(userVoiceChannelId)
@@ -118,6 +122,10 @@ function checkForMovePerms(message, users) {
       'logMessage': 'Moveer is missing Move Members permission',
       'sendMessage': moveerMessage.MOVEER_MISSING_MOVE_PERMISSION + ' <@' + message.author.id + '> \n \n' + moveerMessage.SUPPORT_MESSAGE
     }
+  }
+  if (!voiceChannel.memberPermissions(message.guild.me).has('MOVE_MEMBERS')) throw {
+    'logMessage': 'Moveer is missing Move Members permission',
+    'sendMessage': moveerMessage.MOVEER_MISSING_MOVE_PERMISSION + ' <@' + message.author.id + '> \n \n' + moveerMessage.SUPPORT_MESSAGE
   }
 }
 

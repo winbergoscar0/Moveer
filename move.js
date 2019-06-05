@@ -21,8 +21,9 @@ function move(args, message, command) {
     messageMentions = helper.checkIfMentionsInsideVoiceChannel(message, command, messageMentions)
     messageMentions = helper.checkIfUsersAlreadyInChannel(message, command, messageMentions, message.member.voiceChannelID)
     const userIdsToMove = messageMentions.map(({ id }) => id);
-    helper.checkForMovePerms(message, userIdsToMove)
-    helper.checkForConnectPerms(message, userIdsToMove)
+    const authorVoiceChannel = helper.getChannelByName(message, message.member.voiceChannelID)
+    helper.checkForMovePerms(message, userIdsToMove, authorVoiceChannel)
+    helper.checkForConnectPerms(message, userIdsToMove, authorVoiceChannel)
 
     // No errors in the message, lets get moving!
     if (userIdsToMove.length > 0) helper.moveUsers(message, command, userIdsToMove, message.member.voiceChannelID)
