@@ -105,12 +105,12 @@ function checkForConnectPerms(message, users, voiceChannel) {
     const userVoiceChannel = message.guild.channels.get(userVoiceChannelId)
     if (!userVoiceChannel.memberPermissions(message.guild.me).has('CONNECT')) throw {
       'logMessage': 'Moveer is missing CONNECT permission',
-      'sendMessage': moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' <@' + message.author.id + '> \n' + moveerMessage.SUPPORT_MESSAGE
+      'sendMessage': moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' <@' + message.author.id + '> \n \n' + moveerMessage.SUPPORT_MESSAGE
     }
   }
   if (!voiceChannel.memberPermissions(message.guild.me).has('CONNECT')) throw {
     'logMessage': 'Moveer is missing CONNECT permission',
-    'sendMessage': moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' <@' + message.author.id + '> \n' + moveerMessage.SUPPORT_MESSAGE
+    'sendMessage': moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' <@' + message.author.id + '> \n \n' + moveerMessage.SUPPORT_MESSAGE
   }
 }
 
