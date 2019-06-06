@@ -11,17 +11,17 @@ A bot that moves users from one voice channel to another. Including locked and h
 
 ### **!cmove:** ↓ 
 Moves users spread across multiple voice channels to one without the need of joining a voice channel. (Must be sent inside "moveeradmin"
-<br>Example command: `!cmove channel#1 @Fragstealern#2543 @user2`.
+<br>Example command: `!cmove channel#1 @user1 @user2`.
 
 ### **!move:** ↓
 
-Moves @mentions of users inside the Moveer voice channel to you. Fragstealern is required to be inside the “Moveer” voice channel.
-<br>Example command `!move @Fragstealern#2453`
+Moves @mentions of users inside the Moveer voice channel to you. User1 is required to be inside the “Moveer” voice channel.
+<br>Example command `!move @user1 @user2`
 
 
 ### **!gmove:** ↓
-Moves users inside  GmoveerX to you with one command. If the voice channel is named GmoveerOverwatch the command becomes
-<br>Example command `!gmove overwatch`
+Moves users inside  GmoveerX to you with one command. If the voice channel is named gmoveerPubg the command becomes
+<br>Example command `!gmove pubg`
  
 
 ### **!fmove:** ↓ 
