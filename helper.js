@@ -163,6 +163,7 @@ function moveUsers(message, command, usersToMove, toVoiceChannelId) {
   }
   moveerMessage.logger(message, command, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users")))
   moveerMessage.sendMessage(message, ('Moved ' + usersMoved + (usersMoved === 1 ? " user" : " users") + ' by request of' + ' <@' + message.author.id + '>'))
+  if (message.guild.id === '569905989604868138') return
   if (config.postgreSQLConnection !== 'x') successfullmove(usersMoved)
 }
 
