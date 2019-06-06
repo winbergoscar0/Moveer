@@ -10,7 +10,7 @@ A bot that moves users from one voice channel to another. Including locked and h
 
 
 ### **!cmove:** ↓ 
-Moves users spread across multiple voice channels to one without the need of joining a voice channel. <br>(Command must be sent inside "moveeradmin")
+Moves users spread across multiple voice channels to one without the need of joining a voice channel. <br>(Command must be sent inside a text channel named "moveeradmin")
 <br>Example command: `!cmove channel#1 @user1 @user2`.
 
 ### **!move:** ↓
@@ -25,7 +25,7 @@ Moves users inside  GmoveerX to you with one command. If the voice channel is na
  
 
 ### **!fmove:** ↓ 
-Moves users inside one voicechannel to another. Moves users inside overwatch to pubg. <br>(Command must be sent inside "moveeradmin")
+Moves users inside one voicechannel to another. Moves users inside overwatch to pubg. <br>(Command must be sent inside a text channel named "moveeradmin")
 <br>Example command `!fmove overwatch pubg`
 
 
