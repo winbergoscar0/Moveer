@@ -20,7 +20,7 @@ Moves @mentions of users inside the Moveer voice channel to you. User1 is requir
 
 
 ### **!gmove:** ↓
-Moves users inside  GmoveerX to you with one command. If the voice channel is named gmoveerPubg the command becomes
+Moves users inside  GmoveerX to you with one command. If the voice channel is named gmoveerPubg use the example command
 <br>Example command `!gmove pubg`
  
 
