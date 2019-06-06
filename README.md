@@ -32,7 +32,7 @@ Moves users inside one voicechannel to another. Moves users inside overwatch to 
 # Notes:
 1. If your voice channel contains spaces use `!fmove "channel 1" "channel 2"`
 2. `!fmove` and `!cmove` are both admin commands and requires the command to be sent inside a text channel named "moveeradmin"
-3. `!move` and `!gmove` both have admin versions that removes the requirements of users being inside "Moveer" or "GmoveerOverwatch". If sent inside "moveeradmin" both commands can move people from any channel. Please note that the !gmove will require the full name of the voicechannel.
+3. `!gmove` and `!move` commands sent inside "moveeradmin" moves people from any channel and removes the requirement to be inside "Moveer" or "Gmoveer". Please note that the !gmove will require the full name of the voicechannel.
 
 For more information use the !help command inside discord or join us with the link below ↓
 
