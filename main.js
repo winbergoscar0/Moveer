@@ -20,7 +20,7 @@ if (config.discordBotListToken !== 'x') {
   const DBL = require("dblapi.js");
   const dbl = new DBL(config.discordBotListToken, client);
   dbl.on('posted', () => {
-    log.info('Posted Server count to DBL. Member of (' + client.guilds.array().length + ') servers')
+    log.info('Posted Server count to DBL. Member of (' + client.guilds.array().length + ') servers and serving ' + client.users.size + ' users')
   })
 
   dbl.on('error', e => {
