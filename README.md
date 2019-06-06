@@ -10,7 +10,7 @@ A bot that moves users from one voice channel to another. Including locked and h
 
 
 ### **!cmove:** ↓ 
-Moves users spread across multiple voice channels to one without the need of joining a voice channel. (Must be sent inside "moveeradmin"
+Moves users spread across multiple voice channels to one without the need of joining a voice channel. <br>(Command must be sent inside "moveeradmin")
 <br>Example command: `!cmove channel#1 @user1 @user2`.
 
 ### **!move:** ↓
@@ -25,14 +25,14 @@ Moves users inside  GmoveerX to you with one command. If the voice channel is na
  
 
 ### **!fmove:** ↓ 
-Moves users inside one voicechannel to another. Moves users inside overwatch to pubg. (Must be sent inside "moveeradmin"
+Moves users inside one voicechannel to another. Moves users inside overwatch to pubg. <br>(Command must be sent inside "moveeradmin")
 <br>Example command `!fmove overwatch pubg`
 
 
 # Notes:
 1. If your voice channel contains spaces use `!fmove "channel 1" "channel 2"`
 2. `!fmove` and `!cmove` are both admin commands and requires the command to be sent inside a text channel named "moveeradmin"
-3. `!move` and `!gmove` both have admin versions that removes the requirements of users being inside "Moveer" or "GmoveerOverwatch"
+3. `!move` and `!gmove` both have admin versions that removes the requirements of users being inside "Moveer" or "GmoveerOverwatch". If sent inside "moveeradmin" both commands can move people from any channel. Please note that the !gmove will require the full name of the voicechannel.
 
 For more information use the !help command inside discord or join us with the link below ↓
 
