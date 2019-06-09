@@ -4,7 +4,7 @@ const opts = {
 const log = require('simple-node-logger').createSimpleLogger(opts);
 const config = require('./config.js')
 
-const USER_MOVING_SELF = 'You need to @mention a friend you want to move, not yourself! :)'
+const USER_MOVING_SELF = 'You need to @mention a friend you want to move, not yourself. Remove your @name and try again :)'
 const MESSAGE_MISSING_MENTION = 'You need to @mention a friend!'
 const USER_NOT_IN_ANY_VOICE_CHANNEL = 'You need to join a voice channel before moving people.'
 const USER_INSIDE_MOVEER_VOICE_CHANNEL = "You can't move people into this voice channel."
@@ -17,7 +17,7 @@ const MESSAGE_MISSING_ROOM_IDENTIFER = 'You need to write a number to identify a
 const MOVE_MESSAGE_CONTAINS_MENTIONS = "You're not supposed to @mention members with this command."
 const NO_VOICE_CHANNEL_NAMED_X = "There's no voice channel with "
 const NO_USERS_INSIDE_ROOM = "There's no users inside the voice channel"
-const CMOVE_OUTSIDE_MOVEERADMIN = 'This is an admin command, please use this inside the textchannel "moveeradmin"'
+const CMOVE_OUTSIDE_MOVEERADMIN = 'This is an admin command, please use this inside a textchannel named "moveeradmin"'
 const CMOVE_MESSAGE_MISSING_ROOM_IDENTIFER = 'You need to specify a voice channel!'
 const USER_MENTION_NOT_IN_ANY_CHANNEL = 'is not inside any voice channel!'
 const USER_ALREADY_IN_CHANNEL = 'is already inside that voice channel.'
@@ -25,7 +25,32 @@ const VOICE_CHANNEL_NAMES_THE_SAME = "Please specify one channel to move from, a
 const MISSING_FNUTTS_IN_ARGS = 'There is either too many or too few quotation marks (") or you forgot a space between the channel names :)'
 const USER_MOVED_WITH_TEXT_CHANNEL = " <- seems to be a text channel. I can only move people inside voice channels!"
 
-const HELP_MESSAGE = 'Possible commands I can perform:\n!help move\n!help cmove\n!help gmove\n!help fmove'
+const HELP_MESSAGE = {
+  "embed": {
+    "footer": {
+      "text": "Support server: https://discord.gg/dTdH3gD"
+    },
+    "fields": [
+      {
+        "name": "move",
+        "value": "Moves @mentions to you"
+      },
+      {
+        "name": "cmove",
+        "value": "Moves @mentions to a specific channel"
+      },
+      {
+        "name": "fmove",
+        "value": "Moves one channel to another channel"
+      },
+      {
+        "name": "gmove",
+        "value": "Moves everyone inside a channel to you \n\nFor more information, use !help <command>"
+      }
+    ]
+  }
+}
+
 // CMOVE
 const HELP_CMOVE = {
   "embed": {
