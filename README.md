@@ -29,7 +29,7 @@ Moves users inside one voicechannel to another. Moves users inside overwatch to 
 <br>Example command `!fmove overwatch pubg`
 
 
-# Notes:
+# Important notes:
 1. If your voice channel contains spaces use `!fmove "channel 1" "channel 2"`
 2. `!fmove` and `!cmove` are both admin commands and requires the command to be sent inside a text channel named "moveeradmin"
 3. `!gmove` and `!move` commands sent inside "moveeradmin" moves people from any channel and removes the requirement to be inside "Moveer" or "Gmoveer". Please note that the !gmove will require the full name of the voicechannel.
