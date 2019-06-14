@@ -3,6 +3,7 @@ const opts = {
 }
 const log = require('simple-node-logger').createSimpleLogger(opts);
 const config = require('./config.js')
+const helper = require('./helper.js')
 
 const USER_MOVING_SELF = 'You need to @mention a friend you want to move, not yourself. Remove your @name and try again :)'
 const MESSAGE_MISSING_MENTION = 'You need to @mention a friend!'
