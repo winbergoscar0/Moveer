@@ -3,7 +3,7 @@ const config = require('./config.js')
 
 function checkIfVoiceChannelExist(message, voiceChannel, channelName) {
   if (voiceChannel === null || voiceChannel.members == undefined) throw {
-    'logMessage': 'Cant find voiceChannel: ' + channelName,
+    'logMessage': 'Cant find voiceChannel: ' + channelName + (message.content.slice(config.discordPrefix.length).trim().split(/ +/g).length > 3 ? ' - Sent fnutt helper' : ''),
     'sendMessage': moveerMessage.NO_VOICE_CHANNEL_NAMED_X + 'the name: "' + channelName + '" <@' + message.author.id + '>' + (message.content.slice(config.discordPrefix.length).trim().split(/ +/g).length > 3 ? '\n If your voicechannel contains spaces, please use "" around it. Example `"channel with spaces"`' : '')
   }
 }
