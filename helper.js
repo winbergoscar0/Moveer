@@ -150,7 +150,6 @@ function getNameOfVoiceChannel(message, voiceChannelId) {
 }
 
 function getChannelByName(message, findByName) {
-  console.log(message.guild.channels)
   let voiceChannel = message.guild.channels.find(channel => channel.id === findByName)
   if (voiceChannel === null) {
     voiceChannel = message.guild.channels.find(channel => channel.name.toLowerCase() === findByName.toLowerCase() && channel.type === 'voice')
