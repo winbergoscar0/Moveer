@@ -114,6 +114,7 @@ const HELP_FMOVE = {
 }
 
 function sendMessage(message, sendMessage) {
+  const helper = require('./helper.js')
   message.channel.send(sendMessage)
     .catch((e) => {
       logger(message, message.content, e)
