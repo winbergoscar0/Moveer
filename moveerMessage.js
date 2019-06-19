@@ -126,7 +126,7 @@ function sendMessage(message, sendMessage) {
 }
 
 function logger(message, command, logMessage) {
-  log.info(message.guild.name + ' - (' + message.channel.name + ') - (' + message.content + ') - ' + logMessage)
+  log.info('(' + message.id + ') - ' + message.guild.name + ' - (' + message.channel.name + ') - (' + message.content + ') - ' + logMessage)
 }
 
 module.exports = {
