@@ -1,8 +1,8 @@
 const moveerMessage = require('./moveerMessage.js')
 const helper = require('./helper.js')
 
-function move(args, message, command) {
-  let messageMentions = message.mentions.users.array(); // Mentions in the message
+function move (args, message, command) {
+  let messageMentions = message.mentions.users.array() // Mentions in the message
   let fromVoiceChannel
   try {
     fromVoiceChannel = helper.getChannelByName(message, 'moveer')
@@ -20,7 +20,7 @@ function move(args, message, command) {
     }
     messageMentions = helper.checkIfMentionsInsideVoiceChannel(message, command, messageMentions)
     messageMentions = helper.checkIfUsersAlreadyInChannel(message, command, messageMentions, message.member.voiceChannelID)
-    const userIdsToMove = messageMentions.map(({ id }) => id);
+    const userIdsToMove = messageMentions.map(({ id }) => id)
     const authorVoiceChannel = helper.getChannelByName(message, message.member.voiceChannelID)
     helper.checkForMovePerms(message, userIdsToMove, authorVoiceChannel)
     helper.checkForConnectPerms(message, userIdsToMove, authorVoiceChannel)
@@ -38,4 +38,4 @@ function move(args, message, command) {
 
 module.exports = {
   move
-};
+}

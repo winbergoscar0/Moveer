@@ -1,16 +1,16 @@
 const moveerMessage = require('./moveerMessage.js')
 const helper = require('./helper.js')
 
-function move(args, message, command) {
+function move (args, message, command) {
   if (args.length < 1 || args === undefined || args === null || args === []) {
     moveerMessage.logger(message, command, 'room identifier is missing')
-    moveerMessage.sendMessage(message, (moveerMessage.MESSAGE_MISSING_ROOM_IDENTIFER + ' <@' + message.author.id + '>'))
+    moveerMessage.sendMessage(message, moveerMessage.MESSAGE_MISSING_ROOM_IDENTIFER + ' <@' + message.author.id + '>')
     return
   }
 
   try {
     let fromVoiceChannelName = args[0]
-    if ((new String(args).includes('"'))) {
+    if (args.join().includes('"')) {
       const names = helper.getChannelWithSpacesName(message, command, args)
       fromVoiceChannelName = names[0]
     }
@@ -26,7 +26,7 @@ function move(args, message, command) {
     helper.checkIfVoiceChannelExist(message, fromVoiceChannel, fromVoiceChannelName)
     helper.checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
     helper.checkIfChannelIsTextChannel(message, fromVoiceChannel)
-    const userIdsToMove = fromVoiceChannel.members.map(({ id }) => id);
+    const userIdsToMove = fromVoiceChannel.members.map(({ id }) => id)
     const authorVoiceChannel = helper.getChannelByName(message, message.member.voiceChannelID)
     helper.checkForMovePerms(message, userIdsToMove, authorVoiceChannel)
     helper.checkForConnectPerms(message, userIdsToMove, authorVoiceChannel)
