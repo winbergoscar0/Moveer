@@ -165,7 +165,7 @@ function moveUsers(message, command, usersToMove, toVoiceChannelId) {
         console.log(err)
         moveerMessage.logger(message, command, 'Got above error when moving people...')
         moveerMessage.sendMessage(message, 'Got an error moving people :( If this keeps happening, please contact a moderator in the official discord: https://discord.gg/dTdH3gD')
-        reportMoveerError(message)
+        if (message.guild.id !== '569905989604868138') reportMoveerError(message)
       })
     usersMoved += 1
   }
@@ -182,21 +182,13 @@ function getChannelWithSpacesName(message, command, args) {
   let testTo = ''
 
   for (i = (string[0] === '"' ? 0 : 0 + args[0].length); i < string.length; i++) {
-
     if (string[i] === '"') {
       fnuttCounter += 1
-    } else if (string[i] !== ' ') {
-      if (fnuttCounter === 2 && string[i] === ',') {
-        //skip
-      } else {
-        if (fnuttCounter < 2) {
-          testFrom = testFrom + (string[i] === ',' ? ' ' : string[i])
-        } else {
-          testTo = testTo + (string[i] === ',' ? ' ' : string[i])
-        }
-      }
-
+      continue
     }
+    if (fnuttCounter === 2 && string[i] === ',') continue
+    if (fnuttCounter < 2) testFrom = testFrom + (string[i] === ',' ? ' ' : string[i])
+    if (fnuttCounter > 1) testTo = testTo + (string[i] === ',' ? ' ' : string[i])
   }
 
   if (parseFloat(fnuttCounter) ? !(fnuttCounter % 2) : void 0) {
