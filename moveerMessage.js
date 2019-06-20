@@ -113,6 +113,13 @@ const HELP_FMOVE = {
   }
 }
 
+const FALLBACK_HELP_MESSAGE = 'move - Moves @mentions to you\ncmove  Moves @mentions to a specific channel\nfmove \
+  - Moves users inside one channel to another channel\ngmove - Moves everyone inside a channel to you. \n\nFor more information, use !help <command>\nSupport Server: <https://discord.gg/dTdH3gD>'
+const FALLBACK_HELP_FMOVE = HELP_FMOVE.embed.fields[0].value
+const FALLBACK_HELP_CMOVE = HELP_CMOVE.embed.fields[0].value
+const FALLBACK_HELP_MOVE = HELP_MOVE.embed.fields[0].value
+const FALLBACK_HELP_GMOVE = HELP_GMOVE.embed.fields[0].value
+
 function sendMessage (message, sendMessage) {
   const helper = require('./helper.js')
   message.channel.send(sendMessage)
@@ -156,5 +163,10 @@ module.exports = {
   USER_ALREADY_IN_CHANNEL,
   VOICE_CHANNEL_NAMES_THE_SAME,
   MISSING_FNUTTS_IN_ARGS,
-  USER_MOVED_WITH_TEXT_CHANNEL
+  USER_MOVED_WITH_TEXT_CHANNEL,
+  FALLBACK_HELP_CMOVE,
+  FALLBACK_HELP_FMOVE,
+  FALLBACK_HELP_GMOVE,
+  FALLBACK_HELP_MESSAGE,
+  FALLBACK_HELP_MOVE
 }

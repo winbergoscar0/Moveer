@@ -82,17 +82,18 @@ client.on('message', message => {
   }
 
   if (command === 'help') {
+    const gotEmbedPerms = message.channel.permissionsFor(message.guild.me).has('EMBED_LINKS')
     if (message.author.bot) return
     if (args.length < 1) {
-      moveerMessage.sendMessage(message, moveerMessage.HELP_MESSAGE)
+      moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_MESSAGE : moveerMessage.FALLBACK_HELP_MESSAGE)
     } else if (args[0] === 'cmove') {
-      moveerMessage.sendMessage(message, moveerMessage.HELP_CMOVE)
+      moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_CMOVE : moveerMessage.FALLBACK_HELP_CMOVE)
     } else if (args[0] === 'move') {
-      moveerMessage.sendMessage(message, moveerMessage.HELP_MOVE)
+      moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_MOVE : moveerMessage.FALLBACK_HELP_MOVE)
     } else if (args[0] === 'gmove') {
-      moveerMessage.sendMessage(message, moveerMessage.HELP_GMOVE)
+      moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_GMOVE : moveerMessage.FALLBACK_HELP_GMOVE)
     } else if (args[0] === 'fmove') {
-      moveerMessage.sendMessage(message, moveerMessage.HELP_FMOVE)
+      moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_FMOVE : moveerMessage.FALLBACK_HELP_FMOVE)
     }
   }
 })
