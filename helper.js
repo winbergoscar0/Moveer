@@ -29,7 +29,7 @@ function checkArgsLength (args, expectedLength) {
 }
 
 function checkIfArgsTheSame (message, args) {
-  if (args[0] === args[1]) {
+  if (args[0].toLowerCase() === args[1].toLowerCase()) {
     throw {
       'logMessage': 'Same voicechannel name',
       'sendMessage': moveerMessage.VOICE_CHANNEL_NAMES_THE_SAME + ' <@' + message.author.id + '>'
