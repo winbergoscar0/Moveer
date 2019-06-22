@@ -110,20 +110,20 @@ function checkIfGuildHasTwoMoveerChannels (message) {
   }
 }
 
-function checkIfMentionsInsideVoiceChannel (message, command, messageMentions) {
+function checkIfMentionsInsideVoiceChannel (message, messageMentions) {
   for (let i = 0; i < messageMentions.length; i++) {
     if (message.guild.members.get(messageMentions[i].id).voiceChannelID === undefined || message.guild.members.get(messageMentions[i].id).voiceChannelID === null) {
-      moveerMessage.logger(message, command, 'Not moving user, not in any voice channel!')
+      moveerMessage.logger(message, 'Not moving user, not in any voice channel!')
       moveerMessage.sendMessage(message, messageMentions[i] + ' ' + moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL)
     }
   }
   return messageMentions.filter(user => message.guild.members.get(user.id).voiceChannelID !== undefined && message.guild.members.get(user.id).voiceChannelID !== null)
 }
 
-function checkIfUsersAlreadyInChannel (message, command, messageMentions, toVoiceChannelId) {
+function checkIfUsersAlreadyInChannel (message, messageMentions, toVoiceChannelId) {
   for (let i = 0; i < messageMentions.length; i++) {
     if (message.guild.members.get(messageMentions[i].id).voiceChannelID === toVoiceChannelId) {
-      moveerMessage.logger(message, command, 'Not moving user, user already in the channel!')
+      moveerMessage.logger(message, 'Not moving user, user already in the channel!')
       moveerMessage.sendMessage(message, messageMentions[i].username + ' ' + moveerMessage.USER_ALREADY_IN_CHANNEL)
     }
   }
@@ -190,25 +190,25 @@ function getChannelByName (message, findByName) {
   return voiceChannel
 }
 
-function moveUsers (message, command, usersToMove, toVoiceChannelId) {
+function moveUsers (message, usersToMove, toVoiceChannelId) {
   let usersMoved = 0
   for (let i = 0; i < usersToMove.length; i++) {
     message.guild.member(usersToMove[i]).setVoiceChannel(toVoiceChannelId)
       .catch(err => {
         console.log(err)
-        moveerMessage.logger(message, command, 'Got above error when moving people...')
+        moveerMessage.logger(message, 'Got above error when moving people...')
         moveerMessage.sendMessage(message, 'Got an error moving people :( If this keeps happening, please contact a moderator in the official discord: https://discord.gg/dTdH3gD')
         if (message.guild.id !== '569905989604868138') reportMoveerError(message)
       })
     usersMoved++
   }
-  moveerMessage.logger(message, command, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users'))
+  moveerMessage.logger(message, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users'))
   moveerMessage.sendMessage(message, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users') + ' by request of <@' + message.author.id + '>')
   if (message.guild.id === '569905989604868138') return
   if (config.postgreSQLConnection !== 'x') successfullmove(usersMoved)
 }
 
-function getChannelWithSpacesName (message, command, args) {
+function getChannelWithSpacesName (args) {
   const string = args.join()
   let fnuttCounter = string[0] === '"' ? 0 : 2
   let testFrom = ''

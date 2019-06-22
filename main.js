@@ -65,10 +65,10 @@ client.on('message', message => {
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
   const command = args.shift().toLowerCase()
 
-  if (command === 'move') move.move(args, message, 'Move')
-  if (command === 'gmove') gmove.move(args, message, 'Gmove')
-  if (command === 'cmove') cmove.move(args, message, 'Cmove')
-  if (command === 'fmove') fmove.move(args, message, 'Fmove')
+  if (command === 'move') move.move(args, message)
+  if (command === 'gmove') gmove.move(args, message)
+  if (command === 'cmove') cmove.move(args, message)
+  if (command === 'fmove') fmove.move(args, message)
   if (command === 'help') {
     const gotEmbedPerms = message.channel.permissionsFor(message.guild.me).has('EMBED_LINKS')
     if (args.length < 1) {

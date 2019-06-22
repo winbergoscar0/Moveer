@@ -1,7 +1,7 @@
 const moveerMessage = require('./moveerMessage.js')
 const helper = require('./helper.js')
 
-function move (args, message, command) {
+function move (args, message) {
   let messageMentions = message.mentions.users.array() // Mentions in the message
   let fromVoiceChannel
   try {
@@ -18,18 +18,18 @@ function move (args, message, command) {
       helper.checkIfGuildHasTwoMoveerChannels(message)
       helper.checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
     }
-    messageMentions = helper.checkIfMentionsInsideVoiceChannel(message, command, messageMentions)
-    messageMentions = helper.checkIfUsersAlreadyInChannel(message, command, messageMentions, message.member.voiceChannelID)
+    messageMentions = helper.checkIfMentionsInsideVoiceChannel(message, messageMentions)
+    messageMentions = helper.checkIfUsersAlreadyInChannel(message, messageMentions, message.member.voiceChannelID)
     const userIdsToMove = messageMentions.map(({ id }) => id)
     const authorVoiceChannel = helper.getChannelByName(message, message.member.voiceChannelID)
     helper.checkForMovePerms(message, userIdsToMove, authorVoiceChannel)
     helper.checkForConnectPerms(message, userIdsToMove, authorVoiceChannel)
 
     // No errors in the message, lets get moving!
-    if (userIdsToMove.length > 0) helper.moveUsers(message, command, userIdsToMove, message.member.voiceChannelID)
+    if (userIdsToMove.length > 0) helper.moveUsers(message, userIdsToMove, message.member.voiceChannelID)
   } catch (err) {
     if (!err.logMessage) console.log(err)
-    moveerMessage.logger(message, command, err.logMessage)
+    moveerMessage.logger(message, err.logMessage)
     moveerMessage.sendMessage(message, err.sendMessage)
   }
 }

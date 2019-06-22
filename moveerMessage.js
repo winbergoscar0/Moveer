@@ -133,7 +133,7 @@ function sendMessage (message, sendMessage) {
     })
 }
 
-function logger (message, command, logMessage) {
+function logger (message, logMessage) {
   log.info('(' + message.id + ') - ' + message.guild.name + ' - (' + message.channel.name + ') - (' + message.content + ') - ' + logMessage)
 }
 
