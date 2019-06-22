@@ -55,35 +55,22 @@ client.on('guildDelete', (guild) => {
   log.info('Leaving server: ' + guild.name)
 })
 
-
 // Listen for messages
 client.on('message', message => {
   if (!message.content.startsWith(config.discordPrefix)) return
+  if (message.author.bot) {
+    log.info('Command made by bot: ' + message.content)
+    return
+  }
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
   const command = args.shift().toLowerCase()
-  if (command === 'move') {
-    if (message.author.bot) return // Dont allow bot as author in this message
-    move.move(args, message, 'Move')
-  }
 
-  if (command === 'gmove') {
-    if (message.author.bot) return // Dont allow bot as author in this message
-    gmove.move(args, message, 'Gmove')
-  }
-
-  // This command allows bots
-  if (command === 'cmove') {
-    cmove.move(args, message, 'Cmove')
-  }
-
-  // This command allows bots
-  if (command === 'fmove') {
-    fmove.move(args, message, 'Fmove')
-  }
-
+  if (command === 'move') move.move(args, message, 'Move')
+  if (command === 'gmove') gmove.move(args, message, 'Gmove')
+  if (command === 'cmove') cmove.move(args, message, 'Cmove')
+  if (command === 'fmove') fmove.move(args, message, 'Fmove')
   if (command === 'help') {
     const gotEmbedPerms = message.channel.permissionsFor(message.guild.me).has('EMBED_LINKS')
-    if (message.author.bot) return
     if (args.length < 1) {
       moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_MESSAGE : moveerMessage.FALLBACK_HELP_MESSAGE)
     } else if (args[0] === 'cmove') {

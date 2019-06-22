@@ -27,12 +27,10 @@ function move (args, message, command) {
 
     // No errors in the message, lets get moving!
     if (userIdsToMove.length > 0) helper.moveUsers(message, command, userIdsToMove, message.member.voiceChannelID)
-  }
-  catch (err) {
+  } catch (err) {
     if (!err.logMessage) console.log(err)
     moveerMessage.logger(message, command, err.logMessage)
     moveerMessage.sendMessage(message, err.sendMessage)
-    return
   }
 }
 

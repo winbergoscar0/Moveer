@@ -113,8 +113,9 @@ const HELP_FMOVE = {
   }
 }
 
-const FALLBACK_HELP_MESSAGE = 'move - Moves @mentions to you\ncmove  Moves @mentions to a specific channel\nfmove \
-  - Moves users inside one channel to another channel\ngmove - Moves everyone inside a channel to you. \n\nFor more information, use !help <command>\nSupport Server: <https://discord.gg/dTdH3gD>'
+const FALLBACK_HELP_MESSAGE = 'move - Moves @mentions to you\ncmove  Moves @mentions to a specific channel\nfmove' +
+  '- Moves users inside one channel to another channel\ngmove - Moves everyone inside a channel to you. \n\n' +
+  'For more information, use !help <command>\nSupport Server: <https://discord.gg/dTdH3gD>'
 const FALLBACK_HELP_FMOVE = HELP_FMOVE.embed.fields[0].value
 const FALLBACK_HELP_CMOVE = HELP_CMOVE.embed.fields[0].value
 const FALLBACK_HELP_MOVE = HELP_MOVE.embed.fields[0].value

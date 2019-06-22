@@ -5,7 +5,8 @@
     },
     "extends": [
         "eslint:recommended",
-        "node"
+        "node",
+        "standard"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -16,11 +17,6 @@
         "sourceType": "module"
     },
     "rules": {
-        "no-trailing-spaces": 1,
-        "no-var": 1,
-        "prefer-const": 1,
-        "no-extra-parens": 1,
-        "space-before-function-paren": 1,
         "no-console": 0,
         "import/no-commonjs": 0,
         "quotes": [
