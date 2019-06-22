@@ -10,8 +10,8 @@ function checkIfVoiceChannelExist (message, voiceChannel, channelName) {
     throw {
       'logMessage': 'Cant find voiceChannel: ' + channelName + (message.content.slice(config.discordPrefix.length).trim().split(/ +/g).length > 3 ? ' - Sent fnutt helper' : ''),
       'sendMessage': command === 'move'
-        ? moveerMessage.NO_VOICE_CHANNEL_NAMED_X + 'the name: "' + channelName + '" <@' + message.author.id + '>'
-        : moveerMessage.NO_VOICE_CHANNEL_NAMED_X + 'the name: "' + channelName + '" <@' + message.author.id + '>' +
+        ? moveerMessage.NO_VOICE_CHANNEL_NAMED_X + 'the name/id: "' + channelName + '" <@' + message.author.id + '>'
+        : moveerMessage.NO_VOICE_CHANNEL_NAMED_X + 'the name/id: "' + channelName + '" <@' + message.author.id + '>' +
       (message.content.slice(config.discordPrefix.length).trim().split(/ +/g).length > 3
         ? '\nIf your voicechannel contains spaces, please use "" around it. Example `"channel with spaces"`'
         : '')
