@@ -13,8 +13,8 @@ function move (args, message) {
 
     helper.checkIfTextChannelIsMoveerAdmin(message)
     helper.checkIfMessageContainsMentions(message)
-    helper.checkIfArgsTheSame(message, args)
     helper.checkArgsLength(args, 2)
+    helper.checkIfArgsTheSame(message, args)
     const fromVoiceChannel = helper.getChannelByName(message, fromVoiceChannelName)
     const toVoiceChannel = helper.getChannelByName(message, toVoiceChannelName)
     helper.checkIfVoiceChannelExist(message, fromVoiceChannel, fromVoiceChannelName)
