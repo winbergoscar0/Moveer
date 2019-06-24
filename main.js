@@ -58,10 +58,7 @@ client.on('guildDelete', (guild) => {
 // Listen for messages
 client.on('message', message => {
   if (!message.content.startsWith(config.discordPrefix)) return
-  if (message.author.bot) {
-    log.info('Command made by bot: ' + message.content)
-    return
-  }
+  if (message.author.bot) return
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
   const command = args.shift().toLowerCase()
 
