@@ -125,7 +125,7 @@ function sendMessage (message, sendMessage) {
   const helper = require('./helper.js')
   message.channel.send(sendMessage)
     .catch((e) => {
-      logger(message, message.content, e)
+      logger(message, e)
       if (config.discordBotListToken !== 'x' && message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES') === true) {
         helper.reportMoveerError(message)
         console.log(e)
