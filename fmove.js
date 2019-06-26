@@ -1,7 +1,7 @@
 const moveerMessage = require('./moveerMessage.js')
 const helper = require('./helper.js')
 
-function move (args, message) {
+async function move (args, message) {
   try {
     let fromVoiceChannelName = args[0]
     let toVoiceChannelName = args[1]
@@ -22,9 +22,9 @@ function move (args, message) {
     helper.checkIfChannelIsTextChannel(message, toVoiceChannel)
     helper.checkIfChannelIsTextChannel(message, fromVoiceChannel)
     helper.checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
-    const userIdsToMove = fromVoiceChannel.members.map(({ id }) => id)
-    helper.checkForMovePerms(message, userIdsToMove, toVoiceChannel)
-    helper.checkForConnectPerms(message, userIdsToMove, toVoiceChannel)
+    const userIdsToMove = await fromVoiceChannel.members.map(({ id }) => id)
+    await helper.checkForMovePerms(message, userIdsToMove, toVoiceChannel)
+    await helper.checkForConnectPerms(message, userIdsToMove, toVoiceChannel)
 
     // No errors in the message, lets get moving!
     helper.moveUsers(message, userIdsToMove, toVoiceChannel.id)

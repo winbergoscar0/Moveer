@@ -1,7 +1,7 @@
 const moveerMessage = require('./moveerMessage.js')
 const helper = require('./helper.js')
 
-function move (args, message) {
+async function move (args, message) {
   if (args.length < 1 || args === undefined || args === null || args === []) {
     moveerMessage.logger(message, 'room identifier is missing')
     moveerMessage.sendMessage(message, moveerMessage.MESSAGE_MISSING_ROOM_IDENTIFER + ' <@' + message.author.id + '>')
@@ -26,10 +26,10 @@ function move (args, message) {
     helper.checkIfVoiceChannelExist(message, fromVoiceChannel, fromVoiceChannelName)
     helper.checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
     helper.checkIfChannelIsTextChannel(message, fromVoiceChannel)
-    const userIdsToMove = fromVoiceChannel.members.map(({ id }) => id)
+    const userIdsToMove = await fromVoiceChannel.members.map(({ id }) => id)
     const authorVoiceChannel = helper.getChannelByName(message, message.member.voiceChannelID)
-    helper.checkForMovePerms(message, userIdsToMove, authorVoiceChannel)
-    helper.checkForConnectPerms(message, userIdsToMove, authorVoiceChannel)
+    await helper.checkForMovePerms(message, userIdsToMove, authorVoiceChannel)
+    await helper.checkForConnectPerms(message, userIdsToMove, authorVoiceChannel)
 
     // No errors in the message, lets get moving!
     helper.moveUsers(message, userIdsToMove, message.member.voiceChannelID)
