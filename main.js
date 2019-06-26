@@ -59,6 +59,7 @@ client.on('guildDelete', (guild) => {
 client.on('message', message => {
   if (!message.content.startsWith(config.discordPrefix)) return
   if (message.author.bot) return
+  if (message.channel.type !== 'text') return
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
   const command = args.shift().toLowerCase()
 
