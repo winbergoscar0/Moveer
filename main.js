@@ -68,6 +68,7 @@ client.on('message', message => {
   if (command === 'cmove') cmove.move(args, message)
   if (command === 'fmove') fmove.move(args, message)
   if (command === 'help') {
+    if (message.author.bot) return
     const gotEmbedPerms = message.channel.permissionsFor(message.guild.me).has('EMBED_LINKS')
     if (args.length < 1) {
       moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_MESSAGE : moveerMessage.FALLBACK_HELP_MESSAGE)
