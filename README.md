@@ -44,3 +44,7 @@ Invite the bot to your server using this [LINK](https://discordapp.com/api/oauth
 
 The bot ONLY requires "Use members" and "CONNECT" when inviting. The reason for it requires Connect permissions is because discord requires it. Moveer won't join you!
 
+## Show your support
+
+Give a ⭐️ if you like Moveer
+
