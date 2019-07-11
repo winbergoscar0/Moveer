@@ -152,11 +152,10 @@ async function checkForConnectPerms (message, users, voiceChannel) {
 async function checkForMovePerms (message, users, voiceChannel) {
 
   for (let i = 0; i < users.length; i++) {
-    console.log(users[i])
+    console.log('userId: ' + users[i])
     const userVoiceChannelId = await message.guild.members.get(users[i]).voiceChannelID
-    console.log(userVoiceChannelId)
+    console.log('uservoiceId ' + userVoiceChannelId)
     const userVoiceChannel = await message.guild.channels.get(userVoiceChannelId)
-    console.log(userVoiceChannel)
     if (await !userVoiceChannel.memberPermissions(message.guild.me).has('MOVE_MEMBERS')) {
       throw {
         'logMessage': 'Moveer is missing Move Members permission',
