@@ -192,10 +192,15 @@ function getChannelByName (message, findByName) {
   return voiceChannel
 }
 
-function moveUsers (message, usersToMove, toVoiceChannelId) {
+function sleep (ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+async function moveUsers (message, usersToMove, toVoiceChannelId) {
   let usersMoved = 0
   for (let i = 0; i < usersToMove.length; i++) {
-    message.guild.member(usersToMove[i]).setVoiceChannel(toVoiceChannelId)
+    if (usersToMove.length > 10) await sleep(500)
+    await message.guild.member(usersToMove[i]).setVoiceChannel(toVoiceChannelId)
       .catch(err => {
         if (err.message === 'Target user is not connected to voice.') {
           moveerMessage.logger(message, '1 user left voice before getting moved')
