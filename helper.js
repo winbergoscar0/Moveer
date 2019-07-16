@@ -12,9 +12,9 @@ function checkIfVoiceChannelExist (message, voiceChannel, channelName) {
       'sendMessage': command === 'move'
         ? moveerMessage.NO_VOICE_CHANNEL_NAMED_X + 'the name/id: "' + channelName + '" <@' + message.author.id + '>'
         : moveerMessage.NO_VOICE_CHANNEL_NAMED_X + 'the name/id: "' + channelName + '" <@' + message.author.id + '>' +
-      (message.content.slice(config.discordPrefix.length).trim().split(/ +/g).length > 3
-        ? '\nIf your voicechannel contains spaces, please use "" around it. Example `"channel with spaces"`'
-        : '')
+        (message.content.slice(config.discordPrefix.length).trim().split(/ +/g).length > 3
+          ? '\nIf your voicechannel contains spaces, please use "" around it. Example `"channel with spaces"`'
+          : '')
     }
   }
 }
@@ -150,7 +150,6 @@ async function checkForConnectPerms (message, users, voiceChannel) {
 }
 
 async function checkForMovePerms (message, users, voiceChannel) {
-
   for (let i = 0; i < users.length; i++) {
     console.log('userId: ' + users[i])
     const userVoiceChannelId = await message.guild.members.get(users[i]).voiceChannelID
@@ -198,10 +197,14 @@ function moveUsers (message, usersToMove, toVoiceChannelId) {
   for (let i = 0; i < usersToMove.length; i++) {
     message.guild.member(usersToMove[i]).setVoiceChannel(toVoiceChannelId)
       .catch(err => {
-        console.log(err)
-        moveerMessage.logger(message, 'Got above error when moving people...')
-        moveerMessage.sendMessage(message, 'Got an error moving people :( If this keeps happening, please contact a moderator in the official discord: https://discord.gg/dTdH3gD')
-        if (message.guild.id !== '569905989604868138') reportMoveerError(message)
+        if (err.message === 'Target user is not connected to voice.') {
+          moveerMessage.logger(message, '1 user left voice before getting moved')
+        } else {
+          console.log(err)
+          moveerMessage.logger(message, 'Got above error when moving people...')
+          moveerMessage.sendMessage(message, 'Got an error moving people :( If this keeps happening, please contact a moderator in the official discord: https://discord.gg/dTdH3gD')
+          if (message.guild.id !== '569905989604868138') reportMoveerError('MOVE', err.message)
+        }
       })
     usersMoved++
   }
@@ -252,17 +255,19 @@ async function successfullmove (usersMoved) {
     await client.end()
   } catch (err) {
     console.log(err)
-    reportMoveerError('DB')
+    reportMoveerError('DB', usersMoved)
   }
 }
 
-function reportMoveerError (message) {
+function reportMoveerError (type, message) {
   const Discord = require('discord.js')
   const hook = new Discord.WebhookClient(config.discordHookIdentifier, config.discordHookToken)
-  if (message === 'DB') {
-    hook.send('New Moveer DB error reported. Check the logs for information.\nError adding successful move to postgreSQL\n@everyone')
+  if (type === 'DB') {
+    hook.send('New DB error reported. Check the logs for information.\nError adding ' + message + ' successful move to postgreSQL\n@everyone')
+  } else if (type === 'MOVE') {
+    hook.send('New Moving error reported. Check the logs for information.\n ' + message + '\n@everyone')
   } else {
-    hook.send('New Moveer error reported. Check the logs for information.\nCommand: ' + message.content + '\nInside textChannel: ' + message.channel.name + '\nInside server: ' + message.guild.name + '\n@everyone')
+    hook.send('New error reported. Check the logs for information.\nCommand: ' + message.content + '\nInside textChannel: ' + message.channel.name + '\nInside server: ' + message.guild.name + '\n@everyone')
   }
 }
 
