@@ -231,7 +231,7 @@ async function moveUsers (message, usersToMove, toVoiceChannelId) {
   if (config.postgreSQLConnection !== 'x') successfullmove(usersMoved)
 }
 
-function getChannelWithSpacesName (args) {
+function getNameWithSpacesName (args) {
   const string = args.join()
   let fnuttCounter = string[0] === '"' ? 0 : 2
   let testFrom = ''
@@ -307,7 +307,7 @@ module.exports = {
   checkIfMentionsInsideVoiceChannel,
   checkIfUsersAlreadyInChannel,
   getChannelByName,
-  getChannelWithSpacesName,
+  getNameWithSpacesName,
   checkIfChannelIsTextChannel,
   reportMoveerError,
   getUsersByRole

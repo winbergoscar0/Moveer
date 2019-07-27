@@ -6,7 +6,7 @@ async function move (args, message) {
     let fromVoiceChannelName = args[0]
     let toVoiceChannelName = args[1]
     if (args.join().includes('"')) {
-      const names = helper.getChannelWithSpacesName(args)
+      const names = helper.getNameWithSpacesName(args)
       fromVoiceChannelName = names[0]
       toVoiceChannelName = names[1]
     }

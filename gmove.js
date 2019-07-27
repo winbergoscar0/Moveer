@@ -11,7 +11,7 @@ async function move (args, message) {
   try {
     let fromVoiceChannelName = args[0]
     if (args.join().includes('"')) {
-      const names = helper.getChannelWithSpacesName(args)
+      const names = helper.getNameWithSpacesName(args)
       fromVoiceChannelName = names[0]
     }
     if (message.channel.name.toLowerCase() !== 'moveeradmin') fromVoiceChannelName = 'gMoveer' + fromVoiceChannelName
