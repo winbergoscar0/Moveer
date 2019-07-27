@@ -1,6 +1,5 @@
 const opts = {
-  timestampFormat: 'YYYY-MM-DD HH:mm:ss',
-  logFilePath: 'logs.log'
+  timestampFormat: 'YYYY-MM-DD HH:mm:ss'
 }
 const log = require('simple-node-logger').createSimpleLogger(opts)
 const config = require('./config.js')
