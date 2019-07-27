@@ -1,5 +1,5 @@
-const moveerMessage = require('./moveerMessage.js')
-const helper = require('./helper.js')
+const moveerMessage = require('../moveerMessage.js')
+const helper = require('../helper.js')
 
 async function move (args, message) {
   if (args.length < 1 || args === undefined || args === null || args === []) {

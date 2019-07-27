@@ -9,11 +9,11 @@ const log = require('simple-node-logger').createSimpleLogger(opts)
 const config = require('./config.js')
 const token = config.discordToken
 
-const move = require('./move.js')
-const cmove = require('./cmove.js')
-const gmove = require('./gmove.js')
-const fmove = require('./fmove.js')
-const rmove = require('./rmove.js')
+const move = require('./commands/move.js')
+const cmove = require('./commands/cmove.js')
+const gmove = require('./commands/gmove.js')
+const fmove = require('./commands/fmove.js')
+const rmove = require('./commands/rmove.js')
 const moveerMessage = require('./moveerMessage.js')
 
 if (config.discordBotListToken !== 'x') {
