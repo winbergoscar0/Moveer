@@ -45,7 +45,11 @@ const HELP_MESSAGE = {
       },
       {
         'name': 'gmove',
-        'value': 'Moves everyone inside a channel to you \n\nFor more information, use !help <command>'
+        'value': 'Moves everyone inside a channel to you'
+      },
+      {
+        'name': 'rmove',
+        'value': 'Moves everyone with a certain role to you \n\nFor more information, use !help <command>'
       }
     ]
   }
@@ -112,6 +116,21 @@ const HELP_FMOVE = {
     ]
   }
 }
+// RMOVE
+const HELP_RMOVE = {
+  'embed': {
+    'color': 2387002,
+    'footer': {
+      'text': 'Support server: https://discord.gg/dTdH3gD'
+    },
+    'fields': [
+      {
+        'name': '!rmove',
+        'value': '1. Tell users you want to move to join any voice channel\n2. Write `!rmove damage` where damage is the role name you want to move\n \nThis command requires to be sent from the text channel \'moveeradmin\'.\nIf your role contains spaces use\n`!rmove "super admins"`'
+      }
+    ]
+  }
+}
 
 const FALLBACK_HELP_MESSAGE = 'move - Moves @mentions to you\ncmove  Moves @mentions to a specific channel\nfmove' +
   '- Moves users inside one channel to another channel\ngmove - Moves everyone inside a channel to you. \n\n' +
@@ -159,6 +178,7 @@ module.exports = {
   HELP_MESSAGE,
   HELP_MOVE,
   HELP_FMOVE,
+  HELP_RMOVE,
   logger,
   sendMessage,
   USER_ALREADY_IN_CHANNEL,
