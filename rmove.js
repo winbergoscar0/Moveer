@@ -8,7 +8,7 @@ async function move (args, message) {
       const names = helper.getNameWithSpacesName(args) // Not channels, but role
       roleName = names[0]
     }
-
+    helper.checkIfAuthorInsideAVoiceChannel(message, message.member.voiceChannelID)
     helper.checkIfTextChannelIsMoveerAdmin(message)
     helper.checkIfMessageContainsMentions(message)
     helper.checkArgsLength(args, 1)
