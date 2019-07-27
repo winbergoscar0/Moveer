@@ -13,6 +13,7 @@ const move = require('./move.js')
 const cmove = require('./cmove.js')
 const gmove = require('./gmove.js')
 const fmove = require('./fmove.js')
+const rmove = require('./rmove.js')
 const moveerMessage = require('./moveerMessage.js')
 
 if (config.discordBotListToken !== 'x') {
@@ -67,6 +68,7 @@ client.on('message', message => {
   if (command === 'gmove') gmove.move(args, message)
   if (command === 'cmove') cmove.move(args, message)
   if (command === 'fmove') fmove.move(args, message)
+  if (command === 'rmove') rmove.move(args, message)
   if (command === 'help') {
     if (message.author.bot) return
     const gotEmbedPerms = message.channel.permissionsFor(message.guild.me).has('EMBED_LINKS')

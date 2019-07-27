@@ -196,6 +196,18 @@ function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+function getUsersByRole (message, roleName) {
+  const role = message.guild.roles.find(role => role.name.toLowerCase() === roleName.toLowerCase())
+  if (role === null || role === undefined) {
+    throw {
+      'logMessage': 'Can\'t find role with the name: ' + roleName,
+      'sendMessage': 'Can\'t find role with the name: ' + roleName
+    }
+  }
+  const usersToMove = role.members
+  return usersToMove
+}
+
 async function moveUsers (message, usersToMove, toVoiceChannelId) {
   let usersMoved = 0
   for (let i = 0; i < usersToMove.length; i++) {
@@ -297,5 +309,6 @@ module.exports = {
   getChannelByName,
   getChannelWithSpacesName,
   checkIfChannelIsTextChannel,
-  reportMoveerError
+  reportMoveerError,
+  getUsersByRole
 }
