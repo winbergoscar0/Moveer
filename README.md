@@ -28,10 +28,14 @@ Moves users inside  GmoveerX to you with one command. If the voice channel is na
 Moves users inside one voicechannel to another. Moves users inside overwatch to pubg. <br>(Command must be sent inside a text channel named "moveeradmin")
 <br>Example command `!fmove overwatch pubg`
 
+### **!rmove:** ↓ 
+Moves users with a certain role to you. For example `!rmove dps` moves all members with "dps" role to you.
+<br>Example command `!frmove "super admins"`
+
 
 # Important notes:
-1. If your voice channel contains spaces use `!fmove "channel 1" "channel 2"`
-2. `!fmove` and `!cmove` are both admin commands and requires the command to be sent inside a text channel named "moveeradmin"
+1. If your names contains spaces use " around it. example: `!fmove "channel 1" "channel 2"`
+2. `!fmove`, `!cmove` and `!rmove` are all admin commands and requires the command to be sent inside a text channel named "moveeradmin"
 3. `!gmove` and `!move` commands sent inside "moveeradmin" moves people from any channel and removes the requirement to be inside "Moveer" or "Gmoveer". Please note that the !gmove will require the full name of the voicechannel.
 
 For more information use the !help command inside discord or join us with the link below ↓
@@ -42,7 +46,7 @@ Join us with the following link https://discord.gg/dTdH3gD and tag a moderator!
 ### Invite Moveer to your discord using the link below! Happy Moving! :)
 Invite the bot to your server using this [LINK](https://discordapp.com/api/oauth2/authorize?client_id=400724460203802624&permissions=17825792&scope=bot)
 
-The bot ONLY requires "Use members" and "CONNECT" when inviting. The reason for it requires Connect permissions is because discord requires it. Moveer won't join you!
+The bot ONLY requires "Use members" and "CONNECT" when inviting. The reason for it requiring Connect permissions is because discord requires it. Moveer won't join you!
 
 ## Show your support
 
