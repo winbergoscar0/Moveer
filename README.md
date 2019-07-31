@@ -30,7 +30,7 @@ Moves users inside one voicechannel to another. Moves users inside overwatch to 
 
 ### **!rmove:** ↓ 
 Moves users with a certain role to you. For example `!rmove dps` moves all members with "dps" role to you.
-<br>Example command `!frmove "super admins"`
+<br>Example command `!rmove "super admins"`
 
 
 # Important notes:
