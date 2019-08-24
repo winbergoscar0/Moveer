@@ -6,7 +6,7 @@ function checkIfVoiceChannelExist (message, voiceChannel, channelName) {
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
   const command = args.shift().toLowerCase()
 
-  if (voiceChannel === null || voiceChannel.members === undefined) {
+  if (voiceChannel == null) {
     throw {
       'logMessage': 'Cant find voiceChannel: ' + channelName + (message.content.slice(config.discordPrefix.length).trim().split(/ +/g).length > 3 ? ' - Sent fnutt helper' : ''),
       'sendMessage': command === 'move'
@@ -22,8 +22,8 @@ function checkIfVoiceChannelExist (message, voiceChannel, channelName) {
 function checkArgsLength (args, expectedLength) {
   if (args.length < expectedLength) {
     throw {
-      'logMessage': 'Missing one or more arguments',
-      'sendMessage': 'Missing arguments'
+      'logMessage': 'Missing one or more arguments.',
+      'sendMessage': 'Missing arguments. !help <command> for more information'
     }
   }
 }
@@ -39,7 +39,7 @@ function checkIfArgsTheSame (message, args) {
 
 function checkIfUsersInsideVoiceChannel (message, fromVoiceChannelName, fromVoiceChannel) {
   if (fromVoiceChannel === null) return
-  if (fromVoiceChannel.members.array().length < 1) {
+  if (fromVoiceChannel.members.size < 1) {
     throw {
       'logMessage': 'No users inside the channel: ' + fromVoiceChannelName,
       'sendMessage': moveerMessage.NO_USERS_INSIDE_ROOM + ':  ' + fromVoiceChannelName + ' <@' + message.author.id + '>'
@@ -66,7 +66,7 @@ function checkForUserMentions (message, messageMentions) {
 }
 
 function checkIfMessageContainsMentions (message) {
-  if (message.mentions.users.array().length > 0) {
+  if (message.mentions.users.size > 0) {
     throw {
       'logMessage': 'User tried to mention while moving groups',
       'sendMessage': moveerMessage.MOVE_MESSAGE_CONTAINS_MENTIONS + ' <@' + message.author.id + '>'
@@ -84,7 +84,7 @@ function checkIfSelfMention (message) {
 }
 
 function checkIfAuthorInsideAVoiceChannel (message, userVoiceRoomID) {
-  if (userVoiceRoomID === undefined || userVoiceRoomID === null) {
+  if (userVoiceRoomID == null) { // Check for null or undefined
     throw {
       'logMessage': 'User tried to move people without being inside a voice room',
       'sendMessage': moveerMessage.USER_NOT_IN_ANY_VOICE_CHANNEL + ' <@' + message.author.id + '>'
@@ -112,12 +112,12 @@ function checkIfGuildHasTwoMoveerChannels (message) {
 
 function checkIfMentionsInsideVoiceChannel (message, messageMentions) {
   for (let i = 0; i < messageMentions.length; i++) {
-    if (message.guild.members.get(messageMentions[i].id).voiceChannelID === undefined || message.guild.members.get(messageMentions[i].id).voiceChannelID === null) {
+    if (message.guild.members.get(messageMentions[i].id).voiceChannelID == null) { // Check for null or undefined
       moveerMessage.logger(message, 'Not moving user, not in any voice channel!')
       moveerMessage.sendMessage(message, messageMentions[i] + ' ' + moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL)
     }
   }
-  return messageMentions.filter(user => message.guild.members.get(user.id).voiceChannelID !== undefined && message.guild.members.get(user.id).voiceChannelID !== null)
+  return messageMentions.filter(user => message.guild.members.get(user.id).voiceChannelID != null) // Check for null or undefined
 }
 
 function checkIfUsersAlreadyInChannel (message, messageMentions, toVoiceChannelId) {
@@ -196,7 +196,7 @@ function sleep (ms) {
 
 function getUsersByRole (message, roleName) {
   const role = message.guild.roles.find(role => role.name.toLowerCase() === roleName.toLowerCase())
-  if (role === null || role === undefined) {
+  if (role == null) { // Check for null or undefined
     throw {
       'logMessage': 'Can\'t find role with the name: ' + roleName,
       'sendMessage': 'Can\'t find role with the name: ' + roleName
