@@ -6,7 +6,7 @@
 
 A bot that moves users from one voice channel to another. Including locked and hidden voice channels!
 
-## We currently got 5 commands that all move users in different ways.
+## We currently got 6 commands that all move users in different ways.
 
 
 ### **!cmove:** ↓ 
@@ -32,6 +32,9 @@ Moves users inside one voicechannel to another. Moves users inside overwatch to 
 Moves users with a certain role to you. For example `!rmove dps` moves all members with "dps" role to you.
 <br>Example command `!rmove "super admins"`
 
+### **!tmove:** ↓ 
+Moves users with a certain role to specific channel. For example `!tmove channel1 dps` moves all members with "dps" role to channel1.
+<br>Example command `!tmove channel1 "super admins"`
 
 # Important notes:
 1. If your names contains spaces use " around it. example: `!fmove "channel 1" "channel 2"`

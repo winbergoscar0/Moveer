@@ -86,6 +86,8 @@ client.on('message', message => {
       moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_FMOVE : moveerMessage.FALLBACK_HELP_FMOVE)
     } else if (args[0] === 'rmove') {
       moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_RMOVE : moveerMessage.FALLBACK_HELP_RMOVE)
+    } else if (args[0] === 'tmove') {
+      moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_TMOVE : moveerMessage.FALLBACK_HELP_TMOVE)
     }
   }
 })

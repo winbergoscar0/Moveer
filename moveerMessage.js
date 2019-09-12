@@ -49,7 +49,11 @@ const HELP_MESSAGE = {
       },
       {
         'name': 'rmove',
-        'value': 'Moves everyone with a certain role to you \n\nFor more information, use !help <command>'
+        'value': 'Moves everyone with a certain role to you'
+      },
+      {
+        'name': 'tmove',
+        'value': 'Moves everyone with a certain role to a channel you specify\n\nFor more information, use !help <command>'
       }
     ]
   }
@@ -126,12 +130,26 @@ const HELP_RMOVE = {
     'fields': [
       {
         'name': '!rmove',
-        'value': '1. Tell users you want to move to join any voice channel\n2. Write `!rmove damage` where damage is the role name you want to move\n \nThis command requires to be sent from the text channel \'moveeradmin\'.\nIf your role contains spaces use\n`!rmove "super admins"`'
+        'value': '1. Tell users you want to move to join any voice channel\n2. Join any other voice channel and write `!rmove damage` where damage is the role name you want to move\n \nThis command requires to be sent from the text channel \'moveeradmin\'.\nIf your role contains spaces use\n`!rmove "super admins"`'
       }
     ]
   }
 }
-
+// TMOVE
+const HELP_TMOVE = {
+  'embed': {
+    'color': 2387002,
+    'footer': {
+      'text': 'Support server: https://discord.gg/dTdH3gD'
+    },
+    'fields': [
+      {
+        'name': '!tmove',
+        'value': '1. Tell users you want to move to join any voice channel\n2. Write `!rmove channel1 damage` where damage is the role name you want to move and channel1 is the voice channel\n \nThis command requires to be sent from the text channel \'moveeradmin\'.\nIf your role contains spaces use\n`!rmove channel1 "super admins"`'
+      }
+    ]
+  }
+}
 const FALLBACK_HELP_MESSAGE = 'move - Moves @mentions to you\ncmove  Moves @mentions to a specific channel\nfmove' +
   '- Moves users inside one channel to another channel\ngmove - Moves everyone inside a channel to you. \n\n' +
   'For more information, use !help <command>\nSupport Server: <https://discord.gg/dTdH3gD>'
@@ -139,6 +157,7 @@ const FALLBACK_HELP_FMOVE = HELP_FMOVE.embed.fields[0].value
 const FALLBACK_HELP_CMOVE = HELP_CMOVE.embed.fields[0].value
 const FALLBACK_HELP_MOVE = HELP_MOVE.embed.fields[0].value
 const FALLBACK_HELP_GMOVE = HELP_GMOVE.embed.fields[0].value
+const FALLBACK_HELP_TMOVE = HELP_TMOVE.embed.fields[0].value
 
 function sendMessage (message, sendMessage) {
   const helper = require('./helper.js')
@@ -179,6 +198,7 @@ module.exports = {
   HELP_MOVE,
   HELP_FMOVE,
   HELP_RMOVE,
+  HELP_TMOVE,
   logger,
   sendMessage,
   USER_ALREADY_IN_CHANNEL,
@@ -189,5 +209,6 @@ module.exports = {
   FALLBACK_HELP_FMOVE,
   FALLBACK_HELP_GMOVE,
   FALLBACK_HELP_MESSAGE,
-  FALLBACK_HELP_MOVE
+  FALLBACK_HELP_MOVE,
+  FALLBACK_HELP_TMOVE
 }
