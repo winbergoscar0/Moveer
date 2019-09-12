@@ -26,34 +26,34 @@ const MISSING_FNUTTS_IN_ARGS = 'There is either too many or too few quotation ma
 const USER_MOVED_WITH_TEXT_CHANNEL = ' <- seems to be a text channel. I can only move people inside voice channels!'
 
 const HELP_MESSAGE = {
-  'embed': {
-    'footer': {
-      'text': 'Support server: https://discord.gg/dTdH3gD'
+  embed: {
+    footer: {
+      text: 'Support server: https://discord.gg/dTdH3gD'
     },
-    'fields': [
+    fields: [
       {
-        'name': 'move',
-        'value': 'Moves @mentions to you'
+        name: 'move',
+        value: 'Moves @mentions to you'
       },
       {
-        'name': 'cmove',
-        'value': 'Moves @mentions to a specific channel'
+        name: 'cmove',
+        value: 'Moves @mentions to a specific channel'
       },
       {
-        'name': 'fmove',
-        'value': 'Moves one channel to another channel'
+        name: 'fmove',
+        value: 'Moves one channel to another channel'
       },
       {
-        'name': 'gmove',
-        'value': 'Moves everyone inside a channel to you'
+        name: 'gmove',
+        value: 'Moves everyone inside a channel to you'
       },
       {
-        'name': 'rmove',
-        'value': 'Moves everyone with a certain role to you'
+        name: 'rmove',
+        value: 'Moves everyone with a certain role to you'
       },
       {
-        'name': 'tmove',
-        'value': 'Moves everyone with a certain role to a channel you specify\n\nFor more information, use !help <command>'
+        name: 'tmove',
+        value: 'Moves everyone with a certain role to a channel you specify\n\nFor more information, use !help <command>'
       }
     ]
   }
@@ -61,15 +61,15 @@ const HELP_MESSAGE = {
 
 // CMOVE
 const HELP_CMOVE = {
-  'embed': {
-    'color': 2387002,
-    'footer': {
-      'text': 'Support server: https://discord.gg/dTdH3gD'
+  embed: {
+    color: 2387002,
+    footer: {
+      text: 'Support server: https://discord.gg/dTdH3gD'
     },
-    'fields': [
+    fields: [
       {
-        'name': '!cmove',
-        'value': '1. Create a text channel named \'moveeradmin\'\n2. Tell your friends to join any voice channel.\n3. Write `!cmove <voicechannel name or id> @user1 @user2`\n \nThis command doesn\'t require the author to be inside a voice channel. All `!cmove` commands has to be sent inside \'moveeradmin\' since this is an admin only command.\nExample usage:\n`!cmove Channel1 @Fragstealern#2543`\n`!cmove 569909202437406750 @Fragstealern#2543`\n(If your voice channel contains spaces use\n`!cmove "channel 2" @Fragstealern#2543`)'
+        name: '!cmove',
+        value: '1. Create a text channel named \'moveeradmin\'\n2. Tell your friends to join any voice channel.\n3. Write `!cmove <voicechannel name or id> @user1 @user2`\n \nThis command doesn\'t require the author to be inside a voice channel. All `!cmove` commands has to be sent inside \'moveeradmin\' since this is an admin only command.\nExample usage:\n`!cmove Channel1 @Fragstealern#2543`\n`!cmove 569909202437406750 @Fragstealern#2543`\n(If your voice channel contains spaces use\n`!cmove "channel 2" @Fragstealern#2543`)'
 
       }
     ]
@@ -77,75 +77,75 @@ const HELP_CMOVE = {
 }
 // GMOVE
 const HELP_GMOVE = {
-  'embed': {
-    'color': 2387002,
-    'footer': {
-      'text': 'Support server: https://discord.gg/dTdH3gD'
+  embed: {
+    color: 2387002,
+    footer: {
+      text: 'Support server: https://discord.gg/dTdH3gD'
     },
-    'fields': [
+    fields: [
       {
-        'name': '!gmove',
-        'value': 'Group moving without using @tags!\n1. Create a voice channel named \'gMoveer[name here]\' ← Notice that there is no space between the name and \'gMoveer\'.\n2. Join the voice channel you want to move users to\n3. Tell your friends to join your \'gMoveer\' channel.\n4. Write `!gmove [name of the channel]`, do not include \'gMoveer\'\n\nExample: Let\'s say I have a \'gMoveer\' channel named \'gMoveerIce\'. The command would look like this; `!gmove Ice` and it would move the members to your voice channel.\n(If your voice channel contains spaces use \n`!gmove "channel 1"`)'
+        name: '!gmove',
+        value: 'Group moving without using @tags!\n1. Create a voice channel named \'gMoveer[name here]\' ← Notice that there is no space between the name and \'gMoveer\'.\n2. Join the voice channel you want to move users to\n3. Tell your friends to join your \'gMoveer\' channel.\n4. Write `!gmove [name of the channel]`, do not include \'gMoveer\'\n\nExample: Let\'s say I have a \'gMoveer\' channel named \'gMoveerIce\'. The command would look like this; `!gmove Ice` and it would move the members to your voice channel.\n(If your voice channel contains spaces use \n`!gmove "channel 1"`)'
       }
     ]
   }
 }
 // MOVE
 const HELP_MOVE = {
-  'embed': {
-    'color': 2387002,
-    'footer': {
-      'text': 'Support server: https://discord.gg/dTdH3gD'
+  embed: {
+    color: 2387002,
+    footer: {
+      text: 'Support server: https://discord.gg/dTdH3gD'
     },
-    'fields': [
+    fields: [
       {
-        'name': '!move',
-        'value': '1. Create a voice channel named \'Moveer\'\n2. Join a voice channel (Not \'Moveer\')\n3. Tell users you want to move to join the channel \'Moveer\'\n4. Write `!move @user1 @user2`\n \nThis command also contains an admin version that requires a text channel named \'moveeradmin\'. `!move` commands sent inside this channel removes the requirement of @user1 & @user2 to join the \'Moveer\' channel.\nThe author of the command can move people from any channel to any other channel.\n '
+        name: '!move',
+        value: '1. Create a voice channel named \'Moveer\'\n2. Join a voice channel (Not \'Moveer\')\n3. Tell users you want to move to join the channel \'Moveer\'\n4. Write `!move @user1 @user2`\n \nThis command also contains an admin version that requires a text channel named \'moveeradmin\'. `!move` commands sent inside this channel removes the requirement of @user1 & @user2 to join the \'Moveer\' channel.\nThe author of the command can move people from any channel to any other channel.\n '
       }
     ]
   }
 }
 // FMOVE
 const HELP_FMOVE = {
-  'embed': {
-    'color': 2387002,
-    'footer': {
-      'text': 'Support server: https://discord.gg/dTdH3gD'
+  embed: {
+    color: 2387002,
+    footer: {
+      text: 'Support server: https://discord.gg/dTdH3gD'
     },
-    'fields': [
+    fields: [
       {
-        'name': '!fmove',
-        'value': '1. Tell users you want to move to join voice channel A\n2. Write `!fmove A B` where B is the voice channel you want to move them\n \nThis command requires to be sent from the text channel \'moveeradmin\'.\n(If your voice channel contains spaces use\n`!fmove "channel 1" "channel 2"`)'
+        name: '!fmove',
+        value: '1. Tell users you want to move to join voice channel A\n2. Write `!fmove A B` where B is the voice channel you want to move them\n \nThis command requires to be sent from the text channel \'moveeradmin\'.\n(If your voice channel contains spaces use\n`!fmove "channel 1" "channel 2"`)'
       }
     ]
   }
 }
 // RMOVE
 const HELP_RMOVE = {
-  'embed': {
-    'color': 2387002,
-    'footer': {
-      'text': 'Support server: https://discord.gg/dTdH3gD'
+  embed: {
+    color: 2387002,
+    footer: {
+      text: 'Support server: https://discord.gg/dTdH3gD'
     },
-    'fields': [
+    fields: [
       {
-        'name': '!rmove',
-        'value': '1. Tell users you want to move to join any voice channel\n2. Join any other voice channel and write `!rmove damage` where damage is the role name you want to move\n \nThis command requires to be sent from the text channel \'moveeradmin\'.\nIf your role contains spaces use\n`!rmove "super admins"`'
+        name: '!rmove',
+        value: '1. Tell users you want to move to join any voice channel\n2. Join any other voice channel and write `!rmove damage` where damage is the role name you want to move\n \nThis command requires to be sent from the text channel \'moveeradmin\'.\nIf your role contains spaces use\n`!rmove "super admins"`'
       }
     ]
   }
 }
 // TMOVE
 const HELP_TMOVE = {
-  'embed': {
-    'color': 2387002,
-    'footer': {
-      'text': 'Support server: https://discord.gg/dTdH3gD'
+  embed: {
+    color: 2387002,
+    footer: {
+      text: 'Support server: https://discord.gg/dTdH3gD'
     },
-    'fields': [
+    fields: [
       {
-        'name': '!tmove',
-        'value': '1. Tell users you want to move to join any voice channel\n2. Write `!rmove channel1 damage` where damage is the role name you want to move and channel1 is the voice channel\n \nThis command requires to be sent from the text channel \'moveeradmin\'.\nIf your role contains spaces use\n`!rmove channel1 "super admins"`'
+        name: '!tmove',
+        value: '1. Tell users you want to move to join any voice channel\n2. Write `!rmove channel1 damage` where damage is the role name you want to move and channel1 is the voice channel\n \nThis command requires to be sent from the text channel \'moveeradmin\'.\nIf your role contains spaces use\n`!rmove channel1 "super admins"`'
       }
     ]
   }
