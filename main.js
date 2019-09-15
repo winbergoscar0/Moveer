@@ -57,6 +57,11 @@ client.on('guildDelete', (guild) => {
   log.info('Leaving server: ' + guild.name)
 })
 
+client.on('rateLimit', (limit) => {
+  log.info('RATELIMITED')
+  log.info(limit)
+})
+
 // Listen for messages
 client.on('message', message => {
   if (!message.content.startsWith(config.discordPrefix)) return
