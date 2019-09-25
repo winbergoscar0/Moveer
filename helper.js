@@ -137,14 +137,14 @@ async function checkForConnectPerms (message, users, voiceChannel) {
     if (await !userVoiceChannel.memberPermissions(message.guild.me).has('CONNECT')) {
       throw {
         logMessage: 'Moveer is missing CONNECT permission',
-        sendMessage: moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' <@' + message.author.id + '> \n \n' + moveerMessage.SUPPORT_MESSAGE
+        sendMessage: moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' "' + userVoiceChannel.name + '" <@' + message.author.id + '> \n \n' + moveerMessage.SUPPORT_MESSAGE
       }
     }
   }
   if (await !voiceChannel.memberPermissions(message.guild.me).has('CONNECT')) {
     throw {
       logMessage: 'Moveer is missing CONNECT permission',
-      sendMessage: moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' <@' + message.author.id + '> \n \n' + moveerMessage.SUPPORT_MESSAGE
+      sendMessage: moveerMessage.MOVEER_MISSING_CONNECT_PERMISSION + ' "' + voiceChannel.name + '" <@' + message.author.id + '> \n \n' + moveerMessage.SUPPORT_MESSAGE
     }
   }
 }
@@ -156,14 +156,14 @@ async function checkForMovePerms (message, users, voiceChannel) {
     if (await !userVoiceChannel.memberPermissions(message.guild.me).has('MOVE_MEMBERS')) {
       throw {
         logMessage: 'Moveer is missing Move Members permission',
-        sendMessage: moveerMessage.MOVEER_MISSING_MOVE_PERMISSION + ' <@' + message.author.id + '> \n \n' + moveerMessage.SUPPORT_MESSAGE
+        sendMessage: moveerMessage.MOVEER_MISSING_MOVE_PERMISSION + ' "' + userVoiceChannel.name + '" <@' + message.author.id + '> \n \n' + moveerMessage.SUPPORT_MESSAGE
       }
     }
   }
   if (await !voiceChannel.memberPermissions(message.guild.me).has('MOVE_MEMBERS')) {
     throw {
       logMessage: 'Moveer is missing Move Members permission',
-      sendMessage: moveerMessage.MOVEER_MISSING_MOVE_PERMISSION + ' <@' + message.author.id + '> \n \n' + moveerMessage.SUPPORT_MESSAGE
+      sendMessage: moveerMessage.MOVEER_MISSING_MOVE_PERMISSION + ' "' + voiceChannel.name + '" <@' + message.author.id + '> \n \n' + moveerMessage.SUPPORT_MESSAGE
     }
   }
 }
