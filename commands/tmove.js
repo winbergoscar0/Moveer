@@ -17,6 +17,7 @@ async function move (args, message) {
     const toVoiceChannel = helper.getChannelByName(message, toVoiceChannelName)
     helper.checkIfVoiceChannelExist(message, toVoiceChannel, toVoiceChannelName)
     let usersToMove = helper.getUsersByRole(message, roleName)
+    usersToMove = helper.checkIfUserInsideBlockedChannel(message, usersToMove)
     usersToMove = helper.checkIfMentionsInsideVoiceChannel(message, usersToMove)
     usersToMove = helper.checkIfUsersAlreadyInChannel(message, usersToMove, toVoiceChannel.id)
     const userIdsToMove = await usersToMove.map(({ id }) => id)

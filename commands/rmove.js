@@ -13,9 +13,9 @@ async function move (args, message) {
     helper.checkIfMessageContainsMentions(message)
     helper.checkArgsLength(args, 1)
     let usersToMove = helper.getUsersByRole(message, roleName)
+    usersToMove = helper.checkIfUserInsideBlockedChannel(message, usersToMove)
     usersToMove = helper.checkIfMentionsInsideVoiceChannel(message, usersToMove)
     usersToMove = helper.checkIfUsersAlreadyInChannel(message, usersToMove, message.member.voiceChannelID)
-
     const userIdsToMove = await usersToMove.map(({ id }) => id)
     const authorVoiceChannel = helper.getChannelByName(message, message.member.voiceChannelID)
     await helper.checkForMovePerms(message, userIdsToMove, authorVoiceChannel)

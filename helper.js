@@ -177,6 +177,16 @@ function checkIfChannelIsTextChannel (message, channel) {
   }
 }
 
+function checkIfUserInsideBlockedChannel (message, usersToMove) {
+  usersToMove.forEach(user => {
+    if (config.blockedVoiceChannels.includes(user.voiceChannelID)) {
+      moveerMessage.logger(message, 'One user in blocked voice channel')
+      moveerMessage.sendMessage(message, user.user.username + ' is inside a blocked voice channel. Not moving!')
+    }
+  })
+  return usersToMove.filter(user => !config.blockedVoiceChannels.includes(user.voiceChannelID)) // Check for null or undefined
+}
+
 // Helper functions
 function getNameOfVoiceChannel (message, voiceChannelId) {
   return message.guild.channels.get(voiceChannelId).name
@@ -308,5 +318,6 @@ module.exports = {
   getNameWithSpacesName,
   checkIfChannelIsTextChannel,
   reportMoveerError,
-  getUsersByRole
+  getUsersByRole,
+  checkIfUserInsideBlockedChannel
 }
