@@ -40,6 +40,7 @@ Moves users with a certain role to specific channel. For example `!tmove channel
 1. If your names contains spaces use " around it. example: `!fmove "channel 1" "channel 2"`
 2. `!fmove`, `!cmove` and `!rmove` are all admin commands and requires the command to be sent inside a text channel named "moveeradmin"
 3. `!gmove` and `!move` commands sent inside "moveeradmin" moves people from any channel and removes the requirement to be inside "Moveer" or "Gmoveer". Please note that the !gmove will require the full name of the voicechannel.
+4. If you want to block users from getting moved from a specific channel, example your AFK channel while using `!tmove` or `!rmove`. Contact the moderators in the discord below!
 
 For more information use the !help command inside discord or join us with the link below ↓
 
