@@ -36,7 +36,7 @@ client.on('ready', () => {
 
 client.on('guildCreate', (guild) => {
   const welcomeMessage = 'Hello and thanks for inviting me! If you need help or got any questions, please head over to the official Moveer discord at https://discord.gg/dTdH3gD\n'
-  const supportMessage = 'I got multiple commands, but to get started with !move, please follow the guide below.\n 1. Create a voice channel and name it "Moveer".\n 2. Ask your friends to join "Moveer"\n 3. Join any voice channel except "Moveer"\n 4. Write `!move @friend1 @friend2`\n 5. Thats it! @friend1 & @friend2 should be moved to your voice channel.\n \nWe got more commands! Write !help to see them all.\nLets get Moving!'
+  const supportMessage = 'I got multiple commands, but to get started with !cmove, please follow the guide below.\n 1. Create a text channel and name it "moveeradmin".\n 2. Ask your friends to join a voice channel X\n 3. Inside the textchannel "moveeradmin" write !cmove <voicechannelY> @yourfriendsname\n4. Thats it! @yourfriend should be moved from X to voice channel Y.\n \nWe got more commands! Write !help to see them all.\nLets get Moving!'
   log.info('Joined server: ' + guild.name)
   let defaultChannel = ''
   guild.channels.forEach((channel) => {
