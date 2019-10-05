@@ -233,7 +233,7 @@ async function moveUsers (message, usersToMove, toVoiceChannelId) {
       })
     usersMoved++
   }
-  moveerMessage.logger(message, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users'))
+  moveerMessage.logger(message, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users') + (message.author.bot ? ' | Author was a BOT' : ''))
   moveerMessage.sendMessage(message, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users') + ' by request of <@' + message.author.id + '>')
   if (message.guild.id === '569905989604868138') return
   if (config.postgreSQLConnection !== 'x') successfullmove(usersMoved)
