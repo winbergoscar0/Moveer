@@ -172,7 +172,7 @@ function sendMessage (message, sendMessage) {
 }
 
 function logger (message, logMessage) {
-  log.info('(' + message.id + ') - ' + message.guild.name + ' - (' + message.channel.name + ') - (' + message.content + ') - ' + logMessage)
+  log.info((message.author.bot ? 'BOT - ' : '') + '(' + message.id + ') - ' + message.guild.name + ' - (' + message.channel.name + ') - (' + message.content + ') - ' + logMessage)
 }
 
 module.exports = {
