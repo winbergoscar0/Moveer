@@ -145,7 +145,7 @@ const HELP_TMOVE = {
     fields: [
       {
         name: '!tmove',
-        value: '1. Tell users you want to move to join any voice channel\n2. Write `!rmove channel1 damage` where damage is the role name you want to move and channel1 is the voice channel\n \nThis command requires to be sent from the text channel \'moveeradmin\'.\nIf your role contains spaces use\n`!rmove channel1 "super admins"`'
+        value: '1. Tell users you want to move to join any voice channel\n2. Write `!tmove channel1 damage` where damage is the role name you want to move and channel1 is the voice channel\n \nThis command requires to be sent from the text channel \'moveeradmin\'.\nIf your role contains spaces use\n`!tmove channel1 "super admins"`'
       }
     ]
   }
