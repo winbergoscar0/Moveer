@@ -53,8 +53,13 @@ const HELP_MESSAGE = {
       },
       {
         name: 'tmove',
-        value: 'Moves everyone with a certain role to a channel you specify\n\nFor more information, use !help <command>'
+        value: 'Moves everyone with a certain role to a channel you specify'
+      },
+      {
+        name: 'ymove',
+        value: 'Spreads x user from one channel to different voice channels inside a category\n\nFor more information, use !help <command>'
       }
+
     ]
   }
 }
@@ -150,6 +155,21 @@ const HELP_TMOVE = {
     ]
   }
 }
+// YMOVE
+const HELP_YMOVE = {
+  embed: {
+    color: 2387002,
+    footer: {
+      text: 'Support server: https://discord.gg/dTdH3gD'
+    },
+    fields: [
+      {
+        name: '!ymove',
+        value: '1. Tell users you want to move to join voice channel "before games"\n2. Create a couple of voice channels under a category named "games"\n3. Write `!ymove "before games" "games" 5`\n4. Now Moveer should spread users from the voice channel "beforegames" across the different voice channels inside the category "games". 5 users in each channel.  \nThis command requires to be sent from the text channel \'moveeradmin\''
+      }
+    ]
+  }
+}
 const FALLBACK_HELP_MESSAGE = 'move - Moves @mentions to you\ncmove  Moves @mentions to a specific channel\nfmove' +
   '- Moves users inside one channel to another channel\ngmove - Moves everyone inside a channel to you. \n\n' +
   'For more information, use !help <command>\nSupport Server: <https://discord.gg/dTdH3gD>'
@@ -158,7 +178,7 @@ const FALLBACK_HELP_CMOVE = HELP_CMOVE.embed.fields[0].value
 const FALLBACK_HELP_MOVE = HELP_MOVE.embed.fields[0].value
 const FALLBACK_HELP_GMOVE = HELP_GMOVE.embed.fields[0].value
 const FALLBACK_HELP_TMOVE = HELP_TMOVE.embed.fields[0].value
-
+const FALLBACK_HELP_YMOVE = HELP_YMOVE.embed.fields[0].value
 function sendMessage (message, sendMessage) {
   const helper = require('./helper.js')
   message.channel.send(sendMessage)
@@ -210,5 +230,7 @@ module.exports = {
   FALLBACK_HELP_GMOVE,
   FALLBACK_HELP_MESSAGE,
   FALLBACK_HELP_MOVE,
-  FALLBACK_HELP_TMOVE
+  FALLBACK_HELP_TMOVE,
+  HELP_YMOVE,
+  FALLBACK_HELP_YMOVE
 }

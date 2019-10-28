@@ -15,6 +15,7 @@ const gmove = require('./commands/gmove.js')
 const fmove = require('./commands/fmove.js')
 const rmove = require('./commands/rmove.js')
 const tmove = require('./commands/tmove.js')
+const ymove = require('./commands/ymove.js')
 const moveerMessage = require('./moveerMessage.js')
 
 if (config.discordBotListToken !== 'x') {
@@ -76,6 +77,7 @@ client.on('message', message => {
   if (command === 'fmove') fmove.move(args, message)
   if (command === 'rmove') rmove.move(args, message)
   if (command === 'tmove') tmove.move(args, message)
+  if (command === 'ymove') ymove.move(args, message)
   if (command === 'help') {
     if (message.author.bot) return
     const gotEmbedPerms = message.channel.permissionsFor(message.guild.me).has('EMBED_LINKS')
@@ -93,6 +95,8 @@ client.on('message', message => {
       moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_RMOVE : moveerMessage.FALLBACK_HELP_RMOVE)
     } else if (args[0] === 'tmove') {
       moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_TMOVE : moveerMessage.FALLBACK_HELP_TMOVE)
+    } else if (args[0] === 'ymove') {
+      moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_YMOVE : moveerMessage.FALLBACK_HELP_YMOVE)
     }
   }
 })
