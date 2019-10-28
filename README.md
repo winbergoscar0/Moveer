@@ -6,7 +6,7 @@
 
 A bot that moves users from one voice channel to another. Including locked and hidden voice channels!
 
-## We currently got 6 commands that all move users in different ways.
+## We currently got 7 commands that all move users in different ways.
 
 
 ### **!cmove:** ↓ 
@@ -35,6 +35,10 @@ Moves users with a certain role to you. For example `!rmove dps` moves all membe
 ### **!tmove:** ↓ 
 Moves users with a certain role to specific channel. For example `!tmove channel1 dps` moves all members with "dps" role to channel1.
 <br>Example command `!tmove channel1 "super admins"`
+
+### **!ymove:** ↓ 
+Spreads user across voice channels.  For example `!ymove "before games" "games" 5` moves all user from "before games" and spread them, randomlywith 5 users in each voice, across channels in the category "games"
+<br>Example command `!ymove "before games" "games" 5`
 
 # Important notes:
 1. If your names contains spaces use " around it. example: `!fmove "channel 1" "channel 2"`
