@@ -92,6 +92,21 @@ function checkIfAuthorInsideAVoiceChannel (message, userVoiceRoomID) {
   }
 }
 
+function getCategoryByName (message, categoryName) {
+  console.log('hellofromhelper: ' + categoryName)
+  let category = message.guild.channels.find(category => category.id === categoryName)
+  if (category === null) {
+    category = message.guild.channels.find(category => category.name.toLowerCase() === categoryName.toLowerCase())
+  }
+  if (category == null) {
+    throw {
+      logMessage: 'Cant find category with that name: ' + categoryName,
+      sendMessage: 'No category found with the name: ' + categoryName + ' <@' + message.author.id + '>'
+    }
+  }
+  return category
+}
+
 function checkIfVoiceChannelContainsMoveer (message, authorVoiceChannelName) {
   if (authorVoiceChannelName.toLowerCase().includes('moveer')) {
     throw {
@@ -173,6 +188,34 @@ function checkIfChannelIsTextChannel (message, channel) {
     throw {
       logMessage: 'User tried to move with textchannels',
       sendMessage: channel.name + moveerMessage.USER_MOVED_WITH_TEXT_CHANNEL + ' <@' + message.author.id + '> \n'
+    }
+  }
+}
+
+function checkIfCatergyHasRoomsAvailable (message, voiceChannelCounter, voiceChannelsInCategory, categoryName) {
+  if (voiceChannelCounter === voiceChannelsInCategory.length) {
+    // Out of rooms to move people to.
+    throw {
+      logMessage: 'Category: ' + categoryName + ' is out of voice channels to move users to',
+      sendMessage: 'The category "' + categoryName + '" is out of voice channels to move users to. Please add more voice channels.'
+    }
+  }
+}
+
+function checkCountOfChannelsFromCategory (message, checkCountOfChannelsFromCategory, categoryName) {
+  if (checkCountOfChannelsFromCategory.length === 0) {
+    throw {
+      logMessage: 'Not enought voice channels in the category: ' + categoryName,
+      sendMessage: 'No voicechannels exists or no empty voicechannels in the category: ' + categoryName
+    }
+  }
+}
+
+function checkUserAmountInChannel (message, amount, expectedAmount, fromVoiceChannelName) {
+  if (amount < expectedAmount) {
+    throw {
+      logMessage: 'Not enough members inside the channel ' + fromVoiceChannelName + ' to move. Found (' + amount + ') expected over (' + expectedAmount + ')',
+      sendMessage: 'Not enough members inside the channel "' + fromVoiceChannelName + '" to move. Found ' + amount + ' user expected amount above ' + expectedAmount
     }
   }
 }
@@ -319,5 +362,9 @@ module.exports = {
   checkIfChannelIsTextChannel,
   reportMoveerError,
   getUsersByRole,
-  checkIfUserInsideBlockedChannel
+  checkIfUserInsideBlockedChannel,
+  getCategoryByName,
+  checkCountOfChannelsFromCategory,
+  checkUserAmountInChannel,
+  checkIfCatergyHasRoomsAvailable
 }
