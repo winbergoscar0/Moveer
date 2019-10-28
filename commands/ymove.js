@@ -3,7 +3,6 @@ const helper = require('../helper.js')
 
 async function move (args, message) {
   try {
-    console.log(args)
     const amountInEachChannel = args.pop()
     let fromVoiceChannelName = args[0]
     let categoryName = args[1]

@@ -93,7 +93,6 @@ function checkIfAuthorInsideAVoiceChannel (message, userVoiceRoomID) {
 }
 
 function getCategoryByName (message, categoryName) {
-  console.log('hellofromhelper: ' + categoryName)
   let category = message.guild.channels.find(category => category.id === categoryName)
   if (category === null) {
     category = message.guild.channels.find(category => category.name.toLowerCase() === categoryName.toLowerCase())
