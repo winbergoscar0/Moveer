@@ -10,9 +10,9 @@ async function moveerAdmin (args, message) {
     })
     try {
       await client.connect()
-
-      const searchForGuild = await client.query('SELECT * FROM "guilds" WHERE "guildId" = \'' + message.guild.id + '\'')
+      const searchForGuild = await helper.getMoveerAdminChannelFromDB(message, message.guild.id)
       helper.checkIfChannelTextExpectText(message)
+      console.log(searchForGuild)
       if (searchForGuild.rowCount > 0) {
         await client.query('UPDATE "guilds" SET "adminChannelId" = \'' + message.mentions.channels.first().id + '\' WHERE "guildId" = \'' + message.guild.id + '\'')
       }
@@ -26,7 +26,7 @@ async function moveerAdmin (args, message) {
       await client.end()
     } catch (err) {
       console.log(err)
-      // helper.reportMoveerError('DB', '4')
+      helper.reportMoveerError('DB-CHANGE', 'alert')
     }
   } catch (err) {
     if (!err.logMessage) console.log(err)

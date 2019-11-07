@@ -11,7 +11,7 @@ async function move (args, message) {
       roleName = names[1]
     }
 
-    helper.checkIfTextChannelIsMoveerAdmin(message)
+    await helper.checkIfTextChannelIsMoveerAdmin(message)
     helper.checkArgsLength(args, 1)
     helper.checkIfMessageContainsMentions(message)
     const toVoiceChannel = helper.getChannelByName(message, toVoiceChannelName)
@@ -31,6 +31,7 @@ async function move (args, message) {
       moveerMessage.sendMessage(message, 'Everyone ' + moveerMessage.USER_ALREADY_IN_CHANNEL)
     }
   } catch (err) {
+    console.log('throwing')
     if (!err.logMessage) console.log(err)
     moveerMessage.logger(message, err.logMessage)
     moveerMessage.sendMessage(message, err.sendMessage)

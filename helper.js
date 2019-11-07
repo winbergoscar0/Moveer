@@ -47,11 +47,17 @@ function checkIfUsersInsideVoiceChannel (message, fromVoiceChannelName, fromVoic
   }
 }
 
-function checkIfTextChannelIsMoveerAdmin (message) {
+async function checkIfTextChannelIsMoveerAdmin (message) {
   if (message.channel.name.toLowerCase() !== 'moveeradmin') {
-    throw {
-      logMessage: 'Command made outside moveeradmin',
-      sendMessage: moveerMessage.CMOVE_OUTSIDE_MOVEERADMIN + ' <@' + message.author.id + '>'
+    const searchForGuild = await getMoveerAdminChannelFromDB(message, message.guild.id)
+    if (searchForGuild.rowCount > 0 && searchForGuild.rows[0].adminChannelId === message.channel.id) {
+      console.log('all green')
+    } else {
+      console.log('throwing')
+      throw {
+        logMessage: 'Command made outside moveeradmin',
+        sendMessage: moveerMessage.CMOVE_OUTSIDE_MOVEERADMIN + ' <@' + message.author.id + '>'
+      }
     }
   }
 }
@@ -335,11 +341,29 @@ async function successfullmove (usersMoved) {
   }
 }
 
+async function getMoveerAdminChannelFromDB (message, guildId) {
+  try {
+    const { Client } = require('pg')
+    const client = new Client({
+      connectionString: config.postgreSQLConnection
+    })
+    await client.connect()
+    const searchForGuild = await client.query('SELECT * FROM "guilds" WHERE "guildId" = \'' + message.guild.id + '\'')
+    await client.end()
+    return searchForGuild
+  } catch (err) {
+    console.log(err)
+    reportMoveerError('DB-CHANGE', 'alert')
+  }
+}
+
 function reportMoveerError (type, message) {
   const Discord = require('discord.js')
   const hook = new Discord.WebhookClient(config.discordHookIdentifier, config.discordHookToken)
   if (type === 'DB') {
     hook.send('New DB error reported. Check the logs for information.\nError adding ' + message + ' successful move to postgreSQL\n@everyone')
+  } else if (type === 'DB-CHANGE') {
+    hook.send('New DB error reported. Check the logs for information.\nError changing/getting moveeradmin channel from/to POSTGRESQL\n@everyone')
   } else if (type === 'MOVE') {
     hook.send('New Moving error reported. Check the logs for information.\n ' + message + '\n@everyone')
   } else {
@@ -375,5 +399,6 @@ module.exports = {
   checkCountOfChannelsFromCategory,
   checkUserAmountInChannel,
   checkIfCatergyHasRoomsAvailable,
-  checkIfChannelTextExpectText
+  checkIfChannelTextExpectText,
+  getMoveerAdminChannelFromDB
 }
