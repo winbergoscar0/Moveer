@@ -12,7 +12,7 @@ async function move (args, message) {
     }
 
     helper.checkIfTextChannelIsMoveerAdmin(message)
-    helper.checkArgsLength(args, 1)
+    helper.checkArgsLength(args, 2)
     helper.checkIfMessageContainsMentions(message)
     const toVoiceChannel = helper.getChannelByName(message, toVoiceChannelName)
     helper.checkIfVoiceChannelExist(message, toVoiceChannel, toVoiceChannelName)
