@@ -246,6 +246,15 @@ function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+function checkIfChannelTextExpectText (message) {
+  if (message.mentions.channels.first().type !== 'text') {
+    throw {
+      logMessage: 'Mention is not type text',
+      sendMessage: 'You need to mention the text channel using #nameoftextchannel'
+    }
+  }
+}
+
 function getUsersByRole (message, roleName) {
   const role = message.guild.roles.find(role => role.name.toLowerCase() === roleName.toLowerCase())
   if (role == null) { // Check for null or undefined
@@ -365,5 +374,6 @@ module.exports = {
   getCategoryByName,
   checkCountOfChannelsFromCategory,
   checkUserAmountInChannel,
-  checkIfCatergyHasRoomsAvailable
+  checkIfCatergyHasRoomsAvailable,
+  checkIfChannelTextExpectText
 }
