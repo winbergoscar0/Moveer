@@ -9,7 +9,7 @@ async function move (args, message) {
       roleName = names[0]
     }
     helper.checkIfAuthorInsideAVoiceChannel(message, message.member.voiceChannelID)
-    helper.checkIfTextChannelIsMoveerAdmin(message)
+    await helper.checkIfTextChannelIsMoveerAdmin(message)
     helper.checkIfMessageContainsMentions(message)
     helper.checkArgsLength(args, 1)
     let usersToMove = helper.getUsersByRole(message, roleName)

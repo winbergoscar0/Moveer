@@ -12,7 +12,7 @@ async function move (args, message) {
       categoryName = names[1]
     }
 
-    helper.checkIfTextChannelIsMoveerAdmin(message)
+    await helper.checkIfTextChannelIsMoveerAdmin(message)
     helper.checkArgsLength(args, 2) // 2 since we use args.pop above to be able to use fnutthelper (only allows 2 args)
     helper.checkIfMessageContainsMentions(message)
     const fromVoiceChannel = helper.getChannelByName(message, fromVoiceChannelName)

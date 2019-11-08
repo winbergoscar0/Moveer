@@ -12,7 +12,7 @@ async function move (args, message) {
       toVoiceChannelName = names[0]
     }
 
-    helper.checkIfTextChannelIsMoveerAdmin(message)
+    await helper.checkIfTextChannelIsMoveerAdmin(message)
     helper.checkArgsLength(args, 1)
     helper.checkForUserMentions(message, messageMentions)
     toVoiceChannel = helper.getChannelByName(message, toVoiceChannelName)
