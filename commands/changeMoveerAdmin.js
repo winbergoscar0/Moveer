@@ -28,6 +28,7 @@ async function moveerAdmin (args, message) {
         await client.query(query)
       }
       await client.end()
+      moveerMessage.logger(message, 'Added moveeradmin channel with name: ' + message.mentions.channels.first().name)
       moveerMessage.sendMessage(message, 'Admin commands now allowed to be sent inside <#' + message.mentions.channels.first().id + '>')
     } catch (err) {
       console.log(err)

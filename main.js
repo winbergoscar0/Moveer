@@ -34,6 +34,7 @@ if (config.discordBotListToken !== 'x') {
 
 client.on('ready', () => {
   log.info('Startup successful.')
+  client.user.setActivity('Change moveeradmin channel by using !changema #<channelName>')
 })
 
 client.on('guildCreate', (guild) => {
