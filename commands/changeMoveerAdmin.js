@@ -9,10 +9,14 @@ async function moveerAdmin (args, message) {
       connectionString: config.postgreSQLConnection
     })
     try {
+      if (message.mentions.channels.size === 0) {
+        moveerMessage.logger(message, 'Missing channel mention')
+        moveerMessage.sendMessage(message, 'You need to specify what channel to use, by tagging it with #channelname')
+        return
+      }
       await client.connect()
       const searchForGuild = await helper.getMoveerAdminChannelFromDB(message, message.guild.id)
       helper.checkIfChannelTextExpectText(message)
-      console.log(searchForGuild)
       if (searchForGuild.rowCount > 0) {
         await client.query('UPDATE "guilds" SET "adminChannelId" = \'' + message.mentions.channels.first().id + '\' WHERE "guildId" = \'' + message.guild.id + '\'')
       }
@@ -24,6 +28,7 @@ async function moveerAdmin (args, message) {
         await client.query(query)
       }
       await client.end()
+      moveerMessage.sendMessage(message, 'Admin commands now allowed to be sent inside <#' + message.mentions.channels.first().id + '>')
     } catch (err) {
       console.log(err)
       helper.reportMoveerError('DB-CHANGE', 'alert')
