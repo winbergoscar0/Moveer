@@ -57,7 +57,11 @@ const HELP_MESSAGE = {
       },
       {
         name: 'ymove',
-        value: 'Spreads x user from one channel to different voice channels inside a category\n\nFor more information, use !help <command>'
+        value: 'Spreads x user from one channel to different voice channels inside a category'
+      },
+      {
+        name: 'changema',
+        value: 'Allows moveeradmin commands to be sent from a secondary textchannel of your choice \n`!changema #<channelName>`\n\nFor more information, use !help <command>'
       }
 
     ]
@@ -170,6 +174,23 @@ const HELP_YMOVE = {
     ]
   }
 }
+
+const HELP_CHANGEMA = {
+  embed: {
+    color: 2387002,
+    footer: {
+      text: 'Support server: https://discord.gg/dTdH3gD'
+    },
+    fields: [
+      {
+        name: '!changema',
+        value: '1. Write !changema #<channelName>\n2. Moveer should reply that admin commands are now allowed inside #<channelName>\nBe sure the actually # tagging the textchannel name'
+      }
+    ]
+  }
+}
+
+
 const FALLBACK_HELP_MESSAGE = 'move - Moves @mentions to you\ncmove  Moves @mentions to a specific channel\nfmove' +
   '- Moves users inside one channel to another channel\ngmove - Moves everyone inside a channel to you. \n\n' +
   'For more information, use !help <command>\nSupport Server: <https://discord.gg/dTdH3gD>'
@@ -179,6 +200,7 @@ const FALLBACK_HELP_MOVE = HELP_MOVE.embed.fields[0].value
 const FALLBACK_HELP_GMOVE = HELP_GMOVE.embed.fields[0].value
 const FALLBACK_HELP_TMOVE = HELP_TMOVE.embed.fields[0].value
 const FALLBACK_HELP_YMOVE = HELP_YMOVE.embed.fields[0].value
+const FALLBACK_HELP_CHANGEMA = HELP_CHANGEMA.embed.fields[0].value
 function sendMessage (message, sendMessage) {
   const helper = require('./helper.js')
   message.channel.send(sendMessage)
@@ -232,5 +254,7 @@ module.exports = {
   FALLBACK_HELP_MOVE,
   FALLBACK_HELP_TMOVE,
   HELP_YMOVE,
-  FALLBACK_HELP_YMOVE
+  FALLBACK_HELP_YMOVE,
+  HELP_CHANGEMA,
+  FALLBACK_HELP_CHANGEMA
 }

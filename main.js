@@ -100,6 +100,8 @@ client.on('message', message => {
       moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_TMOVE : moveerMessage.FALLBACK_HELP_TMOVE)
     } else if (args[0] === 'ymove') {
       moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_YMOVE : moveerMessage.FALLBACK_HELP_YMOVE)
+    } else if (args[0] === 'changema') {
+      moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_CHANGEMA : moveerMessage.FALLBACK_HELP_CHANGEMA)
     }
   }
 })
