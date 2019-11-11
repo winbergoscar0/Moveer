@@ -99,9 +99,9 @@ function checkIfAuthorInsideAVoiceChannel (message, userVoiceRoomID) {
 }
 
 function getCategoryByName (message, categoryName) {
-  let category = message.guild.channels.find(category => category.id === categoryName)
+  let category = message.guild.channels.find(category => category.id === categoryName && category.type === 'category')
   if (category === null) {
-    category = message.guild.channels.find(category => category.name.toLowerCase() === categoryName.toLowerCase())
+    category = message.guild.channels.find(category => category.name.toLowerCase() === categoryName.toLowerCase() && category.type === 'category')
   }
   if (category == null) {
     throw {
