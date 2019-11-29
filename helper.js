@@ -354,6 +354,7 @@ async function getMoveerAdminChannelFromDB (message, guildId) {
   } catch (err) {
     console.log(err)
     reportMoveerError('DB-CHANGE', 'alert')
+    return { rowCount: 0 }
   }
 }
 

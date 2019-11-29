@@ -33,6 +33,10 @@ async function moveerAdmin (args, message) {
     } catch (err) {
       console.log(err)
       helper.reportMoveerError('DB-CHANGE', 'alert')
+      throw {
+        'logmessage': 'Error',
+        'sendMessage': 'Moveer cannot communicate with it\'s database. Since this is a admin command please create a textchannel named moveeradmin and use that until my developer fixes this! He has been alerted but please poke him inside the support server! https://discord.gg/dTdH3gD'
+      }
     }
   } catch (err) {
     if (!err.logMessage) console.log(err)
