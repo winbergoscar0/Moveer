@@ -1,7 +1,7 @@
 const moveerMessage = require('../moveerMessage.js')
 const helper = require('../helper.js')
 
-async function move (args, message) {
+async function move (args, message, rabbitMqChannel) {
   try {
     const amountInEachChannel = args.pop()
     let fromVoiceChannelName = args[0]
@@ -35,7 +35,7 @@ async function move (args, message) {
       const randomUsersTomove = await getRandomUsers(userIdsToMove, amountInEachChannel)
       await helper.checkForMovePerms(message, userIdsToMove, voiceChannelsInCategory[voiceChannelCounter])
       await helper.checkForConnectPerms(message, userIdsToMove, voiceChannelsInCategory[voiceChannelCounter])
-      if (randomUsersTomove.length > 0) await helper.moveUsers(message, randomUsersTomove, voiceChannelsInCategory[voiceChannelCounter].id)
+      if (randomUsersTomove.length > 0) await helper.moveUsers(message, randomUsersTomove, voiceChannelsInCategory[voiceChannelCounter].id, rabbitMqChannel)
       for (let z = 0; z < randomUsersTomove.length; z++) {
         const index = await userIdsToMove.indexOf(randomUsersTomove[z])
         if (index > -1) await userIdsToMove.splice(index, 1)

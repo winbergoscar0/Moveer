@@ -217,6 +217,20 @@ function logger (message, logMessage) {
   log.info((message.author.bot ? 'BOT - ' : '') + '(' + message.id + ') - ' + message.guild.name + ' - (' + message.channel.name + ') - (' + message.content + ') - ' + logMessage)
 }
 
+function reportMoveerError (type, message) {
+  const Discord = require('discord.js')
+  const hook = new Discord.WebhookClient(config.discordHookIdentifier, config.discordHookToken)
+  if (type === 'DB') {
+    hook.send('New DB error reported. Check the logs for information.\nError adding ' + message + ' successful move to postgreSQL\n@everyone')
+  } else if (type === 'DB-CHANGE') {
+    hook.send('New DB error reported. Check the logs for information.\nError changing/getting moveeradmin channel from/to POSTGRESQL\n@everyone')
+  } else if (type === 'MOVE') {
+    hook.send('New Moving error reported. Check the logs for information.\n ' + message + '\n@everyone')
+  } else {
+    hook.send('New error reported. Check the logs for information.\nCommand: ' + message.content + '\nInside textChannel: ' + message.channel.name + '\nInside server: ' + message.guild.name + '\n@everyone')
+  }
+}
+
 module.exports = {
   USER_MOVING_SELF,
   MESSAGE_MISSING_MENTION,
@@ -256,5 +270,6 @@ module.exports = {
   HELP_YMOVE,
   FALLBACK_HELP_YMOVE,
   HELP_CHANGEMA,
-  FALLBACK_HELP_CHANGEMA
+  FALLBACK_HELP_CHANGEMA,
+  reportMoveerError
 }

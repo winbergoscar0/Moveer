@@ -32,7 +32,7 @@ async function moveerAdmin (args, message) {
       moveerMessage.sendMessage(message, 'Admin commands now allowed to be sent inside <#' + message.mentions.channels.first().id + '>')
     } catch (err) {
       console.log(err)
-      helper.reportMoveerError('DB-CHANGE', 'alert')
+      moveerMessage.reportMoveerError('DB-CHANGE', 'alert')
       throw {
         'logmessage': 'Error',
         'sendMessage': 'Moveer cannot communicate with it\'s database. Since this is a admin command please create a textchannel named moveeradmin and use that until my developer fixes this! He has been alerted but please poke him inside the support server! https://discord.gg/dTdH3gD'
