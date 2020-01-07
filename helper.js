@@ -274,9 +274,14 @@ function getUsersByRole (message, roleName) {
 }
 
 async function moveUsers (message, usersToMove, toVoiceChannelId, rabbitMqChannel) {
+  let usersMoved = 0
   usersToMove.forEach(user => {
     PublishToRabbitMq(message, user, toVoiceChannelId, rabbitMqChannel)
+    usersMoved++
   })
+  moveerMessage.logger(message, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users'))
+  moveerMessage.sendMessage(message, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users') + ' by request of <@' + message.author.id + '>')
+  if (config.postgreSQLConnection !== 'x') successfullmove(usersMoved)
 }
 
 async function PublishToRabbitMq (message, userToMove, toVoiceChannelId, rabbitMqChannel) {
