@@ -1,4 +1,4 @@
-avMover - If you're interested in avMover (For vanilla BG's) you can find information and invite links here https://discord.gg/hdX4Nq
+avMover - If you're interested in avMover (For vanilla BG's) please contact the me inside the support discord
 
 # Moveer
 [![Discord Bots](https://discordbots.org/api/widget/status/400724460203802624.svg?noavatar=true)](https://discordbots.org/bot/400724460203802624)
