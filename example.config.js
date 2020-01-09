@@ -7,6 +7,5 @@ module.exports = {
   discordHookIdentifier: 'x', // <---- DON'T CHANGE THIS X
   postgreSQLConnection: 'x', // <---- DON'T CHANGE THIS X
   allowedGuilds: [], // <---- DON'T CHANGE THIS
-  blockedVoiceChannels: [], // <---- DON'T CHANGE THIS
-  rabbitMQConnection: 'x'
+  blockedVoiceChannels: [] // <---- DON'T CHANGE THIS
 }

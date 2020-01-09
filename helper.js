@@ -273,6 +273,7 @@ function getUsersByRole (message, roleName) {
   return usersToMove
 }
 
+
 async function moveUsers (message, usersToMove, toVoiceChannelId, rabbitMqChannel) {
   let usersMoved = 0
   usersToMove.forEach(user => {
@@ -290,12 +291,10 @@ async function PublishToRabbitMq (message, userToMove, toVoiceChannelId, rabbitM
     voiceChannelId: toVoiceChannelId,
     guildId: message.guild.id
   }
-  const queue = message.guild.id
-  rabbitMqChannel.assertQueue(queue, {
-    durable: true
-  })
-  rabbitMqChannel.sendToQueue(queue, Buffer.from(JSON.stringify(messageToRabbitMQ)), { persistent: true })
-  moveerMessage.logger(message, 'Sent message - User: ' + messageToRabbitMQ.userId + ' toChannel: ' + messageToRabbitMQ.voiceChannelId + ' in guild: ' + messageToRabbitMQ.guildId)
+  moveerMessage.logger(message, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users'))
+  moveerMessage.sendMessage(message, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users') + ' by request of <@' + message.author.id + '>')
+  if (message.guild.id === '569905989604868138') return
+  if (config.postgreSQLConnection !== 'x') successfullmove(usersMoved)
 }
 
 function getNameWithSpacesName (args) {
@@ -339,7 +338,7 @@ async function successfullmove (usersMoved) {
     await client.end()
   } catch (err) {
     console.log(err)
-    moveerMessage.reportMoveerError('DB', usersMoved)
+    reportMoveerError('DB', usersMoved)
   }
 }
 
@@ -355,8 +354,22 @@ async function getMoveerAdminChannelFromDB (message, guildId) {
     return searchForGuild
   } catch (err) {
     console.log(err)
-    moveerMessage.reportMoveerError('DB-CHANGE', 'alert')
+    reportMoveerError('DB-CHANGE', 'alert')
     return { rowCount: 0 }
+  }
+}
+
+function reportMoveerError (type, message) {
+  const Discord = require('discord.js')
+  const hook = new Discord.WebhookClient(config.discordHookIdentifier, config.discordHookToken)
+  if (type === 'DB') {
+    hook.send('New DB error reported. Check the logs for information.\nError adding ' + message + ' successful move to postgreSQL\n@everyone')
+  } else if (type === 'DB-CHANGE') {
+    hook.send('New DB error reported. Check the logs for information.\nError changing/getting moveeradmin channel from/to POSTGRESQL\n@everyone')
+  } else if (type === 'MOVE') {
+    hook.send('New Moving error reported. Check the logs for information.\n ' + message + '\n@everyone')
+  } else {
+    hook.send('New error reported. Check the logs for information.\nCommand: ' + message.content + '\nInside textChannel: ' + message.channel.name + '\nInside server: ' + message.guild.name + '\n@everyone')
   }
 }
 
@@ -381,6 +394,7 @@ module.exports = {
   getChannelByName,
   getNameWithSpacesName,
   checkIfChannelIsTextChannel,
+  reportMoveerError,
   getUsersByRole,
   checkIfUserInsideBlockedChannel,
   getCategoryByName,

@@ -4,7 +4,6 @@ const opts = {
   timestampFormat: 'YYYY-MM-DD HH:mm:ss'
 }
 const log = require('simple-node-logger').createSimpleLogger(opts)
-const amqp = require('amqplib/callback_api')
 
 // TOKEN
 const config = require('./config.js')
@@ -19,10 +18,6 @@ const tmove = require('./commands/tmove.js')
 const ymove = require('./commands/ymove.js')
 const moveerMessage = require('./moveerMessage.js')
 const change = require('./commands/changeMoveerAdmin.js')
-
-// rabbitMQ
-const rabbitMQConnection = process.env.rabbitMQConnection || config.rabbitMQConnection
-let rabbitMqChannel
 
 if (config.discordBotListToken !== 'x') {
   // Only run if bot is public at discordbotlist.com
@@ -39,27 +34,9 @@ if (config.discordBotListToken !== 'x') {
 
 client.on('ready', () => {
   log.info('Startup successful.')
-  log.info('Running as user: ' + client.user.username)
-  amqp.connect(rabbitMQConnection, (error0, connection) => {
-    if (error0) {
-      throw error0
-    }
-    connection.createChannel((error1, channel) => {
-      if (error1) {
-        throw error1
-      }
-      rabbitMqChannel = channel
-
-      // Create a consumer for each guild that I'm inside
-      client.guilds.forEach(guild => {
-        createConsumer(guild.id, rabbitMqChannel)
-      })
-    })
-  })
 })
 
 client.on('guildCreate', (guild) => {
-  createConsumer(guild.id, rabbitMqChannel)
   const welcomeMessage = 'Hello and thanks for inviting me! If you need help or got any questions, please head over to the official Moveer discord at https://discord.gg/dTdH3gD\n'
   const supportMessage = 'I got multiple commands, but to get started with !cmove, please follow the guide below.\n 1. Create a text channel and name it "moveeradmin" (Or use !changema #<textChannelName> to change it).\n 2. Ask your friends to join a voice channel X\n 3. Inside the textchannel "moveeradmin" write !cmove <voicechannelY> @yourfriendsname\n4. Thats it! @yourfriend should be moved from X to voice channel Y.\n \nWe got more commands! Write !help to see them all.\nLets get Moving!'
   log.info('Joined server: ' + guild.name)
@@ -96,13 +73,13 @@ client.on('message', message => {
   const command = args.shift().toLowerCase()
 
   if (command === 'changema') change.moveerAdmin(args, message)
-  if (command === 'move') move.move(args, message, rabbitMqChannel)
-  if (command === 'gmove') gmove.move(args, message, rabbitMqChannel)
-  if (command === 'cmove') cmove.move(args, message, rabbitMqChannel)
-  if (command === 'fmove') fmove.move(args, message, rabbitMqChannel)
-  if (command === 'rmove') rmove.move(args, message, rabbitMqChannel)
-  if (command === 'tmove') tmove.move(args, message, rabbitMqChannel)
-  if (command === 'ymove') ymove.move(args, message, rabbitMqChannel)
+  if (command === 'move') move.move(args, message)
+  if (command === 'gmove') gmove.move(args, message)
+  if (command === 'cmove') cmove.move(args, message)
+  if (command === 'fmove') fmove.move(args, message)
+  if (command === 'rmove') rmove.move(args, message)
+  if (command === 'tmove') tmove.move(args, message)
+  if (command === 'ymove') ymove.move(args, message)
   if (command === 'help') {
     if (message.author.bot) return
     const gotEmbedPerms = message.channel.permissionsFor(message.guild.me).has('EMBED_LINKS')
@@ -129,23 +106,3 @@ client.on('message', message => {
 })
 
 client.login(token)
-
-function createConsumer (queue, rabbitMqChannel) {
-  log.info('Creating consumer for guild: ' + queue)
-  rabbitMqChannel.assertQueue(queue, {
-    durable: true
-  })
-  rabbitMqChannel.consume(queue, (msg) => {
-    const jsonMsg = JSON.parse(msg.content.toString())
-    log.info('Moving ' + jsonMsg.userId + ' to voiceChannel: ' + jsonMsg.voiceChannelId + ' inside guild: ' + jsonMsg.guildId)
-    client.guilds.get(jsonMsg.guildId).member(jsonMsg.userId).setVoiceChannel(jsonMsg.voiceChannelId)
-      .catch(err => {
-        if (err.message !== 'Target user is not connected to voice.') {
-          log.error(err)
-          log.info('Got above error when moving people...')
-          moveerMessage.reportMoveerError('MOVE', err.message)
-        }
-        log.warn(jsonMsg.userName + ' left voice before getting moved')
-      })
-  }, { noAck: true })
-}
