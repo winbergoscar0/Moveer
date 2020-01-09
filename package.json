@@ -18,6 +18,7 @@
     "nodemon": "^1.19.1"
   },
   "dependencies": {
+    "amqplib": "^0.5.5",
     "dblapi.js": "^2.3.0",
     "discord.js": "^11.5.1",
     "pg": "^7.12.1",

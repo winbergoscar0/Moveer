@@ -1,7 +1,7 @@
 const moveerMessage = require('../moveerMessage.js')
 const helper = require('../helper.js')
 
-async function move (args, message) {
+async function move (args, message, rabbitMqChannel) {
   if (args.length < 1 || args === undefined || args === null || args === []) {
     moveerMessage.logger(message, 'room identifier is missing')
     moveerMessage.sendMessage(message, moveerMessage.MESSAGE_MISSING_ROOM_IDENTIFER + ' <@' + message.author.id + '>')
@@ -32,7 +32,7 @@ async function move (args, message) {
     await helper.checkForConnectPerms(message, userIdsToMove, authorVoiceChannel)
 
     // No errors in the message, lets get moving!
-    helper.moveUsers(message, userIdsToMove, message.member.voiceChannelID)
+    helper.moveUsers(message, userIdsToMove, message.member.voiceChannelID, rabbitMqChannel)
   } catch (err) {
     if (!err.logMessage) console.log(err)
     moveerMessage.logger(message, err.logMessage)

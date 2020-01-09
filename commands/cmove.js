@@ -1,7 +1,7 @@
 const moveerMessage = require('../moveerMessage.js')
 const helper = require('../helper.js')
 
-async function move (args, message) {
+async function move (args, message, rabbitMqChannel) {
   let messageMentions = message.mentions.users.array() // Mentions in the message
   let toVoiceChannel
 
@@ -25,7 +25,7 @@ async function move (args, message) {
     await helper.checkForConnectPerms(message, userIdsToMove, toVoiceChannel)
 
     // No errors in the message, lets get moving!
-    if (userIdsToMove.length > 0) helper.moveUsers(message, userIdsToMove, toVoiceChannel.id)
+    if (userIdsToMove.length > 0) helper.moveUsers(message, userIdsToMove, toVoiceChannel.id, rabbitMqChannel)
   } catch (err) {
     if (!err.logMessage) console.log(err)
     moveerMessage.logger(message, err.logMessage)

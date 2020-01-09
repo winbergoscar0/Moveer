@@ -1,7 +1,7 @@
 const moveerMessage = require('../moveerMessage.js')
 const helper = require('../helper.js')
 
-async function move (args, message) {
+async function move (args, message, rabbitMqChannel) {
   try {
     let toVoiceChannelName = args[0]
     let roleName = args[1]
@@ -25,7 +25,7 @@ async function move (args, message) {
 
     // No errors in the message, lets get moving!
     if (userIdsToMove.length > 0) {
-      helper.moveUsers(message, userIdsToMove, toVoiceChannel.id)
+      helper.moveUsers(message, userIdsToMove, toVoiceChannel.id, rabbitMqChannel)
     } else {
       moveerMessage.sendMessage(message, 'Everyone ' + moveerMessage.USER_ALREADY_IN_CHANNEL)
     }
