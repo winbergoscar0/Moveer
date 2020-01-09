@@ -273,22 +273,23 @@ function getUsersByRole (message, roleName) {
   return usersToMove
 }
 
-async function moveUsers (message, usersToMove, toVoiceChannelId) {
+
+async function moveUsers (message, usersToMove, toVoiceChannelId, rabbitMqChannel) {
   let usersMoved = 0
-  for (let i = 0; i < usersToMove.length; i++) {
-    if (usersToMove.length > 10) await sleep(500)
-    await message.guild.member(usersToMove[i]).setVoiceChannel(toVoiceChannelId)
-      .catch(err => {
-        if (err.message === 'Target user is not connected to voice.') {
-          moveerMessage.logger(message, '1 user left voice before getting moved')
-        } else {
-          console.log(err)
-          moveerMessage.logger(message, 'Got above error when moving people...')
-          moveerMessage.sendMessage(message, 'Got an error moving people :( If this keeps happening, please contact a moderator in the official discord: https://discord.gg/dTdH3gD')
-          if (message.guild.id !== '569905989604868138') reportMoveerError('MOVE', err.message)
-        }
-      })
+  usersToMove.forEach(user => {
+    PublishToRabbitMq(message, user, toVoiceChannelId, rabbitMqChannel)
     usersMoved++
+  })
+  moveerMessage.logger(message, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users'))
+  moveerMessage.sendMessage(message, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users') + ' by request of <@' + message.author.id + '>')
+  if (config.postgreSQLConnection !== 'x') successfullmove(usersMoved)
+}
+
+async function PublishToRabbitMq (message, userToMove, toVoiceChannelId, rabbitMqChannel) {
+  const messageToRabbitMQ = {
+    userId: userToMove,
+    voiceChannelId: toVoiceChannelId,
+    guildId: message.guild.id
   }
   moveerMessage.logger(message, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users'))
   moveerMessage.sendMessage(message, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users') + ' by request of <@' + message.author.id + '>')
