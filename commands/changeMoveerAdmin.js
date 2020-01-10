@@ -4,6 +4,7 @@ const config = require('../config.js')
 
 async function moveerAdmin (args, message) {
   try {
+    await helper.checkIfTextChannelIsMoveerAdmin(message)
     const { Client } = require('pg')
     const client = new Client({
       connectionString: config.postgreSQLConnection

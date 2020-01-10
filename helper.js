@@ -51,9 +51,9 @@ async function checkIfTextChannelIsMoveerAdmin (message) {
   if (message.channel.name.toLowerCase() !== 'moveeradmin') {
     const searchForGuild = await getMoveerAdminChannelFromDB(message, message.guild.id)
     if (searchForGuild.rowCount > 0 && searchForGuild.rows[0].adminChannelId === message.channel.id) {
-      console.log('all green')
+      // console.log('all green')
     } else {
-      console.log('throwing')
+      // console.log('throwing')
       throw {
         logMessage: 'Command made outside moveeradmin',
         sendMessage: moveerMessage.CMOVE_OUTSIDE_MOVEERADMIN + ' <@' + message.author.id + '>'
