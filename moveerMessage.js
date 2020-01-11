@@ -202,12 +202,11 @@ const FALLBACK_HELP_TMOVE = HELP_TMOVE.embed.fields[0].value
 const FALLBACK_HELP_YMOVE = HELP_YMOVE.embed.fields[0].value
 const FALLBACK_HELP_CHANGEMA = HELP_CHANGEMA.embed.fields[0].value
 function sendMessage (message, sendMessage) {
-  const helper = require('./helper.js')
   message.channel.send(sendMessage)
     .catch((e) => {
       logger(message, e)
       if (config.discordBotListToken !== 'x' && message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES') === true) {
-        helper.reportMoveerError('type', message)
+        reportMoveerError('type', message)
         console.log(e)
       }
     })
