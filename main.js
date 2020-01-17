@@ -17,6 +17,7 @@ const fmove = require('./commands/fmove.js')
 const rmove = require('./commands/rmove.js')
 const tmove = require('./commands/tmove.js')
 const ymove = require('./commands/ymove.js')
+const avmove = require('./commands/av.js')
 const moveerMessage = require('./moveerMessage.js')
 const change = require('./commands/changeMoveerAdmin.js')
 
@@ -103,6 +104,7 @@ client.on('message', message => {
   if (command === 'rmove') rmove.move(args, message, rabbitMqChannel)
   if (command === 'tmove') tmove.move(args, message, rabbitMqChannel)
   if (command === 'ymove') ymove.move(args, message, rabbitMqChannel)
+  if (command === 'av') avmove.move(args, message, rabbitMqChannel)
   if (command === 'help') {
     if (message.author.bot) return
     const gotEmbedPerms = message.channel.permissionsFor(message.guild.me).has('EMBED_LINKS')
@@ -124,6 +126,8 @@ client.on('message', message => {
       moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_YMOVE : moveerMessage.FALLBACK_HELP_YMOVE)
     } else if (args[0] === 'changema') {
       moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_CHANGEMA : moveerMessage.FALLBACK_HELP_CHANGEMA)
+    } else if (args[0] === 'av') {
+      moveerMessage.sendMessage(message, gotEmbedPerms ? moveerMessage.HELP_AVMOVE : moveerMessage.FALLBACK_HELP_AVMOVE)
     }
   }
 })

@@ -60,6 +60,10 @@ const HELP_MESSAGE = {
         value: 'Spreads x user from one channel to different voice channels inside a category'
       },
       {
+        name: 'av',
+        value: 'A command for wow vanilla. Channels should be created as "AV 1" to "AV 500" - Users then write `!av 123` to get moved to "AV 123" Commands must be sent inside av-numbers or av-verified'
+      },
+      {
         name: 'changema',
         value: 'Allows moveeradmin commands to be sent from a secondary textchannel of your choice \n`!changema #<channelName>`\n\nFor more information, use !help <command>'
       }
@@ -190,6 +194,20 @@ const HELP_CHANGEMA = {
   }
 }
 
+const HELP_AVMOVE = {
+  embed: {
+    color: 2387002,
+    footer: {
+      text: 'Support server: https://discord.gg/dTdH3gD'
+    },
+    fields: [
+      {
+        name: '!av',
+        value: '0. Voicechannels must be named "AV 1" to "AV 500" and commands must be sent inside "av-numbers" or "av-verified"\n1. Write `!av <channelId>`\n2. Moveer should move you to the correct AV channel.'
+      }
+    ]
+  }
+}
 
 const FALLBACK_HELP_MESSAGE = 'move - Moves @mentions to you\ncmove  Moves @mentions to a specific channel\nfmove' +
   '- Moves users inside one channel to another channel\ngmove - Moves everyone inside a channel to you. \n\n' +
@@ -201,6 +219,7 @@ const FALLBACK_HELP_GMOVE = HELP_GMOVE.embed.fields[0].value
 const FALLBACK_HELP_TMOVE = HELP_TMOVE.embed.fields[0].value
 const FALLBACK_HELP_YMOVE = HELP_YMOVE.embed.fields[0].value
 const FALLBACK_HELP_CHANGEMA = HELP_CHANGEMA.embed.fields[0].value
+const FALLBACK_HELP_AVMOVE = HELP_AVMOVE.embed.fields[0].value
 function sendMessage (message, sendMessage) {
   message.channel.send(sendMessage)
     .catch((e) => {
@@ -270,5 +289,7 @@ module.exports = {
   FALLBACK_HELP_YMOVE,
   HELP_CHANGEMA,
   FALLBACK_HELP_CHANGEMA,
-  reportMoveerError
+  reportMoveerError,
+  FALLBACK_HELP_AVMOVE,
+  HELP_AVMOVE
 }
