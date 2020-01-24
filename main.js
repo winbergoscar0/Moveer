@@ -61,9 +61,11 @@ client.on('ready', () => {
 
 client.on('guildCreate', (guild) => {
   createConsumer(guild.id, rabbitMqChannel)
+  log.info('Joined server: ' + guild.name)
+  /*
+  # Disabled until a good solution for randomly sending this out
   const welcomeMessage = 'Hello and thanks for inviting me! If you need help or got any questions, please head over to the official Moveer discord at https://discord.gg/dTdH3gD\n'
   const supportMessage = 'I got multiple commands, but to get started with !cmove, please follow the guide below.\n 1. Create a text channel and name it "moveeradmin" (Or use !changema #<textChannelName> to change it).\n 2. Ask your friends to join a voice channel X\n 3. Inside the textchannel "moveeradmin" write !cmove <voicechannelY> @yourfriendsname\n4. Thats it! @yourfriend should be moved from X to voice channel Y.\n \nWe got more commands! Write !help to see them all.\nLets get Moving!'
-  log.info('Joined server: ' + guild.name)
   let defaultChannel = ''
   guild.channels.forEach((channel) => {
     if (channel.type === 'text' && defaultChannel === '') {
@@ -77,6 +79,7 @@ client.on('guildCreate', (guild) => {
     return
   }
   defaultChannel.send(welcomeMessage + supportMessage)
+  */
 })
 
 client.on('guildDelete', (guild) => {
