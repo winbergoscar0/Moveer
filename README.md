@@ -1,5 +1,3 @@
-avMover - If you're interested in avMover (For vanilla BG's) please contact the me inside the support discord
-
 # Moveer
 [![Discord Bots](https://discordbots.org/api/widget/status/400724460203802624.svg?noavatar=true)](https://discordbots.org/bot/400724460203802624)
 [![BuyMeACoffee](https://img.shields.io/badge/BuyMeACoffee-Donate-ff813f.svg?logo=CoffeeScript&style=flat-square)](https://www.buymeacoffee.com/Moveer)
@@ -42,12 +40,17 @@ Moves users with a certain role to specific channel. For example `!tmove channel
 Spreads user across voice channels.  For example `!ymove "before games" "games" 5` moves all user from "before games" and spread them, randomlywith 5 users in each voice, across channels in the category "games"
 <br>Example command `!ymove "before games" "games" 5`
 
+### **!av:** ↓ 
+Moves the author to a voice channel named `AV 5` if the author sends the message `!av 5`. Created for Vanilla BGs
+<br>Example command `!av 5`
+
 # Important notes:
 1. If your names contains spaces use " around it. example: `!fmove "channel 1" "channel 2"`
 2. `!fmove`, `!cmove` and `!rmove` are all admin commands and requires the command to be sent inside a text channel named "moveeradmin" (or add a secondary channel, see note 5)
 3. `!gmove` and `!move` commands sent inside "moveeradmin" moves people from any channel and removes the requirement to be inside "Moveer" or "Gmoveer". Please note that the !gmove will require the full name of the voicechannel.
 4. If you want to block users from getting moved from a specific channel, example your AFK channel while using `!tmove` or `!rmove`. Contact the moderators in the discord below!
 5. If you want to add a secondary moveeradmin channel (with your own name) use the command `!changema` by writing `!changema #<ChannelName>`. Be sure the #tag the textchannel. You can now have 1 channel of your choice that allows admin commands!
+6. Want to move more then 10 users instantly? Instead of waiting for discord to move the rest? Contact a moderator inside the support discord!
 
 For more information use the !help command inside discord or join us with the link below ↓
 
