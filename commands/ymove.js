@@ -35,13 +35,15 @@ async function move (args, message, rabbitMqChannel) {
       const randomUsersTomove = await getRandomUsers(userIdsToMove, amountInEachChannel)
       await helper.checkForMovePerms(message, userIdsToMove, voiceChannelsInCategory[voiceChannelCounter])
       await helper.checkForConnectPerms(message, userIdsToMove, voiceChannelsInCategory[voiceChannelCounter])
-      if (randomUsersTomove.length > 0) await helper.moveUsers(message, randomUsersTomove, voiceChannelsInCategory[voiceChannelCounter].id, rabbitMqChannel)
+      if (randomUsersTomove.length > 0) await helper.moveUsers(message, randomUsersTomove, voiceChannelsInCategory[voiceChannelCounter].id, rabbitMqChannel, 'ymove')
       for (let z = 0; z < randomUsersTomove.length; z++) {
         const index = await userIdsToMove.indexOf(randomUsersTomove[z])
         if (index > -1) await userIdsToMove.splice(index, 1)
       }
       voiceChannelCounter++
     }
+    moveerMessage.logger(message, 'Moved ' + userIdsLength + (userIdsLength === 1 ? ' user' : ' users'))
+    moveerMessage.sendMessage(message, 'Moved ' + userIdsLength + (userIdsLength === 1 ? ' user' : ' users') + ' by request of <@' + message.author.id + '>')
   } catch (err) {
     if (!err.logMessage) console.log(err)
     moveerMessage.logger(message, err.logMessage)
