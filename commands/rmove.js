@@ -1,25 +1,26 @@
 const moveerMessage = require('../moveerMessage.js')
-const helper = require('../helper.js')
+const helper = require('../helpers/helper.js')
+const check = require('../helpers/check.js')
 
-async function move (args, message, rabbitMqChannel) {
+async function move(args, message, rabbitMqChannel) {
   try {
     let roleName = args[0]
     if (args.join().includes('"')) {
-      const names = helper.getNameWithSpacesName(args) // Not channels, but role
+      const names = helper.getNameWithSpacesName(args, message.author.id) // Not channels, but role
       roleName = names[0]
     }
-    helper.checkIfAuthorInsideAVoiceChannel(message, message.member.voiceChannelID)
-    await helper.checkIfTextChannelIsMoveerAdmin(message)
-    helper.checkIfMessageContainsMentions(message)
-    helper.checkArgsLength(args, 1)
+    check.ifAuthorInsideAVoiceChannel(message, message.member.voiceChannelID)
+    await check.ifTextChannelIsMoveerAdmin(message)
+    check.ifMessageContainsMentions(message)
+    check.argsLength(args, 1)
     let usersToMove = helper.getUsersByRole(message, roleName)
-    usersToMove = helper.checkIfUserInsideBlockedChannel(message, usersToMove)
-    usersToMove = helper.checkIfMentionsInsideVoiceChannel(message, usersToMove)
-    usersToMove = helper.checkIfUsersAlreadyInChannel(message, usersToMove, message.member.voiceChannelID)
+    usersToMove = check.ifUserInsideBlockedChannel(message, usersToMove)
+    usersToMove = check.ifMentionsInsideVoiceChannel(message, usersToMove)
+    usersToMove = check.ifUsersAlreadyInChannel(message, usersToMove, message.member.voiceChannelID)
     const userIdsToMove = await usersToMove.map(({ id }) => id)
     const authorVoiceChannel = helper.getChannelByName(message, message.member.voiceChannelID)
-    await helper.checkForMovePerms(message, userIdsToMove, authorVoiceChannel)
-    await helper.checkForConnectPerms(message, userIdsToMove, authorVoiceChannel)
+    await check.forMovePerms(message, userIdsToMove, authorVoiceChannel)
+    await check.forConnectPerms(message, userIdsToMove, authorVoiceChannel)
 
     // No errors in the message, lets get moving!
     if (userIdsToMove.length > 0) {
@@ -36,5 +37,5 @@ async function move (args, message, rabbitMqChannel) {
 }
 
 module.exports = {
-  move
+  move,
 }

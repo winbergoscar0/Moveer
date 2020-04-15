@@ -10,12 +10,15 @@
   "devDependencies": {
     "eslint": "^6.3.0",
     "eslint-config-node": "^4.0.0",
+    "eslint-config-prettier": "^6.10.1",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^9.2.0",
+    "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "prettier": "^2.0.4"
   },
   "dependencies": {
     "amqplib": "^0.5.5",

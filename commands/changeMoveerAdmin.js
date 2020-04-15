@@ -1,51 +1,47 @@
+/* eslint-disable no-throw-literal */
 const moveerMessage = require('../moveerMessage.js')
-const helper = require('../helper.js')
-const config = require('../config.js')
+const check = require('../helpers/check.js')
+const database = require('../helpers/database.js')
 
-async function moveerAdmin (args, message) {
+async function moveerAdmin(args, message) {
   try {
-    await helper.checkIfTextChannelIsMoveerAdmin(message)
-    const { Client } = require('pg')
-    const client = new Client({
-      connectionString: config.postgreSQLConnection
-    })
-    try {
-      if (message.mentions.channels.size === 0) {
-        moveerMessage.logger(message, 'Missing channel mention')
-        moveerMessage.sendMessage(message, 'You need to specify what channel to use, by tagging it with #channelname')
-        return
-      }
-      await client.connect()
-      const searchForGuild = await helper.getMoveerAdminChannelFromDB(message, message.guild.id)
-      helper.checkIfChannelTextExpectText(message)
-      if (searchForGuild.rowCount > 0) {
-        await client.query('UPDATE "guilds" SET "adminChannelId" = \'' + message.mentions.channels.first().id + '\' WHERE "guildId" = \'' + message.guild.id + '\'')
-      }
-      if (searchForGuild.rowCount === 0) {
-        const query = {
-          text: 'INSERT INTO "guilds" ("guildId", "adminChannelId") VALUES($1, $2)',
-          values: [message.guild.id, message.mentions.channels.first().id]
-        }
-        await client.query(query)
-      }
-      await client.end()
-      moveerMessage.logger(message, 'Added moveeradmin channel with name: ' + message.mentions.channels.first().name)
-      moveerMessage.sendMessage(message, 'Admin commands now allowed to be sent inside <#' + message.mentions.channels.first().id + '>')
-    } catch (err) {
-      console.log(err)
-      moveerMessage.reportMoveerError('DB-CHANGE', 'alert')
-      throw {
-        'logmessage': 'Error',
-        'sendMessage': 'Moveer cannot communicate with it\'s database. Since this is a admin command please create a textchannel named moveeradmin and use that until my developer fixes this! He has been alerted but please poke him inside the support server! https://discord.gg/dTdH3gD'
-      }
+    if (message.mentions.channels.size === 0) {
+      moveerMessage.logger(message, 'Missing channel mention')
+      moveerMessage.sendMessage(message, moveerMessage.MESSAGE_MENTION_IS_NOT_TEXT(message.author.id))
+      return
     }
+    await check.ifTextChannelIsMoveerAdmin(message)
+    const searchForGuild = await database.getGuildObject(message, message.guild.id)
+    check.ifChannelTextExpectText(message)
+    searchForGuild.rowCount > 0
+      ? await database.updateMoveerAdminChannel(message)
+      : await database.insertGuildMoveerAdminChannel(message)
+
+    moveerMessage.logger(message, 'Added moveeradmin channel with name: ' + message.mentions.channels.first().name)
+    moveerMessage.sendMessage(
+      message,
+      moveerMessage.MESSAGES_NOW_ALLOWED_IN_CHANNEL(message.author.id, message.mentions.channels.first().id)
+    )
   } catch (err) {
-    if (!err.logMessage) console.log(err)
-    moveerMessage.logger(message, err.logMessage)
-    moveerMessage.sendMessage(message, err.sendMessage)
+    if (!err.logMessage) {
+      moveerMessage.reportMoveerError('@everyone Unable to update or insert moveeradmin text channel to DB')
+      moveerMessage.logger(message, moveerMessage.DB_DOWN_WARNING)
+      moveerMessage.sendMessage(message, moveerMessage.DB_DOWN_WARNING)
+    } else {
+      const searchForGuild = await database.getGuildObject(message, message.guild.id)
+      console.log(searchForGuild.rows[1])
+      moveerMessage.logger(message, err.logMessage)
+      moveerMessage.sendMessage(
+        message,
+        err.sendMessage +
+          (searchForGuild.rows[0].adminChannelId === '106679489135706112'
+            ? '\n\nThe first time you use `!changema` you have to do it inside the default admin channel `#moveeradmin`.'
+            : '')
+      )
+    }
   }
 }
 
 module.exports = {
-  moveerAdmin
+  moveerAdmin,
 }

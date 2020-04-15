@@ -1,30 +1,31 @@
 const moveerMessage = require('../moveerMessage.js')
-const helper = require('../helper.js')
+const helper = require('../helpers/helper.js')
+const check = require('../helpers/check.js')
 
-async function move (args, message, rabbitMqChannel) {
+async function move(args, message, rabbitMqChannel) {
   try {
     let fromVoiceChannelName = args[0]
     let toVoiceChannelName = args[1]
     if (args.join().includes('"')) {
-      const names = helper.getNameWithSpacesName(args)
+      const names = helper.getNameWithSpacesName(args, message.author.id)
       fromVoiceChannelName = names[0]
       toVoiceChannelName = names[1]
     }
 
-    await helper.checkIfTextChannelIsMoveerAdmin(message)
-    helper.checkIfMessageContainsMentions(message)
-    helper.checkArgsLength(args, 2)
-    helper.checkIfArgsTheSame(message, args)
+    await check.ifTextChannelIsMoveerAdmin(message)
+    check.ifMessageContainsMentions(message)
+    check.argsLength(args, 2)
+    check.ifArgsTheSame(message, args)
     const fromVoiceChannel = helper.getChannelByName(message, fromVoiceChannelName)
     const toVoiceChannel = helper.getChannelByName(message, toVoiceChannelName)
-    helper.checkIfVoiceChannelExist(message, fromVoiceChannel, fromVoiceChannelName)
-    helper.checkIfVoiceChannelExist(message, toVoiceChannel, toVoiceChannelName)
-    helper.checkIfChannelIsTextChannel(message, toVoiceChannel)
-    helper.checkIfChannelIsTextChannel(message, fromVoiceChannel)
-    helper.checkIfUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
+    check.ifVoiceChannelExist(message, fromVoiceChannel, fromVoiceChannelName)
+    check.ifVoiceChannelExist(message, toVoiceChannel, toVoiceChannelName)
+    check.ifChannelIsTextChannel(message, toVoiceChannel)
+    check.ifChannelIsTextChannel(message, fromVoiceChannel)
+    check.ifUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
     const userIdsToMove = await fromVoiceChannel.members.map(({ id }) => id)
-    await helper.checkForMovePerms(message, userIdsToMove, toVoiceChannel)
-    await helper.checkForConnectPerms(message, userIdsToMove, toVoiceChannel)
+    await check.forMovePerms(message, userIdsToMove, toVoiceChannel)
+    await check.forConnectPerms(message, userIdsToMove, toVoiceChannel)
 
     // No errors in the message, lets get moving!
     helper.moveUsers(message, userIdsToMove, toVoiceChannel.id, rabbitMqChannel)
@@ -36,5 +37,5 @@ async function move (args, message, rabbitMqChannel) {
 }
 
 module.exports = {
-  move
+  move,
 }
