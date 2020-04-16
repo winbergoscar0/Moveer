@@ -318,17 +318,25 @@ const handleHelpCommand = (helpCommand, gotEmbedPerms) => {
       return gotEmbedPerms ? HELP_TMOVE : FALLBACK_HELP_TMOVE
     case 'changema':
       return gotEmbedPerms ? HELP_CHANGEMA : FALLBACK_HELP_CHANGEMA
+    default:
+      return 'notFound'
   }
 }
 
 function sendMessage(message, sendMessage) {
+  if (sendMessage === 'notFound') return // Ignore this. failed to find HELP message by args
+  // eslint-disable-next-line eqeqeq
+  if (sendMessage == null) {
+    reportMoveerError('I was about to send a NULL message - Probably errors in code.. @everyone')
+    return
+  }
   message.channel.send(sendMessage).catch((e) => {
     logger(message, e)
     if (
       config.discordBotListToken !== 'x' &&
       message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES') === true
     ) {
-      reportMoveerError('Failed to send message for some reason: ' + e)
+      reportMoveerError('@everyone - I failed to send message for some reason: ' + e)
       console.log(e)
     }
   })
@@ -353,7 +361,7 @@ function logger(message, logMessage) {
 function reportMoveerError(message) {
   const Discord = require('discord.js')
   const hook = new Discord.WebhookClient(config.discordHookIdentifier, config.discordHookToken)
-  console.log('attempt to send error to DB HOOK')
+  console.log('Sending error to DB HOOK')
   hook.send(message)
 }
 
