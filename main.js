@@ -43,6 +43,7 @@ client.on('ready', () => {
   log.info('Running as user: ' + client.user.username)
   amqp.connect(rabbitMQConnection, (error0, connection) => {
     if (error0) {
+      moveerMessage.reportMoveerError('Unable to connect to rabbitMQ - @everyone')
       throw error0
     }
     connection.createChannel((error1, channel) => {
@@ -109,7 +110,6 @@ client.on('message', (message) => {
   if (message.channel.type !== 'text') return
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
   const command = args.shift().toLowerCase()
-
   if (command === 'changema') change.moveerAdmin(args, message)
   if (command === 'move') move.move(args, message, rabbitMqChannel)
   if (command === 'gmove') gmove.move(args, message, rabbitMqChannel)

@@ -46,6 +46,21 @@ function getUsersByRole(message, roleName) {
   return usersToMove
 }
 
+const findUserByUserName = async (message, username) => {
+  if (!message.author.bot) return []
+  const user = await message.guild.members.find(
+    (user) =>
+      user.user.username.toLowerCase() === username.toLowerCase() ||
+      (user.nickname && user.nickname.toLowerCase() === username.toLowerCase())
+  )
+  if (user != null) return [user.user]
+
+  throw {
+    logMessage: '(BOT CMOVE) - Username not found',
+    sendMessage: moveerMessage.NO_USER_FOUND_BY_SEARCH(message.author.id, username),
+  }
+}
+
 async function moveUsers(message, usersToMove, toVoiceChannelId, rabbitMqChannel, command) {
   let usersMoved = 0
   usersToMove.forEach((user) => {
@@ -135,4 +150,5 @@ module.exports = {
   getUsersByRole,
   getRandomUsers,
   getCategoryByName,
+  findUserByUserName,
 }

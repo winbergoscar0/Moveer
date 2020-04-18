@@ -25,6 +25,9 @@ const MISSING_ARGS_IN_MESSAGE = 'Missing information in the command. See `!help 
 const USER_INSIDE_BLOCKED_CHANNEL = (userInBlockedChannel) =>
   convertUserIdToTaggedUser(userInBlockedChannel) + ' is inside a blocked voice channel. Not moving!'
 
+const NO_USER_FOUND_BY_SEARCH = (userId, username) =>
+  convertUserIdToTaggedUser(userId) + ' Cant find user with the username: ' + username
+
 const MIGHT_BE_MISSING_FNUTTS_WARNING =
   'If your voice channel contains spaces, please use "" around it. Example; `"channel with spaces"`.'
 
@@ -414,4 +417,5 @@ module.exports = {
   MESSAGES_NOW_ALLOWED_IN_CHANNEL,
   handleHelpCommand,
   DB_DOWN_WARNING,
+  NO_USER_FOUND_BY_SEARCH,
 }

@@ -8,16 +8,19 @@ async function move(args, message, rabbitMqChannel) {
 
   try {
     let toVoiceChannelName = args[0]
+    let userToMove = args[1]
     if (args.join().includes('"')) {
       const names = helper.getNameWithSpacesName(args, message.author.id)
       toVoiceChannelName = names[0]
+      userToMove = names[1]
     }
 
     await check.ifTextChannelIsMoveerAdmin(message)
     check.argsLength(args, 1)
-    check.forUserMentions(message, messageMentions)
     toVoiceChannel = helper.getChannelByName(message, toVoiceChannelName)
     check.ifVoiceChannelExist(message, toVoiceChannel, toVoiceChannelName)
+    if (messageMentions.length < 1) messageMentions = await helper.findUserByUserName(message, userToMove)
+    check.forUserMentions(message, messageMentions)
     messageMentions = check.ifMentionsInsideVoiceChannel(message, messageMentions)
     messageMentions = check.ifUsersAlreadyInChannel(message, messageMentions, toVoiceChannel.id)
     check.ifChannelIsTextChannel(message, toVoiceChannel)
