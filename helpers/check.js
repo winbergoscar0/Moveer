@@ -200,13 +200,14 @@ function ifUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChann
   }
 }
 
-async function ifTextChannelIsMoveerAdmin(message) {
+async function ifTextChannelIsMoveerAdmin(message, throwError = true) {
   if (message.channel.name.toLowerCase() !== 'moveeradmin') {
     const searchForGuild = await database.getGuildObject(message, message.guild.id)
     if (searchForGuild.rowCount > 0 && searchForGuild.rows[0].adminChannelId === message.channel.id) {
       // console.log('all green')
     } else {
       // console.log('throwing')
+      if (!throwError) return throwError
       throw {
         logMessage: 'Command made outside moveeradmin',
         sendMessage: moveerMessage.ADMINCOMMAND_OUTSIDE_MOVEERADMIN(message.author.id),

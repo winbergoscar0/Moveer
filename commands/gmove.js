@@ -15,12 +15,13 @@ async function move(args, message, rabbitMqChannel) {
       const names = helper.getNameWithSpacesName(args, message.author.id)
       fromVoiceChannelName = names[0]
     }
-    if (message.channel.name.toLowerCase() !== 'moveeradmin') fromVoiceChannelName = 'gMoveer' + fromVoiceChannelName
+    if ((await check.ifTextChannelIsMoveerAdmin(message, false)) === false)
+      fromVoiceChannelName = 'gMoveer' + fromVoiceChannelName
     const fromVoiceChannel = helper.getChannelByName(message, fromVoiceChannelName)
 
     check.ifAuthorInsideAVoiceChannel(message, message.member.voiceChannelID)
     const authorVoiceChannelName = helper.getNameOfVoiceChannel(message, message.member.voiceChannelID)
-    if (message.channel.name.toLowerCase() !== 'moveeradmin') {
+    if ((await check.ifTextChannelIsMoveerAdmin(message, false)) === false) {
       check.ifVoiceChannelContainsMoveer(message, authorVoiceChannelName)
     }
     check.ifMessageContainsMentions(message)

@@ -11,7 +11,7 @@ async function move(args, message, rabbitMqChannel) {
     check.argsLength(args, 1)
     check.forUserMentions(message, messageMentions)
     check.ifSelfMention(message)
-    if (message.channel.name.toLowerCase() !== 'moveeradmin') {
+    if ((await check.ifTextChannelIsMoveerAdmin(message, false)) === false) {
       const authorVoiceChannelName = helper.getNameOfVoiceChannel(message, message.member.voiceChannelID)
       check.ifVoiceChannelExist(message, fromVoiceChannel, 'Moveer')
       const fromVoiceChannelName = helper.getNameOfVoiceChannel(message, fromVoiceChannel.id)
