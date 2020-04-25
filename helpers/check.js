@@ -43,7 +43,7 @@ function ifVoiceChannelContainsMoveer(message, authorVoiceChannelName) {
 }
 
 function ifGuildHasTwoMoveerChannels(message) {
-  if (message.guild.channels.find((channel) => channel.name.toLowerCase() === 'moveer') !== null) {
+  if (message.guild.channels.filter((channel) => channel.name.toLowerCase() === 'moveer').size > 1) {
     throw {
       logMessage: 'User has two channels called moveer/Moveer',
       sendMessage: moveerMessage.SERVER_HAS_TWO_MOVEER_VOICE_CHANNELS,
