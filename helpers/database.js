@@ -65,10 +65,19 @@ const insertGuildAfterWelcome = async (guildId) => {
   await dbConnection.end()
 }
 
+const updateSentRateLimitMessage = async (message, guildId) => {
+  const checkIfGuildInDb = await getGuildObject(message, guildId)
+  if (checkIfGuildInDb.rowCount === 0) await insertGuildAfterWelcome(guildId)
+  const dbConnection = await connectToDb(message)
+  await dbConnection.query('UPDATE "guilds" SET "sentRLMessage" = \'' + 1 + '\' WHERE "guildId" = \'' + guildId + "'")
+  await dbConnection.end()
+}
+
 module.exports = {
   getGuildObject,
   addSuccessfulMove,
   updateMoveerAdminChannel,
   insertGuildMoveerAdminChannel,
   insertGuildAfterWelcome,
+  updateSentRateLimitMessage,
 }

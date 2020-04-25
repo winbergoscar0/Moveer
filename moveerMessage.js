@@ -72,6 +72,9 @@ const MOVEER_MISSING_MOVE_PERMISSION = (userId, voiceChannelName) =>
   '\n\n' +
   SUPPORT_MESSAGE
 
+const TAKE_A_WHILE_RL_MESSAGE =
+  '\n\nThis is going to take a while.. Want to move users faster? Check out the announcments channel in the official discord! https://discord.gg/dTdH3gD'
+
 const MESSAGES_NOW_ALLOWED_IN_CHANNEL = (userId, textChannelId) =>
   convertUserIdToTaggedUser(userId) + ' - Admin commands now allowed to be sent inside <#' + textChannelId + '>'
 
@@ -418,4 +421,5 @@ module.exports = {
   handleHelpCommand,
   DB_DOWN_WARNING,
   NO_USER_FOUND_BY_SEARCH,
+  TAKE_A_WHILE_RL_MESSAGE,
 }

@@ -67,13 +67,30 @@ async function moveUsers(message, usersToMove, toVoiceChannelId, rabbitMqChannel
     PublishToRabbitMq(message, user, toVoiceChannelId, rabbitMqChannel)
     usersMoved++
   })
-  if (command !== 'ymove') moveerMessage.logger(message, 'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users'))
-  if (command !== 'ymove')
-    moveerMessage.sendMessage(
-      message,
-      'Moved ' + usersMoved + (usersMoved === 1 ? ' user' : ' users') + ' by request of <@' + message.author.id + '>'
-    )
-  if (config.postgreSQLConnection !== 'x') database.addSuccessfulMove(message, usersMoved)
+  if (command === 'ymove') return
+  const guildObject = await database.getGuildObject(message, message.guild.id)
+  const ShouldISendRLMessage =
+    (usersMoved > 15 && guildObject.rowCount > 0 && guildObject.rows[0].sentRLMessage === '0') ||
+    (usersMoved > 15 && guildObject.rowCount === 0)
+  moveerMessage.logger(
+    message,
+    'Moved ' +
+      usersMoved +
+      (usersMoved === 1 ? ' user' : ' users') +
+      (ShouldISendRLMessage ? ' - Sent RL message about announcment' : '')
+  )
+  moveerMessage.sendMessage(
+    message,
+    'Moved ' +
+      usersMoved +
+      (usersMoved === 1 ? ' user' : ' users') +
+      ' by request of <@' +
+      message.author.id +
+      '>' +
+      (ShouldISendRLMessage ? moveerMessage.TAKE_A_WHILE_RL_MESSAGE : '')
+  )
+  if (ShouldISendRLMessage) database.updateSentRateLimitMessage(message, message.guild.id)
+  database.addSuccessfulMove(message, usersMoved)
 }
 
 async function PublishToRabbitMq(message, userToMove, toVoiceChannelId, rabbitMqChannel) {
