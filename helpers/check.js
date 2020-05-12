@@ -131,7 +131,7 @@ function ifCatergyHasRoomsAvailable(message, voiceChannelCounter, voiceChannelsI
 function countOfChannelsFromCategory(message, CountOfChannelsFromCategory, categoryName) {
   if (CountOfChannelsFromCategory.length === 0) {
     throw {
-      logMessage: 'Not enought voice channels in the category: ' + categoryName,
+      logMessage: 'Not enough voice channels in the category: ' + categoryName,
       sendMessage: moveerMessage.NOT_ENOUGH_VCHANNELS_IN_CATEGORY(message.author.id, categoryName),
     }
   }
@@ -165,9 +165,9 @@ function ifVoiceChannelExist(message, voiceChannel, channelName) {
         command === 'move'
           ? moveerMessage.NO_VOICE_CHANNEL_NAMED_X(channelName, message.author.id)
           : moveerMessage.NO_VOICE_CHANNEL_NAMED_X(channelName, message.author.id) +
-            (message.content.slice(config.discordPrefix.length).trim().split(/ +/g).length > 3
-              ? '\n' + moveerMessage.MIGHT_BE_MISSING_FNUTTS_WARNING
-              : ''),
+          (message.content.slice(config.discordPrefix.length).trim().split(/ +/g).length > 3
+            ? '\n' + moveerMessage.MIGHT_BE_MISSING_FNUTTS_WARNING
+            : ''),
     }
   }
 }
