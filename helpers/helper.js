@@ -75,19 +75,19 @@ async function moveUsers(message, usersToMove, toVoiceChannelId, rabbitMqChannel
   moveerMessage.logger(
     message,
     'Moved ' +
-      usersMoved +
-      (usersMoved === 1 ? ' user' : ' users') +
-      (ShouldISendRLMessage ? ' - Sent RL message about announcment' : '')
+    usersMoved +
+    (usersMoved === 1 ? ' user' : ' users') +
+    (ShouldISendRLMessage ? ' - Sent RL message about announcment' : '')
   )
   moveerMessage.sendMessage(
     message,
     'Moved ' +
-      usersMoved +
-      (usersMoved === 1 ? ' user' : ' users') +
-      ' by request of <@' +
-      message.author.id +
-      '>' +
-      (ShouldISendRLMessage ? moveerMessage.TAKE_A_WHILE_RL_MESSAGE : '')
+    usersMoved +
+    (usersMoved === 1 ? ' user' : ' users') +
+    ' by request of <@' +
+    message.author.id +
+    '>' +
+    (ShouldISendRLMessage ? moveerMessage.TAKE_A_WHILE_RL_MESSAGE : '')
   )
   if (ShouldISendRLMessage) database.updateSentRateLimitMessage(message, message.guild.id)
   database.addSuccessfulMove(message, usersMoved)
@@ -109,11 +109,11 @@ async function PublishToRabbitMq(message, userToMove, toVoiceChannelId, rabbitMq
   moveerMessage.logger(
     message,
     'Sent message - User: ' +
-      messageToRabbitMQ.userId +
-      ' toChannel: ' +
-      messageToRabbitMQ.voiceChannelId +
-      ' in guild: ' +
-      messageToRabbitMQ.guildId
+    messageToRabbitMQ.userId +
+    ' toChannel: ' +
+    messageToRabbitMQ.voiceChannelId +
+    ' in guild: ' +
+    messageToRabbitMQ.guildId
   )
 }
 

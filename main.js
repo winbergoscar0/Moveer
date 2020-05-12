@@ -18,6 +18,7 @@ const fmove = require('./commands/fmove.js')
 const rmove = require('./commands/rmove.js')
 const tmove = require('./commands/tmove.js')
 const ymove = require('./commands/ymove.js')
+const zmove = require('./commands/zmove.js')
 const moveerMessage = require('./moveerMessage.js')
 const change = require('./commands/changeMoveerAdmin.js')
 
@@ -118,6 +119,7 @@ client.on('message', (message) => {
   if (command === 'rmove') rmove.move(args, message, rabbitMqChannel)
   if (command === 'tmove') tmove.move(args, message, rabbitMqChannel)
   if (command === 'ymove') ymove.move(args, message, rabbitMqChannel)
+  if (command === 'zmove') zmove.move(args, message, rabbitMqChannel)
   if ((command === 'help' || command === 'commands') && !message.author.bot) {
     const gotEmbedPerms = message.channel.permissionsFor(message.guild.me).has('EMBED_LINKS')
     args.length < 1
