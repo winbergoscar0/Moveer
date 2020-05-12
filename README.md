@@ -45,13 +45,8 @@ Spreads user across voice channels. For example `!ymove "before games" "games" 5
 
 ### **!zmove:** ↓
 
-Best used to move everyone back to a single channel after !ymove is used. For example `!zmove "games" "after games"` will move all users inside the "games" category to the "after games" channel.
+Best used to move everyone back to a single channel after !ymove is used. For example `!zmove "games" "after games"` will move all users inside the "games" category to the "after games" voice channel.
 <br>Example command `!zmove "games" "after games"`
-
-### **!av:** ↓
-
-Moves the author to a voice channel named `AV 5` if the author sends the message `!av 5`. Created for Vanilla BGs
-<br>Example command `!av 5`
 
 # Important notes:
 

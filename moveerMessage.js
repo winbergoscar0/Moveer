@@ -149,7 +149,7 @@ const HELP_MESSAGE = {
       },
       {
         name: 'zmove',
-        value: 'Moves all users inside a category\'s voice channels to another channel',
+        value: "Moves all users inside a category's voice channels to a specific channel",
       },
       {
         name: 'changema',
@@ -290,7 +290,7 @@ const HELP_ZMOVE = {
       {
         name: 'move',
         value:
-          'Best used to move everyone back to a single channel after !ymove is used\n1. Create a couple of voice channels under a category named "games"\n3. Write `!`move "games" "after games" 5`\n4. Now Moveer should move all users from the any of the different voice channels inside the category "games" to the "after games" channel. \nThis command requires to be sent from the text channel \'moveeradmin\'',
+          'Best used to move everyone back to a single channel after !ymove is used\n1. Create a couple of voice channels under a category named "games"\n3. Write `!zmove "games" "after games"`\n4. Moveer should now move all users from all the voice channels inside the category "games" to the "after games" voice channel. \nThis command requires to be sent from the text channel \'moveeradmin\'',
       },
     ],
   },
@@ -374,16 +374,16 @@ function sendMessage(message, sendMessage) {
 function logger(message, logMessage) {
   log.info(
     (message.author.bot ? 'BOT - ' : '') +
-    '(' +
-    message.id +
-    ') - ' +
-    message.guild.name +
-    ' - (' +
-    message.channel.name +
-    ') - (' +
-    message.content +
-    ') - ' +
-    logMessage
+      '(' +
+      message.id +
+      ') - ' +
+      message.guild.name +
+      ' - (' +
+      message.channel.name +
+      ') - (' +
+      message.content +
+      ') - ' +
+      logMessage
   )
 }
 
