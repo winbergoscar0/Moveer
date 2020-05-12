@@ -148,6 +148,10 @@ const HELP_MESSAGE = {
         value: 'Spreads x user from one channel to different voice channels inside a category',
       },
       {
+        name: 'zmove',
+        value: 'Moves all users inside a category\'s voice channels to another channel',
+      },
+      {
         name: 'changema',
         value:
           'Allows moveeradmin commands to be sent from a secondary text channel of your choice \n`!changema #<channelName>`\n\nFor more information, use !help <command>',
@@ -276,6 +280,22 @@ const HELP_YMOVE = {
   },
 }
 
+const HELP_ZMOVE = {
+  embed: {
+    color: 2387002,
+    footer: {
+      text: 'Support server: https://discord.gg/dTdH3gD',
+    },
+    fields: [
+      {
+        name: 'move',
+        value:
+          'Best used to move everyone back to a single channel after !ymove is used\n1. Create a couple of voice channels under a category named "games"\n3. Write `!`move "games" "after games" 5`\n4. Now Moveer should move all users from the any of the different voice channels inside the category "games" to the "after games" channel. \nThis command requires to be sent from the text channel \'moveeradmin\'',
+      },
+    ],
+  },
+}
+
 const HELP_CHANGEMA = {
   embed: {
     color: 2387002,
@@ -303,6 +323,7 @@ const FALLBACK_HELP_MOVE = HELP_MOVE.embed.fields[0].value
 const FALLBACK_HELP_GMOVE = HELP_GMOVE.embed.fields[0].value
 const FALLBACK_HELP_TMOVE = HELP_TMOVE.embed.fields[0].value
 const FALLBACK_HELP_YMOVE = HELP_YMOVE.embed.fields[0].value
+const FALLBACK_HELP_ZMOVE = HELP_ZMOVE.embed.fields[0].value
 const FALLBACK_HELP_CHANGEMA = HELP_CHANGEMA.embed.fields[0].value
 const FALLBACK_HELP_RMOVE = HELP_RMOVE.embed.fields[0].value
 
@@ -320,6 +341,8 @@ const handleHelpCommand = (helpCommand, gotEmbedPerms) => {
       return gotEmbedPerms ? HELP_GMOVE : FALLBACK_HELP_GMOVE
     case 'ymove':
       return gotEmbedPerms ? HELP_YMOVE : FALLBACK_HELP_YMOVE
+    case 'zmove':
+      return gotEmbedPerms ? HELP_ZMOVE : FALLBACK_HELP_ZMOVE
     case 'tmove':
       return gotEmbedPerms ? HELP_TMOVE : FALLBACK_HELP_TMOVE
     case 'changema':
@@ -351,16 +374,16 @@ function sendMessage(message, sendMessage) {
 function logger(message, logMessage) {
   log.info(
     (message.author.bot ? 'BOT - ' : '') +
-      '(' +
-      message.id +
-      ') - ' +
-      message.guild.name +
-      ' - (' +
-      message.channel.name +
-      ') - (' +
-      message.content +
-      ') - ' +
-      logMessage
+    '(' +
+    message.id +
+    ') - ' +
+    message.guild.name +
+    ' - (' +
+    message.channel.name +
+    ') - (' +
+    message.content +
+    ') - ' +
+    logMessage
   )
 }
 
@@ -407,6 +430,8 @@ module.exports = {
   FALLBACK_HELP_TMOVE,
   HELP_YMOVE,
   FALLBACK_HELP_YMOVE,
+  HELP_ZMOVE,
+  FALLBACK_HELP_ZMOVE,
   HELP_CHANGEMA,
   FALLBACK_HELP_CHANGEMA,
   reportMoveerError,

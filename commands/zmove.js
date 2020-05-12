@@ -21,27 +21,23 @@ async function move(args, message, rabbitMqChannel) {
 
     const fromCategory = helper.getCategoryByName(message, fromCategoryName)
     const voiceChannelsInCategory = fromCategory.children
-      .filter((channel) => channel.type === 'voice')
+      .filter((channel) => channel.type === 'voice' && channel.id !== toVoiceChannel.id)
       .array()
     check.countOfChannelsFromCategory(message, voiceChannelsInCategory, fromCategoryName) // Check a voice channel is in this category
 
-    const userIdsToMove = await fromCategory.children.reduce((res, elem) => res.concat(elem.members.map(({ id }) => id)), [])
-    const userIdsLength = userIdsToMove.length
+    const userIdsToMove = await voiceChannelsInCategory.reduce(
+      (res, elem) => res.concat(elem.members.map(({ id }) => id)),
+      []
+    )
+
+    check.userAmountInChannel(message, userIdsToMove.length, 1, fromCategoryName, true)
     await check.forMovePerms(message, userIdsToMove, toVoiceChannel)
     await check.forConnectPerms(message, userIdsToMove, toVoiceChannel)
 
     // No errors in the message, lets get moving!
-    if (userIdsToMove.length > 0) {
-      helper.moveUsers(message, userIdsToMove, toVoiceChannel, rabbitMqChannel)
-      moveerMessage.logger(message, 'Moved ' + userIdsLength + (userIdsLength === 1 ? ' user' : ' users'))
-      moveerMessage.sendMessage(
-        message,
-        'Moved ' + userIdsLength + (userIdsLength === 1 ? ' user' : ' users') + ' by request of <@' + message.author.id + '>'
-      )
-    } else {
-      moveerMessage.logger(message, 'All users already in the correct voice channel')
-      moveerMessage.sendMessage(message, 'All users already in the correct voice channel')
-    }
+    userIdsToMove.length > 0
+      ? helper.moveUsers(message, userIdsToMove, toVoiceChannel.id, rabbitMqChannel)
+      : moveerMessage.sendMessage(message, moveerMessage.USER_ALREADY_IN_CHANNEL('Everyone'))
   } catch (err) {
     if (!err.logMessage) console.log(err)
     moveerMessage.logger(message, err.logMessage)

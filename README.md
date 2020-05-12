@@ -43,6 +43,11 @@ Moves users with a certain role to specific channel. For example `!tmove channel
 Spreads user across voice channels. For example `!ymove "before games" "games" 5` moves all user from "before games" and spread them, randomlywith 5 users in each voice, across channels in the category "games"
 <br>Example command `!ymove "before games" "games" 5`
 
+### **!zmove:** ↓
+
+Best used to move everyone back to a single channel after !ymove is used. For example `!zmove "games" "after games"` will move all users inside the "games" category to the "after games" channel.
+<br>Example command `!zmove "games" "after games"`
+
 ### **!av:** ↓
 
 Moves the author to a voice channel named `AV 5` if the author sends the message `!av 5`. Created for Vanilla BGs
