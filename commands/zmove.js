@@ -25,7 +25,7 @@ async function move(args, message, rabbitMqChannel) {
       .array()
     check.countOfChannelsFromCategory(message, voiceChannelsInCategory, fromCategoryName) // Check a voice channel is in this category
 
-    const userIdsToMove = await fromCategory.children.reduce((res, elem) => res.concat(elem.members.map(({ id }) => id)))
+    const userIdsToMove = await fromCategory.children.reduce((res, elem) => res.concat(elem.members.map(({ id }) => id)), [])
     const userIdsLength = userIdsToMove.length
     await check.forMovePerms(message, userIdsToMove, toVoiceChannel)
     await check.forConnectPerms(message, userIdsToMove, toVoiceChannel)
