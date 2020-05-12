@@ -18,7 +18,6 @@ async function move(args, message, rabbitMqChannel) {
     check.ifMessageContainsMentions(message)
     const toVoiceChannel = helper.getChannelByName(message, voiceChannelName)
     check.ifVoiceChannelExist(message, toVoiceChannel, voiceChannelName)
-    // check.ifUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel) //Ignore during test
 
     const fromCategory = helper.getCategoryByName(message, fromCategoryName)
     const voiceChannelsInCategory = fromCategory.children
