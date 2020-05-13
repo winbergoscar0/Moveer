@@ -30,7 +30,7 @@ async function move(args, message, rabbitMqChannel) {
       []
     )
 
-    check.userAmountInChannel(message, userIdsToMove.length, 1, fromCategoryName, true)
+    check.userAmountInChannel(message, userIdsToMove.length, 1, fromCategoryName)
     await check.forMovePerms(message, userIdsToMove, toVoiceChannel)
     await check.forConnectPerms(message, userIdsToMove, toVoiceChannel)
 

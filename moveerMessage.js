@@ -51,8 +51,17 @@ const NOT_ENOUGH_USERS_IN_CHANNEL = (userId, fromVoiceChannelName, actualAmount,
   ' - Not enough members inside the channel "' +
   fromVoiceChannelName +
   '" to move. Found ' +
-  actualAmount +
-  ' user expected amount above ' +
+  actualAmount + (actualAmount === 1 ? ' user' : ' users') +
+  ', expected at least ' +
+  expectedAmount
+
+const NOT_ENOUGH_USERS_IN_GROUP = (userId, fromGroupName, actualAmount, expectedAmount) =>
+  convertUserIdToTaggedUser(userId) +
+  ' - Not enough members inside the group "' +
+  fromGroupName +
+  '" to move. Found ' +
+  actualAmount + (actualAmount === 1 ? ' user' : ' users') +
+  ', expected at least ' +
   expectedAmount
 
 const SUPPORT_MESSAGE =
@@ -374,16 +383,16 @@ function sendMessage(message, sendMessage) {
 function logger(message, logMessage) {
   log.info(
     (message.author.bot ? 'BOT - ' : '') +
-      '(' +
-      message.id +
-      ') - ' +
-      message.guild.name +
-      ' - (' +
-      message.channel.name +
-      ') - (' +
-      message.content +
-      ') - ' +
-      logMessage
+    '(' +
+    message.id +
+    ') - ' +
+    message.guild.name +
+    ' - (' +
+    message.channel.name +
+    ') - (' +
+    message.content +
+    ') - ' +
+    logMessage
   )
 }
 

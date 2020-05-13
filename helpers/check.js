@@ -139,13 +139,20 @@ function countOfChannelsFromCategory(message, CountOfChannelsFromCategory, categ
 
 function userAmountInChannel(message, amount, expectedAmount, fromVoiceChannelName) {
   if (amount < expectedAmount) {
+    const message = moveerMessage.NOT_ENOUGH_USERS_IN_CHANNEL(message.author.id, fromVoiceChannelName, amount, expectedAmount);
     throw {
-      logMessage: moveerMessage.NOT_ENOUGH_USERS_IN_CHANNEL(message.author.id, fromVoiceChannelName, amount, expectedAmount),
-      sendMessage: moveerMessage.NOT_ENOUGH_USERS_IN_CHANNEL(
-        message.author.id,
-        fromVoiceChannelName,
-        amount,
-        expectedAmount
+      logMessage: message,
+      sendMessage: message
+    }
+  }
+}
+
+function userAmountInGroup(message, amount, expectedAmount, fromGroupName) {
+  if (amount < expectedAmount) {
+    const message = moveerMessage.NOT_ENOUGH_USERS_IN_GROUP(message.author.id, fromGroupName, amount, expectedAmount)
+    throw {
+      logMessage: message,
+      sendMessage: message
       ),
     }
   }
