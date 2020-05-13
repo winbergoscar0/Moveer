@@ -139,14 +139,20 @@ function countOfChannelsFromCategory(message, CountOfChannelsFromCategory, categ
 
 function userAmountInChannel(message, amount, expectedAmount, fromVoiceChannelName) {
   if (amount < expectedAmount) {
+    const m = moveerMessage.NOT_ENOUGH_USERS_IN_CHANNEL(message.author.id, fromVoiceChannelName, amount, expectedAmount);
     throw {
-      logMessage: moveerMessage.NOT_ENOUGH_USERS_IN_CHANNEL(message.author.id, fromVoiceChannelName, amount, expectedAmount),
-      sendMessage: moveerMessage.NOT_ENOUGH_USERS_IN_CHANNEL(
-        message.author.id,
-        fromVoiceChannelName,
-        amount,
-        expectedAmount
-      ),
+      logMessage: m,
+      sendMessage: m
+    }
+  }
+}
+
+function userAmountInCategory(message, amount, expectedAmount, fromCategoryName) {
+  if (amount < expectedAmount) {
+    const m = moveerMessage.NOT_ENOUGH_USERS_IN_CATEGORY(message.author.id, fromCategoryName, amount, expectedAmount)
+    throw {
+      logMessage: m,
+      sendMessage: m
     }
   }
 }
@@ -268,6 +274,7 @@ module.exports = {
   argsLength,
   ifVoiceChannelExist,
   userAmountInChannel,
+  userAmountInCategory,
   countOfChannelsFromCategory,
   ifCatergyHasRoomsAvailable,
   ifChannelIsTextChannel,

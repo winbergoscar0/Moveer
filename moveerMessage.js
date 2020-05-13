@@ -51,8 +51,17 @@ const NOT_ENOUGH_USERS_IN_CHANNEL = (userId, fromVoiceChannelName, actualAmount,
   ' - Not enough members inside the channel "' +
   fromVoiceChannelName +
   '" to move. Found ' +
-  actualAmount +
-  ' user expected amount above ' +
+  actualAmount + (actualAmount === 1 ? ' user' : ' users') +
+  ', expected at least ' +
+  expectedAmount
+
+const NOT_ENOUGH_USERS_IN_CATEGORY = (userId, fromCategoryName, actualAmount, expectedAmount) =>
+  convertUserIdToTaggedUser(userId) +
+  ' - Not enough members inside the category "' +
+  fromCategoryName +
+  '" to move. Found ' +
+  actualAmount + (actualAmount === 1 ? ' user' : ' users') +
+  ', expected at least ' +
   expectedAmount
 
 const SUPPORT_MESSAGE =
@@ -374,16 +383,16 @@ function sendMessage(message, sendMessage) {
 function logger(message, logMessage) {
   log.info(
     (message.author.bot ? 'BOT - ' : '') +
-      '(' +
-      message.id +
-      ') - ' +
-      message.guild.name +
-      ' - (' +
-      message.channel.name +
-      ') - (' +
-      message.content +
-      ') - ' +
-      logMessage
+    '(' +
+    message.id +
+    ') - ' +
+    message.guild.name +
+    ' - (' +
+    message.channel.name +
+    ') - (' +
+    message.content +
+    ') - ' +
+    logMessage
   )
 }
 
@@ -436,6 +445,7 @@ module.exports = {
   FALLBACK_HELP_CHANGEMA,
   reportMoveerError,
   NOT_ENOUGH_USERS_IN_CHANNEL,
+  NOT_ENOUGH_USERS_IN_CATEGORY,
   MISSING_ARGS_IN_MESSAGE,
   NOT_ENOUGH_VCHANNELS_IN_CATEGORY,
   MIGHT_BE_MISSING_FNUTTS_WARNING,

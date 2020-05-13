@@ -6,7 +6,7 @@
 
 A bot that moves users from one voice channel to another. Including locked and hidden voice channels!
 
-## We currently got 7 commands that all move users in different ways.
+## We currently have 8 commands that all move users in different ways.
 
 ### **!cmove:** ↓
 
