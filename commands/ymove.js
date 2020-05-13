@@ -58,7 +58,10 @@ async function move(args, message, rabbitMqChannel) {
       'Moved ' + userIdsLength + (userIdsLength === 1 ? ' user' : ' users') + ' by request of <@' + message.author.id + '>'
     )
   } catch (err) {
-    if (!err.logMessage) console.log(err)
+    if (!err.logMessage) {
+      moveerMessage.reportMoveerError('Above alert was caused by:\n' + err.stack)
+      console.log(err)
+    }
     moveerMessage.logger(message, err.logMessage)
     moveerMessage.sendMessage(message, err.sendMessage)
   }

@@ -31,7 +31,10 @@ async function move(args, message, rabbitMqChannel) {
     // No errors in the message, lets get moving!
     if (userIdsToMove.length > 0) helper.moveUsers(message, userIdsToMove, toVoiceChannel.id, rabbitMqChannel)
   } catch (err) {
-    if (!err.logMessage) console.log(err)
+    if (!err.logMessage) {
+      console.log(err)
+      moveerMessage.reportMoveerError('Above alert was caused by:\n' + err.stack)
+    }
     moveerMessage.logger(message, err.logMessage)
     moveerMessage.sendMessage(message, err.sendMessage)
   }

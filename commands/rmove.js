@@ -30,7 +30,10 @@ async function move(args, message, rabbitMqChannel) {
       moveerMessage.sendMessage(message, 'All users already in the correct voice channel')
     }
   } catch (err) {
-    if (!err.logMessage) console.log(err)
+    if (!err.logMessage) {
+      console.log(err)
+      moveerMessage.reportMoveerError('Above alert was caused by:\n' + err.stack)
+    }
     moveerMessage.logger(message, err.logMessage)
     moveerMessage.sendMessage(message, err.sendMessage)
   }

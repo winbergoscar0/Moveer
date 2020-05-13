@@ -25,6 +25,7 @@ async function moveerAdmin(args, message) {
   } catch (err) {
     if (!err.logMessage) {
       moveerMessage.reportMoveerError('@everyone Unable to update or insert moveeradmin text channel to DB')
+      moveerMessage.reportMoveerError('Above alert was caused by:\n' + err.stack)
       moveerMessage.logger(message, moveerMessage.DB_DOWN_WARNING)
       moveerMessage.sendMessage(message, moveerMessage.DB_DOWN_WARNING)
     } else {

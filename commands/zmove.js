@@ -20,9 +20,7 @@ async function move(args, message, rabbitMqChannel) {
     check.ifVoiceChannelExist(message, toVoiceChannel, voiceChannelName)
 
     const fromCategory = helper.getCategoryByName(message, fromCategoryName)
-    const voiceChannelsInCategory = fromCategory.children
-      .filter((channel) => channel.type === 'voice')
-      .array()
+    const voiceChannelsInCategory = fromCategory.children.filter((channel) => channel.type === 'voice').array()
     check.countOfChannelsFromCategory(message, voiceChannelsInCategory, fromCategoryName) // Check a voice channel is in this category
 
     const userIdsToMove = await voiceChannelsInCategory.reduce(
@@ -44,7 +42,10 @@ async function move(args, message, rabbitMqChannel) {
       ? helper.moveUsers(message, userIdsToMove, toVoiceChannel.id, rabbitMqChannel)
       : moveerMessage.sendMessage(message, moveerMessage.USER_ALREADY_IN_CHANNEL('Everyone'))
   } catch (err) {
-    if (!err.logMessage) console.log(err)
+    if (!err.logMessage) {
+      console.log(err)
+      moveerMessage.reportMoveerError('Above alert was caused by:\n' + err.stack)
+    }
     moveerMessage.logger(message, err.logMessage)
     moveerMessage.sendMessage(message, err.sendMessage)
   }
