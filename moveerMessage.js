@@ -55,10 +55,10 @@ const NOT_ENOUGH_USERS_IN_CHANNEL = (userId, fromVoiceChannelName, actualAmount,
   ', expected at least ' +
   expectedAmount
 
-const NOT_ENOUGH_USERS_IN_GROUP = (userId, fromGroupName, actualAmount, expectedAmount) =>
+const NOT_ENOUGH_USERS_IN_CATEGORY = (userId, fromCategoryName, actualAmount, expectedAmount) =>
   convertUserIdToTaggedUser(userId) +
-  ' - Not enough members inside the group "' +
-  fromGroupName +
+  ' - Not enough members inside the category "' +
+  fromCategoryName +
   '" to move. Found ' +
   actualAmount + (actualAmount === 1 ? ' user' : ' users') +
   ', expected at least ' +
@@ -445,6 +445,7 @@ module.exports = {
   FALLBACK_HELP_CHANGEMA,
   reportMoveerError,
   NOT_ENOUGH_USERS_IN_CHANNEL,
+  NOT_ENOUGH_USERS_IN_CATEGORY,
   MISSING_ARGS_IN_MESSAGE,
   NOT_ENOUGH_VCHANNELS_IN_CATEGORY,
   MIGHT_BE_MISSING_FNUTTS_WARNING,

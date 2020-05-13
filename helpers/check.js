@@ -147,13 +147,12 @@ function userAmountInChannel(message, amount, expectedAmount, fromVoiceChannelNa
   }
 }
 
-function userAmountInGroup(message, amount, expectedAmount, fromGroupName) {
+function userAmountInCategory(message, amount, expectedAmount, fromCategoryName) {
   if (amount < expectedAmount) {
-    const message = moveerMessage.NOT_ENOUGH_USERS_IN_GROUP(message.author.id, fromGroupName, amount, expectedAmount)
+    const message = moveerMessage.NOT_ENOUGH_USERS_IN_CATEGORY(message.author.id, fromCategoryName, amount, expectedAmount)
     throw {
       logMessage: message,
       sendMessage: message
-      ),
     }
   }
 }
@@ -275,6 +274,7 @@ module.exports = {
   argsLength,
   ifVoiceChannelExist,
   userAmountInChannel,
+  userAmountInCategory,
   countOfChannelsFromCategory,
   ifCatergyHasRoomsAvailable,
   ifChannelIsTextChannel,
