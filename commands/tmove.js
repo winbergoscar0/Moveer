@@ -12,7 +12,7 @@ async function move(args, message, rabbitMqChannel) {
       roleName = names[1]
     }
     await check.ifTextChannelIsMoveerAdmin(message)
-    check.argsLength(args, 1)
+    check.argsLength(args, 2)
     check.ifMessageContainsMentions(message)
     const toVoiceChannel = helper.getChannelByName(message, toVoiceChannelName)
     check.ifVoiceChannelExist(message, toVoiceChannel, toVoiceChannelName)
