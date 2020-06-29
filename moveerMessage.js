@@ -51,7 +51,8 @@ const NOT_ENOUGH_USERS_IN_CHANNEL = (userId, fromVoiceChannelName, actualAmount,
   ' - Not enough members inside the channel "' +
   fromVoiceChannelName +
   '" to move. Found ' +
-  actualAmount + (actualAmount === 1 ? ' user' : ' users') +
+  actualAmount +
+  (actualAmount === 1 ? ' user' : ' users') +
   ', expected at least ' +
   expectedAmount
 
@@ -60,7 +61,8 @@ const NOT_ENOUGH_USERS_IN_CATEGORY = (userId, fromCategoryName, actualAmount, ex
   ' - Not enough members inside the category "' +
   fromCategoryName +
   '" to move. Found ' +
-  actualAmount + (actualAmount === 1 ? ' user' : ' users') +
+  actualAmount +
+  (actualAmount === 1 ? ' user' : ' users') +
   ', expected at least ' +
   expectedAmount
 
@@ -383,16 +385,16 @@ function sendMessage(message, sendMessage) {
 function logger(message, logMessage) {
   log.info(
     (message.author.bot ? 'BOT - ' : '') +
-    '(' +
-    message.id +
-    ') - ' +
-    message.guild.name +
-    ' - (' +
-    message.channel.name +
-    ') - (' +
-    message.content +
-    ') - ' +
-    logMessage
+      '(' +
+      message.id +
+      ') - ' +
+      message.guild.name +
+      ' - (' +
+      message.channel.name +
+      ') - (' +
+      message.content +
+      ') - ' +
+      logMessage
   )
 }
 

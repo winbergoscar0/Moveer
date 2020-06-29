@@ -46,19 +46,29 @@ function getUsersByRole(message, roleName) {
   return usersToMove
 }
 
-const findUserByUserName = async (message, username) => {
+const findUserByUserName = async (message, usernames) => {
   if (!message.author.bot) return []
-  const user = await message.guild.members.find(
-    (user) =>
-      user.user.username.toLowerCase() === username.toLowerCase() ||
-      (user.nickname && user.nickname.toLowerCase() === username.toLowerCase())
-  )
-  if (user != null) return [user.user]
+  const usersToFind = usernames.join('__').replace(/".*"/, '').split('__')
+  usersToFind.shift()
 
-  throw {
-    logMessage: '(BOT CMOVE) - Username not found',
-    sendMessage: moveerMessage.NO_USER_FOUND_BY_SEARCH(message.author.id, username),
+  const foundUsers = []
+  await usersToFind.forEach(async (username) => {
+    const user = await message.guild.members.find(
+      (user) =>
+        user.user.username.toLowerCase() === username.toLowerCase() ||
+        (user.nickname && user.nickname.toLowerCase() === username.toLowerCase())
+    )
+    if (user) {
+      foundUsers.push(user.user)
+    } else {
+      moveerMessage.logger(message, moveerMessage.NO_USER_FOUND_BY_SEARCH(message.author.id, username))
+      moveerMessage.sendMessage(message, moveerMessage.NO_USER_FOUND_BY_SEARCH(message.author.id, username))
+    }
+  })
+  if (foundUsers.length > 0) {
+    return foundUsers
   }
+  return []
 }
 
 async function moveUsers(message, usersToMove, toVoiceChannelId, rabbitMqChannel, command) {
@@ -75,19 +85,19 @@ async function moveUsers(message, usersToMove, toVoiceChannelId, rabbitMqChannel
   moveerMessage.logger(
     message,
     'Moved ' +
-    usersMoved +
-    (usersMoved === 1 ? ' user' : ' users') +
-    (ShouldISendRLMessage ? ' - Sent RL message about announcment' : '')
+      usersMoved +
+      (usersMoved === 1 ? ' user' : ' users') +
+      (ShouldISendRLMessage ? ' - Sent RL message about announcment' : '')
   )
   moveerMessage.sendMessage(
     message,
     'Moved ' +
-    usersMoved +
-    (usersMoved === 1 ? ' user' : ' users') +
-    ' by request of <@' +
-    message.author.id +
-    '>' +
-    (ShouldISendRLMessage ? moveerMessage.TAKE_A_WHILE_RL_MESSAGE : '')
+      usersMoved +
+      (usersMoved === 1 ? ' user' : ' users') +
+      ' by request of <@' +
+      message.author.id +
+      '>' +
+      (ShouldISendRLMessage ? moveerMessage.TAKE_A_WHILE_RL_MESSAGE : '')
   )
   if (ShouldISendRLMessage) database.updateSentRateLimitMessage(message, message.guild.id)
   database.addSuccessfulMove(message, usersMoved)
@@ -109,11 +119,11 @@ async function PublishToRabbitMq(message, userToMove, toVoiceChannelId, rabbitMq
   moveerMessage.logger(
     message,
     'Sent message - User: ' +
-    messageToRabbitMQ.userId +
-    ' toChannel: ' +
-    messageToRabbitMQ.voiceChannelId +
-    ' in guild: ' +
-    messageToRabbitMQ.guildId
+      messageToRabbitMQ.userId +
+      ' toChannel: ' +
+      messageToRabbitMQ.voiceChannelId +
+      ' in guild: ' +
+      messageToRabbitMQ.guildId
   )
 }
 
