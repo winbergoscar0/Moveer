@@ -46,6 +46,14 @@ function getUsersByRole(message, roleName) {
   return usersToMove
 }
 
+const getGuildGroupNames = async (message, name) => {
+  const patreonGuildObject = await database.getPatreonGuildObject(message, message.guild.id)
+  if (patreonGuildObject.rowCount > 0 && patreonGuildObject.rows[0].groupName != null) {
+    return patreonGuildObject.rows[0].groupName + name
+  }
+  return 'gMoveer' + name
+}
+
 const findUserByUserName = async (message, usernames) => {
   if (!message.author.bot) return []
   const usersToFind = usernames.join('__').replace(/".*"/, '').split('__')
@@ -178,4 +186,5 @@ module.exports = {
   getRandomUsers,
   getCategoryByName,
   findUserByUserName,
+  getGuildGroupNames,
 }

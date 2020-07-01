@@ -139,10 +139,10 @@ function countOfChannelsFromCategory(message, CountOfChannelsFromCategory, categ
 
 function userAmountInChannel(message, amount, expectedAmount, fromVoiceChannelName) {
   if (amount < expectedAmount) {
-    const m = moveerMessage.NOT_ENOUGH_USERS_IN_CHANNEL(message.author.id, fromVoiceChannelName, amount, expectedAmount);
+    const m = moveerMessage.NOT_ENOUGH_USERS_IN_CHANNEL(message.author.id, fromVoiceChannelName, amount, expectedAmount)
     throw {
       logMessage: m,
-      sendMessage: m
+      sendMessage: m,
     }
   }
 }
@@ -152,7 +152,7 @@ function userAmountInCategory(message, amount, expectedAmount, fromCategoryName)
     const m = moveerMessage.NOT_ENOUGH_USERS_IN_CATEGORY(message.author.id, fromCategoryName, amount, expectedAmount)
     throw {
       logMessage: m,
-      sendMessage: m
+      sendMessage: m,
     }
   }
 }
@@ -171,9 +171,9 @@ function ifVoiceChannelExist(message, voiceChannel, channelName) {
         command === 'move'
           ? moveerMessage.NO_VOICE_CHANNEL_NAMED_X(channelName, message.author.id)
           : moveerMessage.NO_VOICE_CHANNEL_NAMED_X(channelName, message.author.id) +
-          (message.content.slice(config.discordPrefix.length).trim().split(/ +/g).length > 3
-            ? '\n' + moveerMessage.MIGHT_BE_MISSING_FNUTTS_WARNING
-            : ''),
+            (message.content.slice(config.discordPrefix.length).trim().split(/ +/g).length > 3
+              ? '\n' + moveerMessage.MIGHT_BE_MISSING_FNUTTS_WARNING
+              : ''),
     }
   }
 }

@@ -16,7 +16,7 @@ async function move(args, message, rabbitMqChannel) {
       fromVoiceChannelName = names[0]
     }
     if ((await check.ifTextChannelIsMoveerAdmin(message, false)) === false)
-      fromVoiceChannelName = 'gMoveer' + fromVoiceChannelName
+      fromVoiceChannelName = await helper.getGuildGroupNames(message, fromVoiceChannelName)
     const fromVoiceChannel = helper.getChannelByName(message, fromVoiceChannelName)
 
     check.ifAuthorInsideAVoiceChannel(message, message.member.voiceChannelID)

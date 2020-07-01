@@ -27,6 +27,13 @@ const getGuildObject = async (message, guildId) => {
   return searchForGuild
 }
 
+const getPatreonGuildObject = async (message, guildId) => {
+  const dbConnection = await connectToDb(message)
+  const searchForPatreonGuild = await dbConnection.query('SELECT * FROM "patreons" WHERE "guildId" = \'' + guildId + "'")
+  await dbConnection.end()
+  return searchForPatreonGuild
+}
+
 const addSuccessfulMove = async (message, usersMoved) => {
   const dbConnection = await connectToDb(message)
   await dbConnection.query('UPDATE moves SET successCount = successCount + ' + usersMoved + ' WHERE id = 1')
@@ -80,4 +87,5 @@ module.exports = {
   insertGuildMoveerAdminChannel,
   insertGuildAfterWelcome,
   updateSentRateLimitMessage,
+  getPatreonGuildObject,
 }
