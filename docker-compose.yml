@@ -1,0 +1,8 @@
+version: "3"
+services:
+  moveer:
+    build: .
+    environment:
+      - TZ=Europe/Stockholm
+    restart: unless-stopped
+    container_name: "moveer"
