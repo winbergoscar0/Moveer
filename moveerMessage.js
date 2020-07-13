@@ -370,6 +370,7 @@ function sendMessage(message, sendMessage) {
     reportMoveerError('I was about to send a NULL message - Probably errors in code.. @everyone')
     return
   }
+
   message.channel.send(sendMessage).catch((e) => {
     logger(message, e)
     if (

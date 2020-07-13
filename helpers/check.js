@@ -2,6 +2,7 @@
 const moveerMessage = require('../moveerMessage.js')
 const config = require('../config.js')
 const database = require('./database.js')
+const helper = require('./helper')
 
 const valueEqNullorUndefinded = (value, operator = '==') => {
   switch (operator) {
@@ -43,7 +44,7 @@ function ifVoiceChannelContainsMoveer(message, authorVoiceChannelName) {
 }
 
 function ifGuildHasTwoMoveerChannels(message) {
-  if (message.guild.channels.filter((channel) => channel.name.toLowerCase() === 'moveer').size > 1) {
+  if (message.guild.channels.cache.filter((channel) => channel.name.toLowerCase() === 'moveer').size > 1) {
     throw {
       logMessage: 'User has two channels called moveer/Moveer',
       sendMessage: moveerMessage.SERVER_HAS_TWO_MOVEER_VOICE_CHANNELS,
@@ -51,30 +52,39 @@ function ifGuildHasTwoMoveerChannels(message) {
   }
 }
 
-function ifMentionsInsideVoiceChannel(message, messageMentions) {
+async function ifMentionsInsideVoiceChannel(message, messageMentions) {
+  const usersToRemoveFromMentions = []
   for (let i = 0; i < messageMentions.length; i++) {
-    if (valueEqNullorUndefinded(message.guild.members.get(messageMentions[i].id).voiceChannelID)) {
+    const userVoiceChannelId = await helper.getUserVoiceChannelIdByUserId(message, messageMentions[i].id)
+    if (valueEqNullorUndefinded(userVoiceChannelId)) {
       moveerMessage.logger(message, 'Not moving user, not in any voice channel!')
       moveerMessage.sendMessage(message, moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL(messageMentions[i].id))
+      usersToRemoveFromMentions.push(messageMentions[i].id)
     }
   }
-  return messageMentions.filter((user) => valueEqNullorUndefinded(message.guild.members.get(user.id).voiceChannelID, '!='))
+  return messageMentions.filter((user) => !usersToRemoveFromMentions.includes(user.id))
 }
 
-function ifUsersAlreadyInChannel(message, messageMentions, toVoiceChannelId) {
-  for (let i = 0; i < messageMentions.length; i++) {
-    if (message.guild.members.get(messageMentions[i].id).voiceChannelID === toVoiceChannelId) {
-      moveerMessage.logger(message, 'Not moving user, user already in the channel!')
+async function ifUsersAlreadyInChannel(message, messageMentions, toVoiceChannelId) {
+  const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
+  const command = args.shift().toLowerCase()
+  const usersToRemoveFromMentions = []
+  for (let i = 0; i < (await messageMentions.length); i++) {
+    const userVoiceChannelId = await helper.getUserVoiceChannelIdByUserId(message, messageMentions[i].id)
+    if (userVoiceChannelId === toVoiceChannelId) {
+      usersToRemoveFromMentions.push(messageMentions[i].id)
+      if (command === 'rmove' || command === 'tmove') continue // Don't send already in channel alert on rmove and tmove
+      moveerMessage.logger(message, 'Not moving user, ' + messageMentions[i].id + ' is already in ' + toVoiceChannelId)
       moveerMessage.sendMessage(message, moveerMessage.USER_ALREADY_IN_CHANNEL(messageMentions[i].id))
     }
   }
-  return messageMentions.filter((user) => message.guild.members.get(user.id).voiceChannelID !== toVoiceChannelId)
+  return messageMentions.filter((user) => !usersToRemoveFromMentions.includes(user.id))
 }
 
 async function forConnectPerms(message, users, voiceChannel) {
   for (let i = 0; i < users.length; i++) {
-    const userVoiceChannelId = await message.guild.members.get(users[i]).voiceChannelID
-    const userVoiceChannel = await message.guild.channels.get(userVoiceChannelId)
+    const userVoiceChannelId = await helper.getUserVoiceChannelIdByUserId(message, users[i])
+    const userVoiceChannel = await helper.getUserVoiceChannelByVoiceChannelId(message, userVoiceChannelId)
     if (await !userVoiceChannel.memberPermissions(message.guild.me).has('CONNECT')) {
       throw {
         logMessage: 'Moveer is missing CONNECT permission',
@@ -92,8 +102,8 @@ async function forConnectPerms(message, users, voiceChannel) {
 
 async function forMovePerms(message, users, voiceChannel) {
   for (let i = 0; i < users.length; i++) {
-    const userVoiceChannelId = await message.guild.members.get(users[i]).voiceChannelID
-    const userVoiceChannel = await message.guild.channels.get(userVoiceChannelId)
+    const userVoiceChannelId = await helper.getUserVoiceChannelIdByUserId(message, users[i])
+    const userVoiceChannel = await helper.getUserVoiceChannelByVoiceChannelId(message, userVoiceChannelId)
     if (await !userVoiceChannel.memberPermissions(message.guild.me).has('MOVE_MEMBERS')) {
       throw {
         logMessage: 'Moveer is missing Move Members permission',

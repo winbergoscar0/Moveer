@@ -11,10 +11,6 @@ const moveerMessage = require('./moveerMessage.js')
 
 const handleCommand = (command, message, args, rabbitMqChannel) => {
   if (command === 'changema') change.moveerAdmin(args, message)
-  if (command === 'say') {
-    if (message.author.bot) return
-    message.channel.send(message.content.split('!say')[1])
-  }
   if (command === 'move') move.move(args, message, rabbitMqChannel)
   if (command === 'gmove') gmove.move(args, message, rabbitMqChannel)
   if (command === 'cmove') cmove.move(args, message, rabbitMqChannel)

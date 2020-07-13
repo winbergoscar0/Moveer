@@ -1,5 +1,8 @@
 const Discord = require('discord.js')
-const client = new Discord.Client()
+const client = new Discord.Client({
+  shardId: process.argv[1],
+  shardCount: process.argv[2],
+})
 const opts = {
   timestampFormat: 'YYYY-MM-DD HH:mm:ss',
 }
@@ -30,9 +33,9 @@ if (config.discordBotListToken !== 'x') {
   })
 }
 
-client.on('ready', () => {
+client.on('ready', async () => {
   log.info('Startup successful.')
-  log.info('Running as user: ' + client.user.username)
+  log.info('Running as user: ' + client.user.username + ' ShardID: (' + client.shard.ids + ')')
   amqp.connect(rabbitMQConnection, (error0, connection) => {
     if (error0) {
       moveerMessage.reportMoveerError('Unable to connect to rabbitMQ - @everyone')
@@ -44,8 +47,8 @@ client.on('ready', () => {
       }
       rabbitMqChannel = channel
 
-      // Create a consumer for each guild that I'm inside
-      client.guilds.forEach((guild) => {
+      //Create a consumer for each guild that I'm inside
+      client.guilds.cache.forEach((guild) => {
         createConsumer(guild.id, rabbitMqChannel)
       })
     })
@@ -70,7 +73,7 @@ client.on('guildCreate', async (guild) => {
   const supportMessage =
     'I got multiple commands, but to get started try the !cmove command by following the guide below.\n1. Create a text channel and name it "moveeradmin".\n2. Ask your friends to join a voice channel.\n3. Inside the text channel "moveeradmin" write `!cmove <voicechannel name here> @yourfriendsname` -- The voice channel that you specify will be the one that they are moved to.\n4. Thats it! @yourfriend should have been moved now.\n \nI have got more commands for you to use! Write `!help` to see them all.\nLets get Moving!'
   let defaultChannel = ''
-  guild.channels.forEach((channel) => {
+  guild.channels.cache.forEach((channel) => {
     if (
       channel.type === 'text' &&
       defaultChannel === '' &&
@@ -108,7 +111,7 @@ client.on('message', (message) => {
 client.login(token)
 
 function createConsumer(queue, rabbitMqChannel) {
-  log.info('Creating consumer for guild: ' + queue)
+  log.info('Creating consumer for guild: ' + queue + ' on shardID: ' + client.shard.ids)
   rabbitMqChannel.assertQueue(queue, {
     durable: true,
   })
@@ -117,12 +120,20 @@ function createConsumer(queue, rabbitMqChannel) {
     (msg) => {
       const jsonMsg = JSON.parse(msg.content.toString())
       log.info(
-        'Moving ' + jsonMsg.userId + ' to voiceChannel: ' + jsonMsg.voiceChannelId + ' inside guild: ' + jsonMsg.guildId
+        '(' +
+          client.shard.ids +
+          ') Moving ' +
+          jsonMsg.userId +
+          ' to voiceChannel: ' +
+          jsonMsg.voiceChannelId +
+          ' inside guild: ' +
+          jsonMsg.guildId
       )
-      client.guilds
+
+      client.guilds.cache
         .get(jsonMsg.guildId)
         .member(jsonMsg.userId)
-        .setVoiceChannel(jsonMsg.voiceChannelId)
+        .voice.setChannel(jsonMsg.voiceChannelId)
         .catch((err) => {
           if (err.message !== 'Target user is not connected to voice.') {
             log.error(err)

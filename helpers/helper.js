@@ -2,16 +2,17 @@
 const moveerMessage = require('../moveerMessage.js')
 const config = require('../config.js')
 const database = require('../helpers/database.js')
-const check = require('../helpers/check.js')
 
 function getCategoryByName(message, categoryName) {
-  let category = message.guild.channels.find((category) => category.id === categoryName && category.type === 'category')
-  if (category === null) {
-    category = message.guild.channels.find(
+  let category = message.guild.channels.cache.find(
+    (category) => category.id === categoryName && category.type === 'category'
+  )
+  if (category == null) {
+    category = message.guild.channels.cache.find(
       (category) => category.name.toLowerCase() === categoryName.toLowerCase() && category.type === 'category'
     )
   }
-  if (check.valueEqNullorUndefinded(category)) {
+  if (category == null) {
     throw {
       logMessage: 'Cant find category with that name: ' + categoryName,
       sendMessage: 'No category found with the name: ' + categoryName + ' <@' + message.author.id + '>',
@@ -20,29 +21,34 @@ function getCategoryByName(message, categoryName) {
   return category
 }
 
-function getNameOfVoiceChannel(message, voiceChannelId) {
-  return message.guild.channels.get(voiceChannelId).name
+async function getNameOfVoiceChannel(message, authorId) {
+  const voiceChannelId = await getUserVoiceChannelIdByUserId(message, authorId)
+  const voiceChannelName = await message.guild.channels.cache.get(voiceChannelId).name
+  return voiceChannelName
 }
 
 function getChannelByName(message, findByName) {
-  let voiceChannel = message.guild.channels.find((channel) => channel.id === findByName)
-  if (voiceChannel === null) {
-    voiceChannel = message.guild.channels.find(
-      (channel) => channel.name.toLowerCase() === findByName.toLowerCase() && channel.type === 'voice'
-    )
+  let voiceChannel = message.guild.channels.cache.get(findByName)
+
+  if (voiceChannel == null) {
+    voiceChannel = message.guild.channels.cache
+      .filter((channel) => channel.type === 'voice' && channel.name.toLowerCase() === findByName.toLowerCase())
+      .first()
   }
   return voiceChannel
 }
 
 function getUsersByRole(message, roleName) {
-  const role = message.guild.roles.find((role) => role.name.toLowerCase() === roleName.toLowerCase())
-  if (check.valueEqNullorUndefinded(role)) {
+  const role = message.guild.roles.cache.find((role) => role.name.toLowerCase() === roleName.toLowerCase())
+  const voiceStateMembers = message.guild.voiceStates.cache.map((user) => user.id)
+  if (role == null) {
     throw {
       logMessage: "Can't find role with the name: " + roleName,
       sendMessage: "Can't find role with the name: " + roleName,
     }
   }
-  const usersToMove = role.members
+  const usersToMove = role.members.filter((member) => voiceStateMembers.includes(member.id))
+  //console.log(role.members)
   return usersToMove
 }
 
@@ -121,6 +127,7 @@ async function PublishToRabbitMq(message, userToMove, toVoiceChannelId, rabbitMq
   rabbitMqChannel.assertQueue(queue, {
     durable: true,
   })
+
   rabbitMqChannel.sendToQueue(queue, Buffer.from(JSON.stringify(messageToRabbitMQ)), {
     persistent: true,
   })
@@ -177,6 +184,20 @@ function getRandomUsers(userArray, amoutToGet) {
   return result
 }
 
+async function getUserVoiceChannelIdByUserId(message, userId) {
+  const user = await message.guild.members.fetch(userId)
+  try {
+    const userVoiceChannelId = await user.guild.voiceStates.cache.filter((user) => user.id === userId).first().channelID
+    return userVoiceChannelId
+  } catch (err) {
+    return null
+  }
+}
+
+async function getUserVoiceChannelByVoiceChannelId(message, channelId) {
+  return await message.guild.channels.cache.get(channelId)
+}
+
 module.exports = {
   getNameOfVoiceChannel,
   moveUsers,
@@ -187,4 +208,6 @@ module.exports = {
   getCategoryByName,
   findUserByUserName,
   getGuildGroupNames,
+  getUserVoiceChannelIdByUserId,
+  getUserVoiceChannelByVoiceChannelId,
 }

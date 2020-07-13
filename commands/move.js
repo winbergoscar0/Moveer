@@ -7,27 +7,27 @@ async function move(args, message, rabbitMqChannel) {
   let fromVoiceChannel
   try {
     fromVoiceChannel = helper.getChannelByName(message, 'moveer')
-    check.ifAuthorInsideAVoiceChannel(message, message.member.voiceChannelID)
+    const authorVoiceId = await helper.getUserVoiceChannelIdByUserId(message, message.author.id)
+    check.ifAuthorInsideAVoiceChannel(message, authorVoiceId)
+    const authorVoiceChannel = await helper.getChannelByName(message, authorVoiceId)
     check.argsLength(args, 1)
     check.forUserMentions(message, messageMentions)
     check.ifSelfMention(message)
     if ((await check.ifTextChannelIsMoveerAdmin(message, false)) === false) {
-      const authorVoiceChannelName = helper.getNameOfVoiceChannel(message, message.member.voiceChannelID)
       check.ifVoiceChannelExist(message, fromVoiceChannel, 'Moveer')
-      const fromVoiceChannelName = helper.getNameOfVoiceChannel(message, fromVoiceChannel.id)
-      check.ifVoiceChannelContainsMoveer(message, authorVoiceChannelName)
+      const fromVoiceChannelName = fromVoiceChannel.name
+      check.ifVoiceChannelContainsMoveer(message, authorVoiceChannel.name)
       check.ifGuildHasTwoMoveerChannels(message)
       check.ifUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
     }
-    messageMentions = check.ifMentionsInsideVoiceChannel(message, messageMentions)
-    messageMentions = check.ifUsersAlreadyInChannel(message, messageMentions, message.member.voiceChannelID)
+    messageMentions = await check.ifMentionsInsideVoiceChannel(message, messageMentions)
+    messageMentions = await check.ifUsersAlreadyInChannel(message, messageMentions, authorVoiceId)
     const userIdsToMove = await messageMentions.map(({ id }) => id)
-    const authorVoiceChannel = helper.getChannelByName(message, message.member.voiceChannelID)
     await check.forMovePerms(message, userIdsToMove, authorVoiceChannel)
     await check.forConnectPerms(message, userIdsToMove, authorVoiceChannel)
 
     // No errors in the message, lets get moving!
-    if (userIdsToMove.length > 0) helper.moveUsers(message, userIdsToMove, message.member.voiceChannelID, rabbitMqChannel)
+    if (userIdsToMove.length > 0) helper.moveUsers(message, userIdsToMove, authorVoiceId, rabbitMqChannel)
   } catch (err) {
     if (!err.logMessage) {
       console.log(err)

@@ -8,7 +8,7 @@ async function move(args, message, rabbitMqChannel) {
     let fromVoiceChannelName = args[0]
     let categoryName = args[1]
     if (args.join().includes('"')) {
-      const names = helper.getNameWithSpacesName(args, message.author.id) // fromChannel and category name (channels to move to)
+      const names = await helper.getNameWithSpacesName(args, message.author.id) // fromChannel and category name (channels to move to)
       fromVoiceChannelName = names[0]
       categoryName = names[1]
     }

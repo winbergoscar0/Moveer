@@ -15,12 +15,11 @@ async function move(args, message, rabbitMqChannel) {
       const names = helper.getNameWithSpacesName(args, message.author.id)
       fromVoiceChannelName = names[0]
     }
+    check.ifAuthorInsideAVoiceChannel(message, await helper.getUserVoiceChannelIdByUserId(message, message.author.id))
     if ((await check.ifTextChannelIsMoveerAdmin(message, false)) === false)
       fromVoiceChannelName = await helper.getGuildGroupNames(message, fromVoiceChannelName)
-    const fromVoiceChannel = helper.getChannelByName(message, fromVoiceChannelName)
-
-    check.ifAuthorInsideAVoiceChannel(message, message.member.voiceChannelID)
-    const authorVoiceChannelName = helper.getNameOfVoiceChannel(message, message.member.voiceChannelID)
+    const fromVoiceChannel = helper.getChannelByName(message, fromVoiceChannelName.toLowerCase())
+    const authorVoiceChannelName = await helper.getNameOfVoiceChannel(message, message.author.id)
     if ((await check.ifTextChannelIsMoveerAdmin(message, false)) === false) {
       check.ifVoiceChannelContainsMoveer(message, authorVoiceChannelName)
     }
@@ -29,12 +28,13 @@ async function move(args, message, rabbitMqChannel) {
     check.ifUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
     check.ifChannelIsTextChannel(message, fromVoiceChannel)
     const userIdsToMove = await fromVoiceChannel.members.map(({ id }) => id)
-    const authorVoiceChannel = helper.getChannelByName(message, message.member.voiceChannelID)
+    const authorVoiceId = await helper.getUserVoiceChannelIdByUserId(message, message.author.id)
+    const authorVoiceChannel = helper.getChannelByName(message, authorVoiceId)
     await check.forMovePerms(message, userIdsToMove, authorVoiceChannel)
     await check.forConnectPerms(message, userIdsToMove, authorVoiceChannel)
 
     // No errors in the message, lets get moving!
-    helper.moveUsers(message, userIdsToMove, message.member.voiceChannelID, rabbitMqChannel)
+    helper.moveUsers(message, userIdsToMove, authorVoiceId, rabbitMqChannel)
   } catch (err) {
     if (!err.logMessage) {
       console.log(err)
