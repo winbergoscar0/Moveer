@@ -103,7 +103,7 @@ const NO_USERS_INSIDE_ROOM = (fromVoiceChannelName, userId) =>
 
 const ADMINCOMMAND_OUTSIDE_MOVEERADMIN = (userId) =>
   convertUserIdToTaggedUser(userId) +
-  ' - This is an admin command, please us it inside a text channel with admin permissions. Default admin channel is `#moveeradmin` or add your own with `!changema`.'
+  ' - This is an admin command, please use it inside a text channel with admin permissions. Default admin channel is `#moveeradmin` or add your own with `!changema`.'
 
 const USER_MENTION_NOT_IN_ANY_CHANNEL = (userId) => convertUserIdToTaggedUser(userId) + ' is not inside any voice channel!'
 
