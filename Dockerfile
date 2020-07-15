@@ -1,4 +1,4 @@
-FROM node:10.15.3-stretch-slim
+FROM node:12.18.2-stretch-slim
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -11,4 +11,4 @@ RUN npm install --only=prod
 # Bundle app source
 COPY . .
 
-CMD [ "npm", "start" ]
+CMD [ "node", "bot" ]
