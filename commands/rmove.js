@@ -9,6 +9,7 @@ async function move(args, message, rabbitMqChannel) {
       const names = helper.getNameWithSpacesName(args, message.author.id) // Not channels, but role
       roleName = names[0]
     }
+    if (message.mentions.roles.size > 0) roleName = message.mentions.roles.first().name
     const authorVoiceId = await helper.getUserVoiceChannelIdByUserId(message, message.author.id)
     check.ifAuthorInsideAVoiceChannel(message, authorVoiceId)
     const authorVoiceChannel = await helper.getChannelByName(message, authorVoiceId)
