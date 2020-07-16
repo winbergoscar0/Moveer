@@ -11,6 +11,7 @@ async function move(args, message, rabbitMqChannel) {
       toVoiceChannelName = names[0]
       roleName = names[1]
     }
+    if (message.mentions.roles.size > 0) roleName = message.mentions.roles.first().name
     await check.ifTextChannelIsMoveerAdmin(message)
     check.argsLength(args, 2)
     check.ifMessageContainsMentions(message)
