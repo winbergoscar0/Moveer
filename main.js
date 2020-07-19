@@ -75,6 +75,7 @@ client.on('guildCreate', async (guild) => {
   log.info('Joined server: ' + guild.name)
   const guildInfo = await database.getGuildObject('noAlert', guild.id)
   if (guildInfo.rowCount !== 0) return
+  database.insertGuildAfterWelcome(guild.id)
   const welcomeMessage =
     'Hello and thanks for inviting me! If you need help or got any questions, please head over to the official Moveer discord at https://discord.gg/dTdH3gD\n'
   const supportMessage =
@@ -93,7 +94,6 @@ client.on('guildCreate', async (guild) => {
   defaultChannel === ''
     ? log.info('Failed to find defaultchannel, not sending welcome message.')
     : defaultChannel.send(welcomeMessage + supportMessage)
-  database.insertGuildAfterWelcome(guild.id)
 })
 
 client.on('guildDelete', (guild) => {
