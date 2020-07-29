@@ -20,7 +20,8 @@ async function move(args, message, rabbitMqChannel) {
     usersToMove = await check.ifUserInsideBlockedChannel(message, usersToMove)
     usersToMove = await check.ifMentionsInsideVoiceChannel(
       message,
-      usersToMove.filter((user) => user.id !== message.author.id).array()
+      usersToMove.filter((user) => user.id !== message.author.id).array(),
+      false
     )
     usersToMove = await check.ifUsersAlreadyInChannel(message, usersToMove, authorVoiceId)
     const userIdsToMove = await usersToMove.map(({ id }) => id)

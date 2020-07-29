@@ -52,13 +52,14 @@ function ifGuildHasTwoMoveerChannels(message) {
   }
 }
 
-async function ifMentionsInsideVoiceChannel(message, messageMentions) {
+async function ifMentionsInsideVoiceChannel(message, messageMentions, sendErrorMsg = true) {
   const usersToRemoveFromMentions = []
   for (let i = 0; i < messageMentions.length; i++) {
     const userVoiceChannelId = await helper.getUserVoiceChannelIdByUserId(message, messageMentions[i].id)
     if (valueEqNullorUndefinded(userVoiceChannelId)) {
-      moveerMessage.logger(message, 'Not moving user, not in any voice channel!')
-      moveerMessage.sendMessage(message, moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL(messageMentions[i].id))
+      moveerMessage.logger(message, 'Not moving ' + messageMentions[i].id + ', not in any voice channel!')
+      if (sendErrorMsg)
+        moveerMessage.sendMessage(message, moveerMessage.USER_MENTION_NOT_IN_ANY_CHANNEL(messageMentions[i].id))
       usersToRemoveFromMentions.push(messageMentions[i].id)
     }
   }
