@@ -3,10 +3,8 @@ const client = new Discord.Client({
   shardId: process.argv[1],
   shardCount: process.argv[2],
 })
-const opts = {
-  timestampFormat: 'YYYY-MM-DD HH:mm:ss',
-}
-const log = require('simple-node-logger').createSimpleLogger(opts)
+
+const log = require('./helpers/logger')
 const amqp = require('amqplib/callback_api')
 
 // TOKEN
@@ -126,29 +124,32 @@ function createConsumer(queue, rabbitMqChannel) {
     queue,
     (msg) => {
       const jsonMsg = JSON.parse(msg.content.toString())
-      log.info(
-        '(' +
-          client.shard.ids +
-          ') Moving ' +
-          jsonMsg.userId +
-          ' to voiceChannel: ' +
-          jsonMsg.voiceChannelId +
-          ' inside guild: ' +
-          jsonMsg.guildId
-      )
-
-      client.guilds.cache
-        .get(jsonMsg.guildId)
-        .member(jsonMsg.userId)
-        .voice.setChannel(jsonMsg.voiceChannelId)
-        .catch((err) => {
-          if (err.message !== 'Target user is not connected to voice.') {
-            log.error(err)
-            log.info('Got above error when moving people...')
-            moveerMessage.reportMoveerError(err.message)
-          }
-          log.warn(jsonMsg.userId + ' left voice before getting moved')
-        })
+      try {
+        log.info(
+          '(' +
+            client.shard.ids +
+            ') Trying to move: ' +
+            jsonMsg.userId +
+            ' to voiceChannel: ' +
+            jsonMsg.voiceChannelId +
+            ' inside guild: ' +
+            jsonMsg.guildId
+        )
+        client.guilds.cache
+          .get(jsonMsg.guildId)
+          .member(jsonMsg.userId)
+          .voice.setChannel(jsonMsg.voiceChannelId)
+          .catch((t) => {
+            log.info(t)
+            moveerMessage.reportMoveerError(t.message)
+          })
+        log.info('(' + client.shard.ids + ') Success in moving: ' + jsonMsg.userId)
+      } catch (err) {
+        log.error('(' + client.shard.ids + ') Failure in moving: ' + jsonMsg.userId)
+        log.error(err)
+        log.info('Got above error when moving people...')
+        moveerMessage.reportMoveerError(err.message)
+      }
     },
     { noAck: true }
   )

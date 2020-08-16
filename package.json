@@ -25,6 +25,7 @@
     "dblapi.js": "^2.4.0",
     "discord.js": "^12.2.0",
     "pg": "^8.2.1",
-    "simple-node-logger": "^18.12.24"
+    "pino": "^5.14.0",
+    "pino-pretty": "^3.4.0"
   }
 }

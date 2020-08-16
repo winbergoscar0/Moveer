@@ -1,7 +1,4 @@
-const opts = {
-  timestampFormat: 'YYYY-MM-DD HH:mm:ss',
-}
-const log = require('simple-node-logger').createSimpleLogger(opts)
+const log = require('./helpers/logger')
 const config = require('./config.js')
 
 const convertUserIdToTaggedUser = (userId) => {
@@ -402,7 +399,7 @@ function logger(message, logMessage) {
 function reportMoveerError(message) {
   const Discord = require('discord.js')
   const hook = new Discord.WebhookClient(config.discordHookIdentifier, config.discordHookToken)
-  console.log('Sending error to DB HOOK')
+  log.info('Sending error to DB HOOK')
   hook.send(message)
 }
 
