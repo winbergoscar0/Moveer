@@ -27,6 +27,11 @@ const getGuildObject = async (message, guildId) => {
   return searchForGuild
 }
 
+const isGuildAllowed = async (message, guildId) => {
+  const guildObject = await getGuildObject(message, guildId)
+  return guildObject.rows[0].allowed === 0
+}
+
 const getPatreonGuildObject = async (message, guildId) => {
   const dbConnection = await connectToDb(message)
   const searchForPatreonGuild = await dbConnection.query('SELECT * FROM "patreons" WHERE "guildId" = \'' + guildId + "'")
@@ -88,4 +93,5 @@ module.exports = {
   insertGuildAfterWelcome,
   updateSentRateLimitMessage,
   getPatreonGuildObject,
+  isGuildAllowed,
 }

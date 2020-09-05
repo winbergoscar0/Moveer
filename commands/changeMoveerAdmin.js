@@ -30,7 +30,6 @@ async function moveerAdmin(args, message) {
       moveerMessage.sendMessage(message, moveerMessage.DB_DOWN_WARNING)
     } else {
       const searchForGuild = await database.getGuildObject(message, message.guild.id)
-      console.log(searchForGuild.rows)
       moveerMessage.logger(message, err.logMessage)
       moveerMessage.sendMessage(
         message,
