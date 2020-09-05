@@ -51,7 +51,7 @@ client.on('ready', async () => {
         throw error1
       }
       rabbitMqChannel = channel
-
+      rabbitMqChannel.prefetch(1)
       //Create a consumer for each guild that I'm inside
       client.guilds.cache.forEach((guild) => {
         createConsumer(guild.id, rabbitMqChannel)
@@ -122,35 +122,26 @@ function createConsumer(queue, rabbitMqChannel) {
   })
   rabbitMqChannel.consume(
     queue,
-    (msg) => {
+    async (msg) => {
       const jsonMsg = JSON.parse(msg.content.toString())
-      try {
-        log.info(
-          '(' +
-            client.shard.ids +
-            ') Trying to move: ' +
-            jsonMsg.userId +
-            ' to voiceChannel: ' +
-            jsonMsg.voiceChannelId +
-            ' inside guild: ' +
-            jsonMsg.guildId
-        )
-        client.guilds.cache
-          .get(jsonMsg.guildId)
-          .member(jsonMsg.userId)
-          .voice.setChannel(jsonMsg.voiceChannelId)
-          .catch((t) => {
+      await client.guilds.cache
+        .get(jsonMsg.guildId)
+        .member(jsonMsg.userId)
+        .voice.setChannel(jsonMsg.voiceChannelId)
+        .then(() => {
+          log.info('(' + client.shard.ids + ') Success in moving: ' + jsonMsg.userId)
+        })
+        .catch((t) => {
+          if (t.message === 'Target user is not connected to voice.') {
+            log.warn('(' + client.shard.ids + ') Failure in moving: ' + jsonMsg.userId + ' - User not connected to voice')
+          } else {
+            log.error('(' + client.shard.ids + ') Failure in moving: ' + jsonMsg.userId + ' - Reason below')
             log.info(t)
             moveerMessage.reportMoveerError(t.message)
-          })
-        log.info('(' + client.shard.ids + ') Success in moving: ' + jsonMsg.userId)
-      } catch (err) {
-        log.error('(' + client.shard.ids + ') Failure in moving: ' + jsonMsg.userId)
-        log.error(err)
-        log.info('Got above error when moving people...')
-        moveerMessage.reportMoveerError(err.message)
-      }
+          }
+        })
+      await rabbitMqChannel.ack(msg) // ack everything since this is master
     },
-    { noAck: true }
+    { noAck: false }
   )
 }
