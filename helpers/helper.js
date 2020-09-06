@@ -35,15 +35,6 @@ function getChannelByName(message, findByName) {
       .filter((channel) => channel.type === 'voice' && channel.name.toLowerCase() === findByName.toLowerCase())
       .first()
   }
-  if (voiceChannel) {
-    console.log(
-      voiceChannel.id +
-        ' memberCount - voiceChannel.members: ' +
-        voiceChannel.members.size +
-        ' vs voiceStates: ' +
-        message.guild.voiceStates.cache.filter((c) => c.channelID === voiceChannel.id).size
-    )
-  }
   return voiceChannel
 }
 
