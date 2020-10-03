@@ -120,7 +120,7 @@ client.on('raw', async (packet) => {
       const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
       const command = args.shift().toLowerCase()
       if (command !== 'fmove') return
-      log.info('Resending message since react was added and succesfull')
+      log.info('Resending message since react was added and succesfull. React done by: ' + packet.d.user_id)
       client.emit('message', message)
     })
     .catch((err) => console.log(err))
