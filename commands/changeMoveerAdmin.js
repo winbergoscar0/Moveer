@@ -18,6 +18,7 @@ async function moveerAdmin(type, message) {
 
     if (type === 'remove' && !alreadyAddedChannels.includes(channelId.toString())) {
       moveerMessage.sendMessage(message, '<#' + channelId + '> is not moveeradmin channel.')
+      moveerMessage.logger(message, '<#' + channelId + '> is not moveeradmin channel.')
       return
     }
 
@@ -41,8 +42,8 @@ async function moveerAdmin(type, message) {
         : moveerMessage.MESSAGES_NOT_ALLOWED_IN_CHANNEL(message.author.id, message.mentions.channels.first().id)
     )
   } catch (err) {
-    console.log(err)
     if (!err.logMessage) {
+      console.log(err)
       moveerMessage.reportMoveerError('@everyone Unable to update, insert or delete moveeradmin text channel to DB')
       moveerMessage.reportMoveerError('Above alert was caused by:\n' + err.stack)
       moveerMessage.logger(message, moveerMessage.DB_DOWN_WARNING)
