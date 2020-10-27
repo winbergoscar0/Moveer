@@ -220,7 +220,7 @@ function ifUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChann
 async function ifTextChannelIsMoveerAdmin(message, throwError = true) {
   if (message.channel.name.toLowerCase() !== 'moveeradmin') {
     const searchForGuild = await database.getGuildObject(message, message.guild.id)
-    if (searchForGuild.rowCount > 0 && searchForGuild.rows[0].adminChannelId === message.channel.id) {
+    if (searchForGuild.rowCount > 0 && searchForGuild.rows[0].adminChannelId.split(',').includes(message.channel.id)) {
       // console.log('all green')
     } else {
       // console.log('throwing')

@@ -40,23 +40,19 @@ const addSuccessfulMove = async (message, usersMoved) => {
   await dbConnection.end()
 }
 
-const updateMoveerAdminChannel = async (message) => {
+const updateMoveerAdminChannel = async (message, guildId, channelId) => {
   const dbConnection = await connectToDb(message)
   await dbConnection.query(
-    'UPDATE "guilds" SET "adminChannelId" = \'' +
-      message.mentions.channels.first().id +
-      '\' WHERE "guildId" = \'' +
-      message.guild.id +
-      "'"
+    'UPDATE "guilds" SET "adminChannelId" = \'' + channelId + '\' WHERE "guildId" = \'' + guildId + "'"
   )
   await dbConnection.end()
 }
 
-const insertGuildMoveerAdminChannel = async (message) => {
+const insertGuildMoveerAdminChannel = async (message, guildId, channelId) => {
   const dbConnection = await connectToDb(message)
   const query = {
     text: 'INSERT INTO "guilds" ("guildId", "adminChannelId") VALUES($1, $2)',
-    values: [message.guild.id, message.mentions.channels.first().id],
+    values: [guildId, channelId],
   }
   await dbConnection.query(query)
   await dbConnection.end()

@@ -84,7 +84,13 @@ const TAKE_A_WHILE_RL_MESSAGE =
   '\n\nThis is going to take a while.. Want to move users faster? Check out the announcments channel in the official discord! https://discord.gg/dTdH3gD'
 
 const MESSAGES_NOW_ALLOWED_IN_CHANNEL = (userId, textChannelId) =>
-  convertUserIdToTaggedUser(userId) + ' - Admin commands now allowed to be sent inside <#' + textChannelId + '>'
+  convertUserIdToTaggedUser(userId) +
+  ' - Admin commands now allowed to be sent inside <#' +
+  textChannelId +
+  '>\nCan be removed with `!removema <#channelName>`'
+
+const MESSAGES_NOT_ALLOWED_IN_CHANNEL = (userId, textChannelId) =>
+  convertUserIdToTaggedUser(userId) + ' - Admin not allowed inside <#' + textChannelId + '> anymore'
 
 const MESSAGE_MISSING_ROOM_IDENTIFER = (userId) =>
   convertUserIdToTaggedUser(userId) + ' - You need to write a number to identify a gMoveer room!'
@@ -160,9 +166,14 @@ const HELP_MESSAGE = {
         value: "Moves all users inside a category's voice channels to a specific channel",
       },
       {
-        name: 'changema',
+        name: 'addma',
         value:
-          'Allows moveeradmin commands to be sent from a secondary text channel of your choice \n`!changema #<channelName>`\n\nFor more information, use !help <command>',
+          'Allows moveeradmin commands to be sent from a secondary text channel of your choice \n`!addma #<channelName>`',
+      },
+      {
+        name: 'removema',
+        value:
+          'Remove the permission of moveeradmin commands to be sent from a secondary text channel. \n`!removema #<channelName>`\n\nFor more information, use !help <command>',
       },
     ],
   },
@@ -304,7 +315,7 @@ const HELP_ZMOVE = {
   },
 }
 
-const HELP_CHANGEMA = {
+const HELP_ADDMA = {
   embed: {
     color: 2387002,
     footer: {
@@ -312,9 +323,25 @@ const HELP_CHANGEMA = {
     },
     fields: [
       {
-        name: '!changema',
+        name: '!addma',
         value:
-          '1. Write !changema #<channelName>\n2. Moveer should reply that admin commands are now allowed inside #<channelName>\nBe sure the actually # tagging the text channel name',
+          '1. Write !addma #<channelName>\n2. Moveer should reply that admin commands are now allowed inside #<channelName>\nBe sure the actually # tagging the text channel name',
+      },
+    ],
+  },
+}
+
+const HELP_REMOVEMA = {
+  embed: {
+    color: 2387002,
+    footer: {
+      text: 'Support server: https://discord.gg/dTdH3gD',
+    },
+    fields: [
+      {
+        name: '!removema',
+        value:
+          '1. Write !removema #<channelName>\n2. Moveer should reply that admin commands are no longer allowed inside #<channelName>\nBe sure the actually # tagging the text channel name',
       },
     ],
   },
@@ -332,7 +359,8 @@ const FALLBACK_HELP_GMOVE = HELP_GMOVE.embed.fields[0].value
 const FALLBACK_HELP_TMOVE = HELP_TMOVE.embed.fields[0].value
 const FALLBACK_HELP_YMOVE = HELP_YMOVE.embed.fields[0].value
 const FALLBACK_HELP_ZMOVE = HELP_ZMOVE.embed.fields[0].value
-const FALLBACK_HELP_CHANGEMA = HELP_CHANGEMA.embed.fields[0].value
+const FALLBACK_HELP_ADDMA = HELP_ADDMA.embed.fields[0].value
+const FALLBACK_HELP_REMOVEMA = HELP_REMOVEMA.embed.fields[0].value
 const FALLBACK_HELP_RMOVE = HELP_RMOVE.embed.fields[0].value
 
 const handleHelpCommand = (helpCommand, gotEmbedPerms) => {
@@ -353,8 +381,10 @@ const handleHelpCommand = (helpCommand, gotEmbedPerms) => {
       return gotEmbedPerms ? HELP_ZMOVE : FALLBACK_HELP_ZMOVE
     case 'tmove':
       return gotEmbedPerms ? HELP_TMOVE : FALLBACK_HELP_TMOVE
-    case 'changema':
-      return gotEmbedPerms ? HELP_CHANGEMA : FALLBACK_HELP_CHANGEMA
+    case 'addma':
+      return gotEmbedPerms ? HELP_ADDMA : FALLBACK_HELP_ADDMA
+    case 'removema':
+      return gotEmbedPerms ? HELP_REMOVEMA : FALLBACK_HELP_REMOVEMA
     default:
       return 'notFound'
   }
@@ -441,8 +471,10 @@ module.exports = {
   FALLBACK_HELP_YMOVE,
   HELP_ZMOVE,
   FALLBACK_HELP_ZMOVE,
-  HELP_CHANGEMA,
-  FALLBACK_HELP_CHANGEMA,
+  HELP_ADDMA,
+  FALLBACK_HELP_ADDMA,
+  HELP_REMOVEMA,
+  FALLBACK_HELP_REMOVEMA,
   reportMoveerError,
   NOT_ENOUGH_USERS_IN_CHANNEL,
   NOT_ENOUGH_USERS_IN_CATEGORY,
@@ -453,6 +485,7 @@ module.exports = {
   NO_EMTPY_VOICECHANNELS_IN_CATEGORY,
   MESSAGE_MENTION_IS_NOT_TEXT,
   MESSAGES_NOW_ALLOWED_IN_CHANNEL,
+  MESSAGES_NOT_ALLOWED_IN_CHANNEL,
   handleHelpCommand,
   DB_DOWN_WARNING,
   NO_USER_FOUND_BY_SEARCH,
