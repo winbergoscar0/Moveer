@@ -31,9 +31,10 @@ async function move(args, message, rabbitMqChannel) {
     helper.moveUsers(message, userIdsToMove, toVoiceChannel.id, rabbitMqChannel)
 
     // Check for patreon stuff
-    const guildInfo = await database.getPatreonGuildObject(message, message.guild.id)
-    if (guildInfo.rowCount === 0) return
-    if (guildInfo.rows[0].enabled === '0' || guildInfo.rows[0].repeatEnabled === 0) return
+    // Free week wop wop
+    //const guildInfo = await database.getPatreonGuildObject(message, message.guild.id)
+    //if (guildInfo.rowCount === 0) return
+    //if (guildInfo.rows[0].enabled === '0' || guildInfo.rows[0].repeatEnabled === 0) return
     if (
       message.reactions.cache.size > 0 &&
       message.reactions.cache.first().users.cache.filter((u) => ['564773724520185856', '400724460203802624'].includes(u.id))

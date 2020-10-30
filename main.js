@@ -108,9 +108,9 @@ client.on('raw', async (packet) => {
   if (!['MESSAGE_REACTION_ADD'].includes(packet.t)) return // only check added reactions
   if (ignoreUsers.includes(packet.d.user_id)) return
   if (packet.d.emoji.name !== '🔂') return
-  const guildInfo = await database.getPatreonGuildObject('noAlert', packet.d.guild_id)
-  if (guildInfo.rowCount === 0) return
-  if (guildInfo.rows[0].enabled === '0' || guildInfo.rows[0].repeatEnabled === 0) return
+  // const guildInfo = await database.getPatreonGuildObject('noAlert', packet.d.guild_id)
+  //if (guildInfo.rowCount === 0) return
+  //if (guildInfo.rows[0].enabled === '0' || guildInfo.rows[0].repeatEnabled === 0) return
 
   const channel = client.channels.cache.get(packet.d.channel_id)
   channel.messages
