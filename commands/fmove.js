@@ -41,7 +41,7 @@ async function move(args, message, rabbitMqChannel) {
         .size > 0
     )
       return
-    message.react('🔂')
+    message.react('🔂').catch((e) => moveerMessage.logger(message, e.message + ' to react to message'))
     // End check for patreon stuff
   } catch (err) {
     if (!err.logMessage) {
