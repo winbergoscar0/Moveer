@@ -10,9 +10,15 @@ async function moveerAdmin(type, message) {
       moveerMessage.sendMessage(message, moveerMessage.MESSAGE_MENTION_IS_NOT_TEXT(message.author.id))
       return
     }
-    await check.ifTextChannelIsMoveerAdmin(message)
-    const searchForGuild = await database.getGuildObject(message, message.guild.id)
     check.ifChannelTextExpectText(message)
+    await check.ifTextChannelIsMoveerAdmin(message)
+
+    let searchForGuild = await database.getGuildObject(message, message.guild.id)
+    if (searchForGuild.rowCount === 0) {
+      await database.insertGuildAfterWelcome(message.guild.id)
+      searchForGuild = await database.getGuildObject(message, message.guild.id)
+    }
+
     const alreadyAddedChannels = searchForGuild.rows[0].adminChannelId.split(',')
     const channelId = message.mentions.channels.first().id
 
@@ -54,8 +60,8 @@ async function moveerAdmin(type, message) {
       moveerMessage.sendMessage(
         message,
         err.sendMessage +
-          (searchForGuild.rows[0].adminChannelId === '106679489135706112'
-            ? '\n\nThe first time you use `!changema` you have to do it inside the default admin channel `#moveeradmin`.'
+          (searchForGuild.rows[0].adminChannelId === '106679489135706112' || searchForGuild.rows[0].adminChannelId === ''
+            ? '\n\nThe first time you use `!addma #textchannel` you have to do it inside the default admin channel `#moveeradmin`.'
             : '')
       )
     }
