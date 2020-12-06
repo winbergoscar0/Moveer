@@ -23,10 +23,10 @@ Moves @mentions of users inside the Moveer voice channel to you. User1 is requir
 Moves users inside GmoveerX to you with one command. If the voice channel is named gmoveerPubg use the example command
 <br>Example command `!gmove pubg`
 
-### **!fmove:** ↓
+### **!fmove:** (Perfect for Amoung Us gameplay) ↓
 
-Moves users inside one voice channel to another. Moves users inside overwatch to pubg. <br>(Command must be sent inside a text channel named "moveeradmin")
-<br>Example command `!fmove overwatch pubg`
+Moves users inside one voice channel to another. Moves users inside gameplay to mute. <br>(Command must be sent inside a text channel named "moveeradmin")
+<br>Example command `!fmove gameplay mute`
 
 ### **!rmove:** ↓
 
