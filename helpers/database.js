@@ -15,7 +15,7 @@ async function connectToDb(message) {
     moveerMessage.logger(message, 'Error')
     moveerMessage.sendMessage(
       message,
-      "Moveer cannot communicate with it's database. Since this is a admin command please create a text channel named moveeradmin and use that until my developer fixes this! He has been alerted but please poke him inside the support server! https://discord.gg/dTdH3gD"
+      "Moveer cannot communicate with its database. Since this is a admin command please create a text channel named moveeradmin and use that until my developer fixes this! He has been alerted but please poke him inside the support server! https://discord.gg/dTdH3gD"
     )
   }
 }

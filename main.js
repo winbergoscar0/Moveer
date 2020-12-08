@@ -84,7 +84,7 @@ client.on('guildCreate', async (guild) => {
       channel.type === 'text' &&
       defaultChannel === '' &&
       channel.permissionsFor(guild.me).has('SEND_MESSAGES') &&
-      channel.permissionsFor(guild.me).has('READ_MESSAGES')
+      channel.permissionsFor(guild.me).has('VIEW_CHANNEL')
     ) {
       defaultChannel = channel
     }
