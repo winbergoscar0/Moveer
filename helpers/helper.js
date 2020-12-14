@@ -67,11 +67,13 @@ const findUserByUserName = async (message, usernames) => {
 
   const foundUsers = []
   await usersToFind.forEach(async (username) => {
-    const user = await message.guild.members.find(
+    const user = await message.guild.members.cache.find(
       (user) =>
         user.user.username.toLowerCase() === username.toLowerCase() ||
-        (user.nickname && user.nickname.toLowerCase() === username.toLowerCase())
+        (user.nickname && user.nickname.toLowerCase() === username.toLowerCase()) ||
+        user.id === username
     )
+
     if (user) {
       foundUsers.push(user.user)
     } else {
