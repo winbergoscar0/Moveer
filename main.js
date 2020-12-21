@@ -150,23 +150,30 @@ function createConsumer(queue, rabbitMqChannel) {
     queue,
     async (msg) => {
       const jsonMsg = JSON.parse(msg.content.toString())
-      await client.guilds.cache
-        .get(jsonMsg.guildId)
-        .member(jsonMsg.userId)
-        .voice.setChannel(jsonMsg.voiceChannelId)
-        .then(() => {
-          log.info('(' + client.shard.ids + ') Success in moving: ' + jsonMsg.userId)
-        })
-        .catch((t) => {
-          if (t.message === 'Target user is not connected to voice.') {
-            log.warn('(' + client.shard.ids + ') Failure in moving: ' + jsonMsg.userId + ' - User not connected to voice')
-          } else {
-            log.error('(' + client.shard.ids + ') Failure in moving: ' + jsonMsg.userId + ' - Reason below')
-            log.info(t)
-            moveerMessage.reportMoveerError(t.message)
-          }
-        })
-      await rabbitMqChannel.ack(msg) // ack everything since this is master
+
+      try {
+        await client.guilds.cache
+          .get(jsonMsg.guildId)
+          .member(jsonMsg.userId)
+          .voice.setChannel(jsonMsg.voiceChannelId)
+          .then(() => {
+            log.info('(' + client.shard.ids + ') Success in moving: ' + jsonMsg.userId)
+          })
+          .catch((t) => {
+            if (t.message === 'Target user is not connected to voice.') {
+              log.warn('(' + client.shard.ids + ') Failure in moving: ' + jsonMsg.userId + ' - User not connected to voice')
+            } else {
+              log.error('(' + client.shard.ids + ') Failure in moving: ' + jsonMsg.userId + ' - Reason below')
+              log.info(t)
+              moveerMessage.reportMoveerError(t.message)
+            }
+          })
+        await rabbitMqChannel.ack(msg) // ack everything since this is master
+      } catch (err) {
+        console.log(err)
+        moveerMessage.reportMoveerError(err)
+        await rabbitMqChannel.ack(msg) // ack everything since this is master
+      }
     },
     { noAck: false }
   )
