@@ -2,7 +2,7 @@ const moveerMessage = require('../moveerMessage.js')
 const check = require('../helpers/check.js')
 const helper = require('../helpers/helper.js')
 
-async function move(args, message, rabbitMqChannel) {
+async function move (args, message, rabbitMqChannel) {
   try {
     const amountInEachChannel = args.pop()
     let fromVoiceChannelName = args[0]
@@ -58,6 +58,7 @@ async function move(args, message, rabbitMqChannel) {
       message,
       'Moved ' + userIdsLength + (userIdsLength === 1 ? ' user' : ' users') + ' by request of <@' + message.author.id + '>'
     )
+    check.checkifPatreonGuildRepeat(message)
   } catch (err) {
     if (!err.logMessage) {
       moveerMessage.reportMoveerError('Above alert was caused by:\n' + err.stack)

@@ -3,7 +3,7 @@ const helper = require('../helpers/helper.js')
 const check = require('../helpers/check.js')
 const database = require('../helpers/database')
 
-async function move(args, message, rabbitMqChannel) {
+async function move (args, message, rabbitMqChannel) {
   try {
     let fromVoiceChannelName = args[0]
     let toVoiceChannelName = args[1]
@@ -31,16 +31,7 @@ async function move(args, message, rabbitMqChannel) {
     helper.moveUsers(message, userIdsToMove, toVoiceChannel.id, rabbitMqChannel)
 
     // Check for patreon stuff
-    const guildInfo = await database.getPatreonGuildObject(message, message.guild.id)
-    if (guildInfo.rowCount === 0) return
-    if (guildInfo.rows[0].enabled === '0' || guildInfo.rows[0].repeatEnabled === 0) return
-    if (
-      message.reactions.cache.size > 0 &&
-      message.reactions.cache.first().users.cache.filter((u) => ['564773724520185856', '400724460203802624'].includes(u.id))
-        .size > 0
-    )
-      return
-    message.react('🔂').catch((e) => moveerMessage.logger(message, e.message + ' to react to message'))
+    check.checkifPatreonGuildRepeat(message)
     // End check for patreon stuff
   } catch (err) {
     if (!err.logMessage) {

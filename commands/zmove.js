@@ -2,7 +2,7 @@ const moveerMessage = require('../moveerMessage.js')
 const check = require('../helpers/check.js')
 const helper = require('../helpers/helper.js')
 
-async function move(args, message, rabbitMqChannel) {
+async function move (args, message, rabbitMqChannel) {
   try {
     // May need to be swapped order, for semantics
     let fromCategoryName = args[0]
@@ -41,6 +41,8 @@ async function move(args, message, rabbitMqChannel) {
     userIdsToMove.length > 0
       ? helper.moveUsers(message, userIdsToMove, toVoiceChannel.id, rabbitMqChannel)
       : moveerMessage.sendMessage(message, moveerMessage.USER_ALREADY_IN_CHANNEL('Everyone'))
+
+    check.checkifPatreonGuildRepeat(message)
   } catch (err) {
     if (!err.logMessage) {
       console.log(err)

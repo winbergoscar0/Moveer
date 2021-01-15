@@ -122,7 +122,7 @@ client.on('raw', async (packet) => {
         .catch((e) => moveerMessage.logger(message, e.message + ' to remove reaction from message'))
       const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
       const command = args.shift().toLowerCase()
-      if (command !== 'fmove') return
+      if (!['fmove', 'tmove', 'zmove', 'ymove'].includes(command)) return
       log.info('Resending message since react was added and succesfull. React done by: ' + packet.d.user_id)
       client.emit('message', message)
     })
@@ -141,7 +141,7 @@ client.on('message', async (message) => {
 
 client.login(token)
 
-function createConsumer(queue, rabbitMqChannel) {
+function createConsumer (queue, rabbitMqChannel) {
   log.info('Creating consumer for guild: ' + queue + ' on shardID: ' + client.shard.ids)
   rabbitMqChannel.assertQueue(queue, {
     durable: true,
