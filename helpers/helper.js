@@ -38,6 +38,7 @@ function getChannelByName(message, findByName) {
   return voiceChannel
 }
 
+function getUsersByRole (message, roleName) {
   const role = message.guild.roles.cache.find((role) => role.name.toLowerCase() === roleName.toLowerCase() || role.id === roleName)
   const voiceStateMembers = message.guild.voiceStates.cache.map((user) => user.id)
   if (role == null) {
