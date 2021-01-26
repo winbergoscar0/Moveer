@@ -122,7 +122,7 @@ client.on('raw', async (packet) => {
         .catch((e) => moveerMessage.logger(message, e.message + ' to remove reaction from message'))
       const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
       const command = args.shift().toLowerCase()
-      if (!['fmove', 'tmove', 'zmove', 'ymove'].includes(command)) return
+      if (!['fmove', 'tmove', 'zmove', 'ymove', 'ucount'].includes(command)) return
       log.info('Resending message since react was added and succesfull. React done by: ' + packet.d.user_id)
       client.emit('message', message)
     })

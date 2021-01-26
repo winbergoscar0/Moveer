@@ -20,6 +20,11 @@ async function count (args, message) {
       message,
       moveerMessage.MEMBER_COUNT_IN_VOICE_CHANNEL(message.author.id, toVoiceChannel.name, toVoiceChannel.members.size))
     moveerMessage.logger(message, moveerMessage.MEMBER_COUNT_IN_VOICE_CHANNEL(message.author.username, toVoiceChannel.name, toVoiceChannel.members.size))
+
+    // Check for patreon stuff
+    check.checkifPatreonGuildRepeat(message)
+    // End check for patreon stuff
+
   } catch (err) {
     if (!err.logMessage) {
       console.log(err)
