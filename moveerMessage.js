@@ -43,6 +43,15 @@ const USER_INSIDE_MOVEER_VOICE_CHANNEL = (userId) =>
 
 const SERVER_HAS_TWO_MOVEER_VOICE_CHANNELS = 'You seem to be having two channels called Moveer, please remove one!'
 
+const MEMBER_COUNT_IN_VOICE_CHANNEL = (userId, voiceChannelName, count) =>
+  convertUserIdToTaggedUser(userId) +
+  ' - Voicechannel (' +
+  voiceChannelName +
+  ') has ' +
+  count +
+  (count === 1 ? ' user' : ' users') +
+  ' inside it.'
+
 const NOT_ENOUGH_USERS_IN_CHANNEL = (userId, fromVoiceChannelName, actualAmount, expectedAmount) =>
   convertUserIdToTaggedUser(userId) +
   ' - Not enough members inside the channel "' +
@@ -490,4 +499,5 @@ module.exports = {
   DB_DOWN_WARNING,
   NO_USER_FOUND_BY_SEARCH,
   TAKE_A_WHILE_RL_MESSAGE,
+  MEMBER_COUNT_IN_VOICE_CHANNEL
 }
