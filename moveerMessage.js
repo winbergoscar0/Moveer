@@ -45,12 +45,12 @@ const SERVER_HAS_TWO_MOVEER_VOICE_CHANNELS = 'You seem to be having two channels
 
 const MEMBER_COUNT_IN_VOICE_CHANNEL = (userId, voiceChannelName, count) =>
   convertUserIdToTaggedUser(userId) +
-  ' - Voicechannel (' +
+  '```Voice channel (' +
   voiceChannelName +
-  ') has ' +
+  ') currently has ' +
   count +
-  (count === 1 ? ' user' : ' users') +
-  ' inside it.'
+  (count === 1 ? ' member' : ' members') +
+  '.```'
 
 const NOT_ENOUGH_USERS_IN_CHANNEL = (userId, fromVoiceChannelName, actualAmount, expectedAmount) =>
   convertUserIdToTaggedUser(userId) +
