@@ -15,7 +15,7 @@ const valueEqNullorUndefinded = (value, operator = '==') => {
   }
 }
 
-function ifChannelTextExpectText (message) {
+function ifChannelTextExpectText(message) {
   if (message.mentions.channels.first().type !== 'text') {
     throw {
       logMessage: 'Mention is not type text',
@@ -24,7 +24,7 @@ function ifChannelTextExpectText (message) {
   }
 }
 
-function ifUserInsideBlockedChannel (message, usersToMove) {
+function ifUserInsideBlockedChannel(message, usersToMove) {
   usersToMove.forEach((user) => {
     if (config.blockedVoiceChannels.includes(user.voiceChannelID)) {
       moveerMessage.logger(message, 'One user in blocked voice channel')
@@ -34,7 +34,7 @@ function ifUserInsideBlockedChannel (message, usersToMove) {
   return usersToMove.filter((user) => !config.blockedVoiceChannels.includes(user.voiceChannelID))
 }
 
-function ifVoiceChannelContainsMoveer (message, authorVoiceChannelName) {
+function ifVoiceChannelContainsMoveer(message, authorVoiceChannelName) {
   if (authorVoiceChannelName.toLowerCase().includes('moveer')) {
     throw {
       logMessage: 'User trying to move people into a moveer channel',
@@ -43,7 +43,7 @@ function ifVoiceChannelContainsMoveer (message, authorVoiceChannelName) {
   }
 }
 
-function ifGuildHasTwoMoveerChannels (message) {
+function ifGuildHasTwoMoveerChannels(message) {
   if (message.guild.channels.cache.filter((channel) => channel.name.toLowerCase() === 'moveer').size > 1) {
     throw {
       logMessage: 'User has two channels called moveer/Moveer',
@@ -52,7 +52,7 @@ function ifGuildHasTwoMoveerChannels (message) {
   }
 }
 
-async function ifMentionsInsideVoiceChannel (message, messageMentions, sendErrorMsg = true) {
+async function ifMentionsInsideVoiceChannel(message, messageMentions, sendErrorMsg = true) {
   const usersToRemoveFromMentions = []
   for (let i = 0; i < messageMentions.length; i++) {
     const userVoiceChannelId = await helper.getUserVoiceChannelIdByUserId(message, messageMentions[i].id)
@@ -66,7 +66,7 @@ async function ifMentionsInsideVoiceChannel (message, messageMentions, sendError
   return messageMentions.filter((user) => !usersToRemoveFromMentions.includes(user.id))
 }
 
-async function ifUsersAlreadyInChannel (message, messageMentions, toVoiceChannelId) {
+async function ifUsersAlreadyInChannel(message, messageMentions, toVoiceChannelId) {
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
   const command = args.shift().toLowerCase()
   const usersToRemoveFromMentions = []
@@ -82,7 +82,7 @@ async function ifUsersAlreadyInChannel (message, messageMentions, toVoiceChannel
   return messageMentions.filter((user) => !usersToRemoveFromMentions.includes(user.id))
 }
 
-async function forConnectPerms (message, users, voiceChannel) {
+async function forConnectPerms(message, users, voiceChannel) {
   for (let i = 0; i < users.length; i++) {
     const userVoiceChannelId = await helper.getUserVoiceChannelIdByUserId(message, users[i])
     const userVoiceChannel = await helper.getUserVoiceChannelByVoiceChannelId(message, userVoiceChannelId)
@@ -101,7 +101,7 @@ async function forConnectPerms (message, users, voiceChannel) {
   }
 }
 
-async function forMovePerms (message, users, voiceChannel) {
+async function forMovePerms(message, users, voiceChannel) {
   for (let i = 0; i < users.length; i++) {
     const userVoiceChannelId = await helper.getUserVoiceChannelIdByUserId(message, users[i])
     const userVoiceChannel = await helper.getUserVoiceChannelByVoiceChannelId(message, userVoiceChannelId)
@@ -120,7 +120,7 @@ async function forMovePerms (message, users, voiceChannel) {
   }
 }
 
-function ifChannelIsTextChannel (message, channel) {
+function ifChannelIsTextChannel(message, channel) {
   if (channel.type === 'text') {
     throw {
       logMessage: 'User tried to move with textchannels',
@@ -129,7 +129,7 @@ function ifChannelIsTextChannel (message, channel) {
   }
 }
 
-function ifCatergyHasRoomsAvailable (message, voiceChannelCounter, voiceChannelsInCategory, categoryName) {
+function ifCatergyHasRoomsAvailable(message, voiceChannelCounter, voiceChannelsInCategory, categoryName) {
   if (voiceChannelCounter === voiceChannelsInCategory.length) {
     // Out of rooms to move people to.
     throw {
@@ -139,7 +139,7 @@ function ifCatergyHasRoomsAvailable (message, voiceChannelCounter, voiceChannels
   }
 }
 
-function countOfChannelsFromCategory (message, CountOfChannelsFromCategory, categoryName) {
+function countOfChannelsFromCategory(message, CountOfChannelsFromCategory, categoryName) {
   if (CountOfChannelsFromCategory.length === 0) {
     throw {
       logMessage: 'Not enough voice channels in the category: ' + categoryName,
@@ -148,7 +148,7 @@ function countOfChannelsFromCategory (message, CountOfChannelsFromCategory, cate
   }
 }
 
-function userAmountInChannel (message, amount, expectedAmount, fromVoiceChannelName) {
+function userAmountInChannel(message, amount, expectedAmount, fromVoiceChannelName) {
   if (amount < expectedAmount) {
     const m = moveerMessage.NOT_ENOUGH_USERS_IN_CHANNEL(message.author.id, fromVoiceChannelName, amount, expectedAmount)
     throw {
@@ -158,7 +158,7 @@ function userAmountInChannel (message, amount, expectedAmount, fromVoiceChannelN
   }
 }
 
-function userAmountInCategory (message, amount, expectedAmount, fromCategoryName) {
+function userAmountInCategory(message, amount, expectedAmount, fromCategoryName) {
   if (amount < expectedAmount) {
     const m = moveerMessage.NOT_ENOUGH_USERS_IN_CATEGORY(message.author.id, fromCategoryName, amount, expectedAmount)
     throw {
@@ -168,7 +168,7 @@ function userAmountInCategory (message, amount, expectedAmount, fromCategoryName
   }
 }
 
-function ifVoiceChannelExist (message, voiceChannel, channelName) {
+function ifVoiceChannelExist(message, voiceChannel, channelName) {
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
   const command = args.shift().toLowerCase()
 
@@ -182,14 +182,14 @@ function ifVoiceChannelExist (message, voiceChannel, channelName) {
         command === 'move'
           ? moveerMessage.NO_VOICE_CHANNEL_NAMED_X(channelName, message.author.id)
           : moveerMessage.NO_VOICE_CHANNEL_NAMED_X(channelName, message.author.id) +
-          (message.content.slice(config.discordPrefix.length).trim().split(/ +/g).length > 3
-            ? '\n' + moveerMessage.MIGHT_BE_MISSING_FNUTTS_WARNING
-            : ''),
+            (message.content.slice(config.discordPrefix.length).trim().split(/ +/g).length > 3
+              ? '\n' + moveerMessage.MIGHT_BE_MISSING_FNUTTS_WARNING
+              : ''),
     }
   }
 }
 
-function argsLength (args, expectedLength) {
+function argsLength(args, expectedLength) {
   if (args.length < expectedLength) {
     throw {
       logMessage: 'Missing one or more arguments.',
@@ -198,7 +198,7 @@ function argsLength (args, expectedLength) {
   }
 }
 
-function ifArgsTheSame (message, args) {
+function ifArgsTheSame(message, args) {
   if (args[0].toLowerCase() === args[1].toLowerCase()) {
     throw {
       logMessage: 'Same voice channel name',
@@ -207,7 +207,7 @@ function ifArgsTheSame (message, args) {
   }
 }
 
-function ifUsersInsideVoiceChannel (message, fromVoiceChannelName, fromVoiceChannel) {
+function ifUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel) {
   if (fromVoiceChannel === null) return
   if (fromVoiceChannel.members.size < 1) {
     throw {
@@ -217,7 +217,7 @@ function ifUsersInsideVoiceChannel (message, fromVoiceChannelName, fromVoiceChan
   }
 }
 
-async function ifTextChannelIsMoveerAdmin (message, throwError = true) {
+async function ifTextChannelIsMoveerAdmin(message, throwError = true) {
   if (message.channel.name.toLowerCase() !== 'moveeradmin') {
     const searchForGuild = await database.getGuildObject(message, message.guild.id)
     if (searchForGuild.rowCount > 0 && searchForGuild.rows[0].adminChannelId.split(',').includes(message.channel.id)) {
@@ -233,7 +233,7 @@ async function ifTextChannelIsMoveerAdmin (message, throwError = true) {
   }
 }
 
-function forUserMentions (message, messageMentions) {
+function forUserMentions(message, messageMentions) {
   if (messageMentions.length < 1) {
     throw {
       logMessage: '@Mention is missing',
@@ -242,7 +242,7 @@ function forUserMentions (message, messageMentions) {
   }
 }
 
-function ifMessageContainsMentions (message) {
+function ifMessageContainsMentions(message) {
   if (message.mentions.users.size > 0) {
     throw {
       logMessage: 'User tried to mention while moving groups',
@@ -251,7 +251,7 @@ function ifMessageContainsMentions (message) {
   }
 }
 
-function ifSelfMention (message) {
+function ifSelfMention(message) {
   if (message.mentions.users.has(message.author.id)) {
     throw {
       logMessage: 'User trying to move himself',
@@ -260,7 +260,7 @@ function ifSelfMention (message) {
   }
 }
 
-function ifAuthorInsideAVoiceChannel (message, userVoiceRoomID) {
+function ifAuthorInsideAVoiceChannel(message, userVoiceRoomID) {
   if (valueEqNullorUndefinded(userVoiceRoomID)) {
     throw {
       logMessage: 'User tried to move people without being inside a voice room',
@@ -269,12 +269,11 @@ function ifAuthorInsideAVoiceChannel (message, userVoiceRoomID) {
   }
 }
 
-
 const checkifPatreonGuildRepeat = async (message) => {
   // Check for patreon stuff
-  /*   const guildInfo = await database.getPatreonGuildObject(message, message.guild.id)
-    if (guildInfo.rowCount === 0) return
-    if (guildInfo.rows[0].enabled === '0' || guildInfo.rows[0].repeatEnabled === 0) return */
+  const guildInfo = await database.getPatreonGuildObject(message, message.guild.id)
+  if (guildInfo.rowCount === 0) return
+  if (guildInfo.rows[0].enabled === '0' || guildInfo.rows[0].repeatEnabled === 0) return
   if (
     message.reactions.cache.size > 0 &&
     message.reactions.cache.first().users.cache.filter((u) => ['564773724520185856', '400724460203802624'].includes(u.id))
