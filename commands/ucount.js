@@ -2,7 +2,7 @@ const moveerMessage = require('../moveerMessage.js')
 const helper = require('../helpers/helper.js')
 const check = require('../helpers/check.js')
 
-async function count (args, message) {
+async function count(args, message) {
   let toVoiceChannel
   try {
     let toVoiceChannelName = args[0]
@@ -18,13 +18,16 @@ async function count (args, message) {
 
     moveerMessage.sendMessage(
       message,
-      moveerMessage.MEMBER_COUNT_IN_VOICE_CHANNEL(message.author.id, toVoiceChannel.name, toVoiceChannel.members.size))
-    moveerMessage.logger(message, moveerMessage.MEMBER_COUNT_IN_VOICE_CHANNEL(message.author.username, toVoiceChannel.name, toVoiceChannel.members.size))
+      moveerMessage.MEMBER_COUNT_IN_VOICE_CHANNEL(message.author.id, toVoiceChannel.name, toVoiceChannel.members.size)
+    )
+    moveerMessage.logger(
+      message,
+      moveerMessage.MEMBER_COUNT_IN_VOICE_CHANNEL(message.author.username, toVoiceChannel.name, toVoiceChannel.members.size)
+    )
 
     // Check for patreon stuff
     check.checkifPatreonGuildRepeat(message)
     // End check for patreon stuff
-
   } catch (err) {
     if (!err.logMessage) {
       console.log(err)

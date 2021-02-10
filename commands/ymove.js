@@ -2,7 +2,7 @@ const moveerMessage = require('../moveerMessage.js')
 const check = require('../helpers/check.js')
 const helper = require('../helpers/helper.js')
 
-async function move (args, message, rabbitMqChannel) {
+async function move(args, message, rabbitMqChannel) {
   try {
     const amountInEachChannel = args.pop()
     let fromVoiceChannelName = args[0]

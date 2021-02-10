@@ -2,7 +2,7 @@ const moveerMessage = require('../moveerMessage.js')
 const helper = require('../helpers/helper.js')
 const check = require('../helpers/check.js')
 
-async function move (args, message, rabbitMqChannel) {
+async function move(args, message, rabbitMqChannel) {
   try {
     let toVoiceChannelName = args[0]
     let roleName = args[1]
