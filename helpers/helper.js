@@ -92,6 +92,25 @@ const findUserByUserName = async (message, usernames) => {
   return []
 }
 
+const kickUsers = async (message, userIdsToKick) => {
+  let usersKicked = 0
+  await userIdsToKick.forEach(async (userId) => {
+    const user = await message.guild.members.cache.find((user) => user.id === userId)
+    if (user) {
+      user.voice.kick()
+      usersKicked++
+      moveerMessage.logger(message, 'Kicked ' + userId)
+    } else {
+      moveerMessage.logger(message, 'FAILED to kick ' + userId + ' (User not found)')
+    }
+  })
+
+  await moveerMessage.sendMessage(
+    message,
+    '<@' + message.author.id + '> kicked ' + usersKicked + ' users from a voicechannel'
+  )
+}
+
 async function moveUsers(message, usersToMove, toVoiceChannelId, rabbitMqChannel, command) {
   let usersMoved = 0
   usersToMove.forEach((user) => {
@@ -217,4 +236,5 @@ module.exports = {
   getGuildGroupNames,
   getUserVoiceChannelIdByUserId,
   getUserVoiceChannelByVoiceChannelId,
+  kickUsers,
 }
