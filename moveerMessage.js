@@ -413,7 +413,6 @@ function sendMessage(message, sendMessage) {
       config.discordBotListToken !== 'x' &&
       message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES') === true
     ) {
-      reportMoveerError('@everyone - I failed to send message for some reason: ' + e)
       console.log(e)
     }
   })
