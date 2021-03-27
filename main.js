@@ -165,7 +165,7 @@ function createConsumer(queue, rabbitMqChannel) {
             } else {
               log.error('(' + client.shard.ids + ') Failure in moving: ' + jsonMsg.userId + ' - Reason below')
               log.info(t)
-              moveerMessage.reportMoveerError(t.message)
+              moveerMessage.reportMoveerError(t.message + '\n\n' + msg.content.toString())
             }
           })
         await rabbitMqChannel.ack(msg) // ack everything since this is master
