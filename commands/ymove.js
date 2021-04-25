@@ -18,6 +18,12 @@ async function move(args, message, rabbitMqChannel) {
     check.ifMessageContainsMentions(message)
     const fromVoiceChannel = helper.getChannelByName(message, fromVoiceChannelName)
     check.ifVoiceChannelExist(message, fromVoiceChannel, fromVoiceChannelName)
+    const voiceChannelMembers = await fromVoiceChannel.members.filter(
+      (mem) => !mem.roles.cache.some((rol) => rol.name === 'ymoveignore')
+    )
+    check.userAmountInChannel(message, voiceChannelMembers.size, amountInEachChannel, fromVoiceChannelName)
+    const userIdsToMove = voiceChannelMembers.map(({ id }) => id)
+
     // check.ifUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel) //Ignore during test
 
     const category = helper.getCategoryByName(message, categoryName)
@@ -26,9 +32,7 @@ async function move(args, message, rabbitMqChannel) {
       .sort((a, b) => a.rawPosition - b.rawPosition)
       .array()
     check.countOfChannelsFromCategory(message, voiceChannelsInCategory, categoryName)
-    check.userAmountInChannel(message, fromVoiceChannel.members.size, amountInEachChannel, fromVoiceChannelName)
 
-    const userIdsToMove = await fromVoiceChannel.members.map(({ id }) => id)
     const userIdsLength = userIdsToMove.length
     let voiceChannelCounter = 0
     for (let i = 0; i < userIdsLength; i++) {
