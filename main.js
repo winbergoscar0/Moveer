@@ -30,6 +30,7 @@ const saveDataToInflux = (data, shardId) => {
           wsStatus: Influx.FieldType.INTEGER,
           wsPing: Influx.FieldType.INTEGER,
           shardGuilds: Influx.FieldType.INTEGER,
+          totalShards: Influx.FieldType.INTEGER,
         },
         tags: ['shardId'],
       },
@@ -43,6 +44,7 @@ const saveDataToInflux = (data, shardId) => {
         wsStatus: data.status,
         wsPing: data.ping,
         shardGuilds: data.guilds,
+        totalShards: data.totalShards,
       },
     },
   ])
@@ -73,7 +75,7 @@ if (config.discordBotListToken !== 'x') {
 
   schedule.scheduleJob('* * * * *', () => {
     saveDataToInflux(
-      { status: client.ws.status, ping: client.ws.ping, guilds: client.guilds.cache.size },
+      { status: client.ws.status, ping: client.ws.ping, totalShards: client.shard.count, guilds: client.guilds.cache.size },
       client.shard.ids[0]
     )
   })
