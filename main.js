@@ -13,6 +13,40 @@ const token = config.discordToken
 const database = require('./helpers/database.js')
 const moveerMessage = require('./moveerMessage.js')
 const { handleCommand } = require('./commandHandler.js')
+const schedule = require('node-schedule')
+const Influx = require('influx')
+
+const saveDataToInflux = (data, shardId) => {
+  console.log(data, shardId)
+  const influx = new Influx.InfluxDB({
+    host: config.influxHost,
+    database: config.influxDatabase,
+    username: config.influxUsername,
+    password: config.influxPassword,
+    schema: [
+      {
+        measurement: 'moveerData',
+        fields: {
+          wsStatus: Influx.FieldType.INTEGER,
+          wsPing: Influx.FieldType.INTEGER,
+          shardGuilds: Influx.FieldType.INTEGER,
+        },
+        tags: ['shardId'],
+      },
+    ],
+  })
+  influx.writePoints([
+    {
+      measurement: 'moveerData',
+      tags: { shardId },
+      fields: {
+        wsStatus: data.status,
+        wsPing: data.ping,
+        shardGuilds: data.guilds,
+      },
+    },
+  ])
+}
 
 // rabbitMQ
 const rabbitMQConnection = process.env.rabbitMQConnection || config.rabbitMQConnection
@@ -35,6 +69,13 @@ if (config.discordBotListToken !== 'x') {
 
   dbl.on('error', (e) => {
     log.warn(`DBL Error!:  ${e}`)
+  })
+
+  schedule.scheduleJob('* * * * *', () => {
+    saveDataToInflux(
+      { status: client.ws.status, ping: client.ws.ping, guilds: client.guilds.cache.size },
+      client.shard.ids[0]
+    )
   })
 }
 
@@ -62,6 +103,22 @@ client.on('ready', async () => {
 
 client.on('error', (err) => {
   console.log(err)
+  moveerMessage.reportMoveerError('error\n' + err)
+})
+
+client.on('shardDisconnect', (err, id) => {
+  console.log(err, id)
+  moveerMessage.reportMoveerError(`shardDisconnect (${id})\n` + err)
+})
+
+client.on('shardError', (err, id) => {
+  console.log(err, id)
+  moveerMessage.reportMoveerError(`shardError (${id})\n` + err)
+})
+
+client.on('shardReconnecting', (err) => {
+  console.log(err)
+  moveerMessage.reportMoveerError('shardReconnecting\n' + err)
 })
 
 client.on('warn', (wrn) => {
