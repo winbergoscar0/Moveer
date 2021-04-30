@@ -118,11 +118,6 @@ client.on('shardError', (err, id) => {
   moveerMessage.reportMoveerError(`shardError (${id})\n` + err)
 })
 
-client.on('shardReconnecting', (err) => {
-  console.log(err)
-  moveerMessage.reportMoveerError('shardReconnecting\n' + err)
-})
-
 client.on('warn', (wrn) => {
   console.log(wrn)
 })
