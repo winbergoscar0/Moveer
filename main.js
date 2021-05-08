@@ -16,6 +16,8 @@ const { handleCommand } = require('./commandHandler.js')
 const schedule = require('node-schedule')
 const Influx = require('influx')
 
+const prefixRegex = /[^A-Za-z 0-9]/g
+
 const saveDataToInflux = (data, shardId) => {
   console.log(data, shardId)
   const influx = new Influx.InfluxDB({
@@ -185,9 +187,12 @@ client.on('raw', async (packet) => {
 
 // Listen for messages
 client.on('message', async (message) => {
-  if (!message.content.startsWith(config.discordPrefix)) return
-  if (message.author.bot && (await database.isGuildAllowed(message, message.guild.id))) return
+  if (!prefixRegex.test(message.content.charAt(0))) return
   if (message.channel.type !== 'text') return
+  let guildData = await database.getGuildObject(message, message.guild.id)
+  guildData = guildData?.rows?.length > 0 ? guildData.rows[0] : null
+  if (!message.content.startsWith(guildData?.prefix || config.discordPrefix)) return
+  if (message.author.bot && guildData?.allowed) return
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
   const command = args.shift().toLowerCase()
   handleCommand(command, message, args, rabbitMqChannel)

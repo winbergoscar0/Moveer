@@ -20,13 +20,6 @@ async function connectToDb(message) {
   }
 }
 
-const getGuildObject = async (message, guildId) => {
-  const dbConnection = await connectToDb(message)
-  const searchForGuild = await dbConnection.query('SELECT * FROM "guilds" WHERE "guildId" = \'' + guildId + "'")
-  await dbConnection.end()
-  return searchForGuild
-}
-
 const getPatreonGuildObject = async (message, guildId) => {
   const dbConnection = await connectToDb(message)
   const searchForPatreonGuild = await dbConnection.query('SELECT * FROM "patreons" WHERE "guildId" = \'' + guildId + "'")
@@ -68,13 +61,15 @@ const insertGuildAfterWelcome = async (guildId) => {
   await dbConnection.end()
 }
 
-const isGuildAllowed = async (message, guildId) => {
-  const guildObject = await getGuildObject(message, guildId)
-  if (guildObject.rowCount === 0) {
+const getGuildObject = async (message, guildId) => {
+  const dbConnection = await connectToDb(message)
+  const searchForGuild = await dbConnection.query('SELECT * FROM "guilds" WHERE "guildId" = \'' + guildId + "'")
+  if (searchForGuild.rowCount === 0) {
     await insertGuildAfterWelcome(guildId) // Guild not in DB for some reason, add it.
     return true
   }
-  return guildObject.rows[0].allowed === 0
+  await dbConnection.end()
+  return searchForGuild
 }
 
 const updateSentRateLimitMessage = async (message, guildId) => {
@@ -93,5 +88,4 @@ module.exports = {
   insertGuildAfterWelcome,
   updateSentRateLimitMessage,
   getPatreonGuildObject,
-  isGuildAllowed,
 }
