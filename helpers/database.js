@@ -64,11 +64,11 @@ const insertGuildAfterWelcome = async (guildId) => {
 const getGuildObject = async (message, guildId) => {
   const dbConnection = await connectToDb(message)
   const searchForGuild = await dbConnection.query('SELECT * FROM "guilds" WHERE "guildId" = \'' + guildId + "'")
+  await dbConnection.end()
   if (searchForGuild.rowCount === 0) {
     await insertGuildAfterWelcome(guildId) // Guild not in DB for some reason, add it.
     return true
   }
-  await dbConnection.end()
   return searchForGuild
 }
 
