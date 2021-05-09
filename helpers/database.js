@@ -11,6 +11,7 @@ async function connectToDb(message) {
     return client
   } catch (err) {
     if (!err.logMessage) console.log(err)
+    moveerMessage.reportMoveerError('dberror: ' + err.stack)
     if (message === 'welcome') return
     moveerMessage.logger(message, 'Error')
     moveerMessage.sendMessage(
