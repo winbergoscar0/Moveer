@@ -16,8 +16,6 @@ const { handleCommand } = require('./commandHandler.js')
 const schedule = require('node-schedule')
 const Influx = require('influx')
 
-const prefixRegex = /[^A-Za-z 0-9]/g
-
 const saveDataToInflux = (data, shardId) => {
   console.log(data, shardId)
   const influx = new Influx.InfluxDB({
