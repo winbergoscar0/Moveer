@@ -187,12 +187,12 @@ client.on('raw', async (packet) => {
 
 // Listen for messages
 client.on('message', async (message) => {
-  if (!prefixRegex.test(message.content.charAt(0))) return
+  if (!/[^A-Za-z 0-9]/g.test(message.content.charAt(0))) return
   if (message.channel.type !== 'text') return
   let guildData = await database.getGuildObject('welcome', message.guild.id)
   guildData = guildData?.rows?.length > 0 ? guildData.rows[0] : null
   if (!message.content.startsWith(guildData?.prefix || config.discordPrefix)) return
-  if (message.author.bot && guildData?.allowed) return
+  if (message.author.bot && guildData?.allowed === 0) return
   const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
   const command = args.shift().toLowerCase()
   handleCommand(command, message, args, rabbitMqChannel)
