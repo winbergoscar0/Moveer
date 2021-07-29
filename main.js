@@ -178,6 +178,7 @@ client.on('raw', async (packet) => {
       const command = args.shift().toLowerCase()
       if (!['fmove', 'tmove', 'zmove', 'ymove', 'ucount'].includes(command)) return
       log.info('Resending message since react was added and succesfull. React done by: ' + packet.d.user_id)
+      channel.send(`Resending message since react was added and succesfull. React done by: <@${packet.d.user_id}>`)
       client.emit('message', message)
     })
     .catch((err) => console.log(err))
