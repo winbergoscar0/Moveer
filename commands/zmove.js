@@ -20,7 +20,9 @@ async function move(args, message, rabbitMqChannel) {
     check.ifVoiceChannelExist(message, toVoiceChannel, voiceChannelName)
 
     const fromCategory = helper.getCategoryByName(message, fromCategoryName)
-    const voiceChannelsInCategory = fromCategory.children.filter((channel) => channel.type === 'GUILD_VOICE').array()
+    const voiceChannelsInCategory = fromCategory.children
+      .filter((channel) => channel.type === 'GUILD_VOICE' || channel.type === 'GUILD_STAGE_VOICE')
+      .array()
     check.countOfChannelsFromCategory(message, voiceChannelsInCategory, fromCategoryName) // Check a voice channel is in this category
 
     const userIdsToMove = await voiceChannelsInCategory.reduce(

@@ -32,7 +32,11 @@ function getChannelByName(message, findByName) {
   console.log(message.guild.channels.cache)
   if (voiceChannel == null) {
     voiceChannel = message.guild.channels.cache
-      .filter((channel) => channel.type === 'GUILD_VOICE' && channel.name.toLowerCase() === findByName.toLowerCase())
+      .filter(
+        (channel) =>
+          (channel.type === 'GUILD_VOICE' || channel.type === 'GUILD_STAGE_VOICE') &&
+          channel.name.toLowerCase() === findByName.toLowerCase()
+      )
       .first()
   }
   return voiceChannel
