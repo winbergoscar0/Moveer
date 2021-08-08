@@ -1,7 +1,18 @@
-const Discord = require('discord.js')
-const client = new Discord.Client({
+const { Client, Intents } = require('discord.js')
+
+const intentFlags = Intents.FLAGS
+
+const client = new Client({
   shardId: process.argv[1],
   shardCount: process.argv[2],
+  intents: [
+    intentFlags.GUILDS,
+    intentFlags.GUILD_MEMBERS,
+    intentFlags.GUILD_VOICE_STATES,
+    intentFlags.GUILD_MESSAGES,
+    intentFlags.GUILD_MESSAGE_REACTIONS,
+    intentFlags.DIRECT_MESSAGES,
+  ],
 })
 
 const log = require('./helpers/logger')
@@ -83,7 +94,7 @@ if (config.discordBotListToken !== 'x') {
 
 client.on('ready', async () => {
   log.info('Startup successful.')
-  log.info('Running as user: ' + client.user.username + ' ShardID: (' + client.shard.ids + ')')
+  log.info('Running as user: ' + client.user.username + ' ShardId: (' + client.shard.ids + ')')
   amqp.connect(rabbitMQConnection, (error0, connection) => {
     if (error0) {
       moveerMessage.reportMoveerError('Unable to connect to rabbitMQ - @everyone')
@@ -135,7 +146,7 @@ client.on('guildCreate', async (guild) => {
   let defaultChannel = ''
   guild.channels.cache.forEach((channel) => {
     if (
-      channel.type === 'text' &&
+      channel.type === 'GUILD_TEXT' &&
       defaultChannel === '' &&
       channel.permissionsFor(guild.me).has('SEND_MESSAGES') &&
       channel.permissionsFor(guild.me).has('VIEW_CHANNEL')
@@ -181,15 +192,15 @@ client.on('raw', async (packet) => {
       channel.send(
         `Resending message [${message.content}] since react was added and successfull. React done by: <@${packet.d.user_id}>`
       )
-      client.emit('message', message)
+      client.emit('messageCreate', message)
     })
     .catch((err) => console.log(err))
 })
 
 // Listen for messages
-client.on('message', async (message) => {
+client.on('messageCreate', async (message) => {
   if (!/[^A-Za-z 0-9]/g.test(message.content.charAt(0))) return
-  if (message.channel.type !== 'text') return
+  if (message.channel.type !== 'GUILD_TEXT') return
   let guildData = await database.getGuildObject('welcome', message.guild.id)
   guildData = guildData?.rows?.length > 0 ? guildData.rows[0] : null
   if (!message.content.startsWith(guildData?.prefix || config.discordPrefix)) return
@@ -202,7 +213,7 @@ client.on('message', async (message) => {
 client.login(token)
 
 function createConsumer(queue, rabbitMqChannel) {
-  log.info('Creating consumer for guild: ' + queue + ' on shardID: ' + client.shard.ids)
+  log.info('Creating consumer for guild: ' + queue + ' on shardId: ' + client.shard.ids)
   rabbitMqChannel.assertQueue(queue, {
     durable: true,
   })
@@ -214,7 +225,7 @@ function createConsumer(queue, rabbitMqChannel) {
       try {
         await client.guilds.cache
           .get(jsonMsg.guildId)
-          .member(jsonMsg.userId)
+          .members.cache.get(jsonMsg.userId)
           .voice.setChannel(jsonMsg.voiceChannelId)
           .then(() => {
             log.info('(' + client.shard.ids + ') Success in moving: ' + jsonMsg.userId)

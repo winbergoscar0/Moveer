@@ -26,12 +26,12 @@ function ifChannelTextExpectText(message) {
 
 function ifUserInsideBlockedChannel(message, usersToMove) {
   usersToMove.forEach((user) => {
-    if (config.blockedVoiceChannels.includes(user.voiceChannelID)) {
+    if (config.blockedVoiceChannels.includes(user.voiceChannelId)) {
       moveerMessage.logger(message, 'One user in blocked voice channel')
       moveerMessage.sendMessage(message, moveerMessage.USER_INSIDE_BLOCKED_CHANNEL(user.user.id))
     }
   })
-  return usersToMove.filter((user) => !config.blockedVoiceChannels.includes(user.voiceChannelID))
+  return usersToMove.filter((user) => !config.blockedVoiceChannels.includes(user.voiceChannelId))
 }
 
 function ifVoiceChannelContainsMoveer(message, authorVoiceChannelName) {
@@ -121,7 +121,7 @@ async function forMovePerms(message, users, voiceChannel) {
 }
 
 function ifChannelIsTextChannel(message, channel) {
-  if (channel.type === 'text') {
+  if (channel.type === 'GUILD_TEXT') {
     throw {
       logMessage: 'User tried to move with textchannels',
       sendMessage: moveerMessage.USER_MOVED_WITH_TEXT_CHANNEL(channel.id),

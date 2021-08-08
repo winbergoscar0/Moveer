@@ -29,10 +29,10 @@ async function getNameOfVoiceChannel(message, authorId) {
 
 function getChannelByName(message, findByName) {
   let voiceChannel = message.guild.channels.cache.get(findByName)
-
+  console.log(message.guild.channels.cache)
   if (voiceChannel == null) {
     voiceChannel = message.guild.channels.cache
-      .filter((channel) => channel.type === 'voice' && channel.name.toLowerCase() === findByName.toLowerCase())
+      .filter((channel) => channel.type === 'GUILD_VOICE' && channel.name.toLowerCase() === findByName.toLowerCase())
       .first()
   }
   return voiceChannel
@@ -216,7 +216,7 @@ function getRandomUsers(userArray, amoutToGet) {
 async function getUserVoiceChannelIdByUserId(message, userId) {
   const user = await message.guild.members.fetch(userId)
   try {
-    const userVoiceChannelId = await user.guild.voiceStates.cache.filter((user) => user.id === userId).first().channelID
+    const userVoiceChannelId = await user.guild.voiceStates.cache.filter((user) => user.id === userId).first().channelId
     return userVoiceChannelId
   } catch (err) {
     return null

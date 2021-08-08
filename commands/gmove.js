@@ -16,7 +16,7 @@ async function move(args, message, rabbitMqChannel) {
       fromVoiceChannelName = names[0]
     }
     const authorVoice = message.member.voice
-    check.ifAuthorInsideAVoiceChannel(message, authorVoice.channelID)
+    check.ifAuthorInsideAVoiceChannel(message, authorVoice.channelId)
     if ((await check.ifTextChannelIsMoveerAdmin(message, false)) === false)
       fromVoiceChannelName = await helper.getGuildGroupNames(message, fromVoiceChannelName)
     const fromVoiceChannel = helper.getChannelByName(message, fromVoiceChannelName.toLowerCase())
@@ -29,12 +29,12 @@ async function move(args, message, rabbitMqChannel) {
     check.ifUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel)
     check.ifChannelIsTextChannel(message, fromVoiceChannel)
     const userIdsToMove = await fromVoiceChannel.members.map(({ id }) => id)
-    const authorVoiceChannel = helper.getChannelByName(message, authorVoice.channelID)
+    const authorVoiceChannel = helper.getChannelByName(message, authorVoice.channelId)
     await check.forMovePerms(message, userIdsToMove, authorVoiceChannel)
     await check.forConnectPerms(message, userIdsToMove, authorVoiceChannel)
 
     // No errors in the message, lets get moving!
-    helper.moveUsers(message, userIdsToMove, authorVoice.channelID, rabbitMqChannel)
+    helper.moveUsers(message, userIdsToMove, authorVoice.channelId, rabbitMqChannel)
   } catch (err) {
     if (!err.logMessage) {
       console.log(err)

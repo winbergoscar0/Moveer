@@ -28,7 +28,7 @@ async function move(args, message, rabbitMqChannel) {
 
     const category = helper.getCategoryByName(message, categoryName)
     const voiceChannelsInCategory = category.children
-      .filter((channel) => channel.type === 'voice' && channel.members.size === 0)
+      .filter((channel) => channel.type === 'GUILD_VOICE' && channel.members.size === 0)
       .sort((a, b) => a.rawPosition - b.rawPosition)
       .array()
     check.countOfChannelsFromCategory(message, voiceChannelsInCategory, categoryName)
