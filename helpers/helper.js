@@ -5,11 +5,11 @@ const database = require('../helpers/database.js')
 
 function getCategoryByName(message, categoryName) {
   let category = message.guild.channels.cache.find(
-    (category) => category.id === categoryName && category.type === 'category'
+    (category) => category.id === categoryName && category.type === 'GUILD_CATEGORY'
   )
   if (category == null) {
     category = message.guild.channels.cache.find(
-      (category) => category.name.toLowerCase() === categoryName.toLowerCase() && category.type === 'category'
+      (category) => category.name.toLowerCase() === categoryName.toLowerCase() && category.type === 'GUILD_CATEGORY'
     )
   }
   if (category == null) {
@@ -29,7 +29,6 @@ async function getNameOfVoiceChannel(message, authorId) {
 
 function getChannelByName(message, findByName) {
   let voiceChannel = message.guild.channels.cache.get(findByName)
-  console.log(message.guild.channels.cache)
   if (voiceChannel == null) {
     voiceChannel = message.guild.channels.cache
       .filter(
@@ -57,7 +56,6 @@ function getUsersByRole(message, roleName) {
     }
   }
   const usersToMove = role.members.filter((member) => voiceStateMembers.includes(member.id))
-  //console.log(role.members)
   return usersToMove
 }
 

@@ -16,7 +16,7 @@ const valueEqNullorUndefinded = (value, operator = '==') => {
 }
 
 function ifChannelTextExpectText(message) {
-  if (message.mentions.channels.first().type !== 'text') {
+  if (message.mentions.channels.first().type !== 'GUILD_TEXT') {
     throw {
       logMessage: 'Mention is not type text',
       sendMessage: moveerMessage.MESSAGE_MENTION_IS_NOT_TEXT(message.author.id),
