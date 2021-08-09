@@ -7,7 +7,6 @@ const client = new Client({
   shardCount: process.argv[2],
   intents: [
     intentFlags.GUILDS,
-    intentFlags.GUILD_MEMBERS,
     intentFlags.GUILD_VOICE_STATES,
     intentFlags.GUILD_MESSAGES,
     intentFlags.GUILD_MESSAGE_REACTIONS,
