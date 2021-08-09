@@ -443,7 +443,7 @@ function reportMoveerError(message) {
   const Discord = require('discord.js')
   const hook = new Discord.WebhookClient(config.discordHookIdentifier, config.discordHookToken)
   log.info('Sending error to DB HOOK')
-  hook.send(message)
+  //hook.send(message)
 }
 
 module.exports = {
