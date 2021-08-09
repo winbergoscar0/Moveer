@@ -406,16 +406,21 @@ function sendMessage(message, sendMessage) {
     reportMoveerError('I was about to send a NULL message - Probably errors in code.. @everyone')
     return
   }
-
-  message.channel.send(sendMessage).catch((e) => {
-    logger(message, e)
-    if (
-      config.discordBotListToken !== 'x' &&
-      message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES') === true
-    ) {
-      console.log(e)
-    }
-  })
+  message.channel
+    .send(
+      sendMessage.embed
+        ? { embeds: [sendMessage.embed], reply: { messageReference: message.id } }
+        : { content: sendMessage, reply: { messageReference: message.id } }
+    )
+    .catch((e) => {
+      logger(message, e)
+      if (
+        config.discordBotListToken !== 'x' &&
+        message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES') === true
+      ) {
+        console.log(e)
+      }
+    })
 }
 
 function logger(message, logMessage) {
@@ -438,7 +443,7 @@ function reportMoveerError(message) {
   const Discord = require('discord.js')
   const hook = new Discord.WebhookClient(config.discordHookIdentifier, config.discordHookToken)
   log.info('Sending error to DB HOOK')
-  hook.send(message)
+  //hook.send(message)
 }
 
 module.exports = {

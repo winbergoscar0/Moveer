@@ -5,11 +5,11 @@ const database = require('../helpers/database.js')
 
 function getCategoryByName(message, categoryName) {
   let category = message.guild.channels.cache.find(
-    (category) => category.id === categoryName && category.type === 'category'
+    (category) => category.id === categoryName && category.type === 'GUILD_CATEGORY'
   )
   if (category == null) {
     category = message.guild.channels.cache.find(
-      (category) => category.name.toLowerCase() === categoryName.toLowerCase() && category.type === 'category'
+      (category) => category.name.toLowerCase() === categoryName.toLowerCase() && category.type === 'GUILD_CATEGORY'
     )
   }
   if (category == null) {
@@ -29,10 +29,13 @@ async function getNameOfVoiceChannel(message, authorId) {
 
 function getChannelByName(message, findByName) {
   let voiceChannel = message.guild.channels.cache.get(findByName)
-
   if (voiceChannel == null) {
     voiceChannel = message.guild.channels.cache
-      .filter((channel) => channel.type === 'voice' && channel.name.toLowerCase() === findByName.toLowerCase())
+      .filter(
+        (channel) =>
+          (channel.type === 'GUILD_VOICE' || channel.type === 'GUILD_STAGE_VOICE') &&
+          channel.name.toLowerCase() === findByName.toLowerCase()
+      )
       .first()
   }
   return voiceChannel
@@ -53,7 +56,6 @@ function getUsersByRole(message, roleName) {
     }
   }
   const usersToMove = role.members.filter((member) => voiceStateMembers.includes(member.id))
-  //console.log(role.members)
   return usersToMove
 }
 
@@ -97,7 +99,7 @@ const kickUsers = async (message, userIdsToKick) => {
   await userIdsToKick.forEach(async (userId) => {
     const user = await message.guild.members.cache.find((user) => user.id === userId)
     if (user) {
-      user.voice.kick().catch((err) => {
+      user.voice.disconnect().catch((err) => {
         console.log(err)
         moveerMessage.logger(message, 'FAILED to kick ' + userId + ' (User not found)')
       })
@@ -216,7 +218,7 @@ function getRandomUsers(userArray, amoutToGet) {
 async function getUserVoiceChannelIdByUserId(message, userId) {
   const user = await message.guild.members.fetch(userId)
   try {
-    const userVoiceChannelId = await user.guild.voiceStates.cache.filter((user) => user.id === userId).first().channelID
+    const userVoiceChannelId = await user.guild.voiceStates.cache.filter((user) => user.id === userId).first().channelId
     return userVoiceChannelId
   } catch (err) {
     return null
