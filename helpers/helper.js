@@ -99,7 +99,7 @@ const kickUsers = async (message, userIdsToKick) => {
   await userIdsToKick.forEach(async (userId) => {
     const user = await message.guild.members.cache.find((user) => user.id === userId)
     if (user) {
-      user.voice.kick().catch((err) => {
+      user.voice.disconnect().catch((err) => {
         console.log(err)
         moveerMessage.logger(message, 'FAILED to kick ' + userId + ' (User not found)')
       })
