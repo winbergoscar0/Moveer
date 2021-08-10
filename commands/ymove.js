@@ -27,12 +27,14 @@ async function move(args, message, rabbitMqChannel) {
     // check.ifUsersInsideVoiceChannel(message, fromVoiceChannelName, fromVoiceChannel) //Ignore during test
 
     const category = helper.getCategoryByName(message, categoryName)
-    const voiceChannelsInCategory = category.children
-      .filter(
-        (channel) => (channel.type === 'GUILD_VOICE' || channel.type === 'GUILD_STAGE_VOICE') && channel.members.size === 0
-      )
-      .sort((a, b) => a.rawPosition - b.rawPosition)
-      .array()
+    const voiceChannelsInCategory = [
+      ...category.children
+        .filter(
+          (channel) => (channel.type === 'GUILD_VOICE' || channel.type === 'GUILD_STAGE_VOICE') && channel.members.size === 0
+        )
+        .sort((a, b) => a.rawPosition - b.rawPosition)
+        .values(),
+    ]
     check.countOfChannelsFromCategory(message, voiceChannelsInCategory, categoryName)
 
     const userIdsLength = userIdsToMove.length
