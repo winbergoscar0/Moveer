@@ -441,7 +441,7 @@ function logger(message, logMessage) {
 
 function reportMoveerError(message) {
   const Discord = require('discord.js')
-  const hook = new Discord.WebhookClient(config.discordHookIdentifier, config.discordHookToken)
+  const hook = new Discord.WebhookClient({ id: config.discordHookIdentifier, token: config.discordHookToken })
   log.info('Sending error to DB HOOK')
   hook.send(message)
 }
