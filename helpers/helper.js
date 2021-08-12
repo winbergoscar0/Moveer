@@ -162,15 +162,6 @@ async function PublishToRabbitMq(message, userToMove, toVoiceChannelId, rabbitMq
   rabbitMqChannel.sendToQueue(queue, Buffer.from(JSON.stringify(messageToRabbitMQ)), {
     persistent: true,
   })
-  moveerMessage.logger(
-    message,
-    'Sent message - User: ' +
-      messageToRabbitMQ.userId +
-      ' toChannel: ' +
-      messageToRabbitMQ.voiceChannelId +
-      ' in guild: ' +
-      messageToRabbitMQ.guildId
-  )
 }
 
 function getNameWithSpacesName(args, authorId) {

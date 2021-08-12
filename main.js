@@ -63,6 +63,7 @@ client.on('ready', async () => {
       rabbitMqChannel = channel
       rabbitMqChannel.prefetch(1)
       //Create a consumer for each guild that I'm inside
+      log.info(`Creating ${client.guilds.cache.size} consumers on shard ${client.shard.ids}`)
       client.guilds.cache.forEach((guild) => {
         createConsumer(guild.id, rabbitMqChannel)
       })
@@ -169,7 +170,6 @@ client.on('messageCreate', async (message) => {
 client.login(token)
 
 function createConsumer(queue, rabbitMqChannel) {
-  log.info('Creating consumer for guild: ' + queue + ' on shardId: ' + client.shard.ids)
   rabbitMqChannel.assertQueue(queue, {
     durable: true,
   })
@@ -183,9 +183,6 @@ function createConsumer(queue, rabbitMqChannel) {
           .get(jsonMsg.guildId)
           .members.cache.get(jsonMsg.userId)
           .voice.setChannel(jsonMsg.voiceChannelId)
-          .then(() => {
-            log.info('(' + client.shard.ids + ') Success in moving: ' + jsonMsg.userId)
-          })
           .catch((t) => {
             if (t.message === 'Target user is not connected to voice.') {
               log.warn('(' + client.shard.ids + ') Failure in moving: ' + jsonMsg.userId + ' - User not connected to voice')
