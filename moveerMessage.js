@@ -90,7 +90,7 @@ const MOVEER_MISSING_MOVE_PERMISSION = (userId, voiceChannelName) =>
   SUPPORT_MESSAGE
 
 const TAKE_A_WHILE_RL_MESSAGE =
-  '\n\nThis is going to take a while.. Want to move users faster? Check out the announcments channel in the official discord! https://discord.gg/dTdH3gD'
+  "\n\nThis is going to take a while.. Want to move users faster? Our patreon feature solves this! Contact a Moderator in our support server and we'll tell you more! https://discord.gg/dTdH3gD"
 
 const MESSAGES_NOW_ALLOWED_IN_CHANNEL = (userId, textChannelId) =>
   convertUserIdToTaggedUser(userId) +
