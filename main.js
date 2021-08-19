@@ -194,6 +194,7 @@ function createConsumer(queue, rabbitMqChannel) {
           })
         await rabbitMqChannel.ack(msg) // ack everything since this is master
       } catch (err) {
+        console.log(jsonMsg)
         console.log(err)
         moveerMessage.reportMoveerError('Alert was caused by:\n' + err.stack)
         await rabbitMqChannel.ack(msg) // ack everything since this is master

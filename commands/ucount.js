@@ -3,7 +3,6 @@ const helper = require('../helpers/helper.js')
 const check = require('../helpers/check.js')
 
 async function count(args, message) {
-  let toVoiceChannel
   try {
     let toVoiceChannelName = args[0]
     if (args.join().includes('"')) {
@@ -13,7 +12,7 @@ async function count(args, message) {
 
     await check.ifTextChannelIsMoveerAdmin(message)
     check.argsLength(args, 1)
-    toVoiceChannel = helper.getChannelByName(message, toVoiceChannelName)
+    const toVoiceChannel = helper.getChannelByName(message, toVoiceChannelName)
     check.ifVoiceChannelExist(message, toVoiceChannel, toVoiceChannelName)
 
     moveerMessage.sendMessage(

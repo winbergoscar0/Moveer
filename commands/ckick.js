@@ -3,8 +3,8 @@ const helper = require('../helpers/helper.js')
 const check = require('../helpers/check.js')
 
 async function kick(args, message) {
-  let messageMentions = [...message.mentions.users.values()] // Mentions in the message
   try {
+    let messageMentions = [...message.mentions.users.values()] // Mentions in the message
     await check.ifTextChannelIsMoveerAdmin(message)
     check.argsLength(args, 1)
     if (messageMentions.length < 1) messageMentions = await helper.findUserByUserName(message, args)

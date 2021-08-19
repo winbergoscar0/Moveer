@@ -3,13 +3,12 @@ const helper = require('../helpers/helper.js')
 const check = require('../helpers/check.js')
 
 async function move(args, message, rabbitMqChannel) {
-  if (args.length < 1 || check.valueEqNullorUndefinded(args) || args === []) {
-    moveerMessage.logger(message, 'room identifier is missing')
-    moveerMessage.sendMessage(message, moveerMessage.MESSAGE_MISSING_ROOM_IDENTIFER(message.author.id))
-    return
-  }
-
   try {
+    if (args.length < 1 || check.valueEqNullorUndefinded(args) || args === []) {
+      moveerMessage.logger(message, 'room identifier is missing')
+      moveerMessage.sendMessage(message, moveerMessage.MESSAGE_MISSING_ROOM_IDENTIFER(message.author.id))
+      return
+    }
     let fromVoiceChannelName = args[0]
     if (args.join().includes('"')) {
       const names = helper.getNameWithSpacesName(args, message.author.id)

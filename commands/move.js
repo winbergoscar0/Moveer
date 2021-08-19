@@ -3,10 +3,9 @@ const helper = require('../helpers/helper.js')
 const check = require('../helpers/check.js')
 
 async function move(args, message, rabbitMqChannel) {
-  let messageMentions = message.mentions.users.array() // Mentions in the message
-  let fromVoiceChannel
   try {
-    fromVoiceChannel = helper.getChannelByName(message, 'moveer')
+    let messageMentions = [...message.mentions.users.values()] // Mentions in the message
+    const fromVoiceChannel = helper.getChannelByName(message, 'moveer')
     const authorVoiceId = await helper.getUserVoiceChannelIdByUserId(message, message.author.id)
     check.ifAuthorInsideAVoiceChannel(message, authorVoiceId)
     const authorVoiceChannel = await helper.getChannelByName(message, authorVoiceId)

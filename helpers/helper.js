@@ -1,6 +1,5 @@
 /* eslint-disable no-throw-literal */
 const moveerMessage = require('../moveerMessage.js')
-const config = require('../config.js')
 const database = require('../helpers/database.js')
 
 function getCategoryByName(message, categoryName) {
@@ -131,18 +130,14 @@ async function moveUsers(message, usersToMove, toVoiceChannelId, rabbitMqChannel
     message,
     'Moved ' +
       usersMoved +
-      (usersMoved === 1 ? ' user' : ' users') +
+      (usersMoved === 1 ? 'user' : 'users') +
       (ShouldISendRLMessage ? ' - Sent RL message about announcment' : '')
   )
   moveerMessage.sendMessage(
     message,
-    'Moved ' +
-      usersMoved +
-      (usersMoved === 1 ? ' user' : ' users') +
-      ' by request of <@' +
-      message.author.id +
-      '>' +
-      (ShouldISendRLMessage ? moveerMessage.TAKE_A_WHILE_RL_MESSAGE : '')
+    `Move successful, ${usersMoved} ${usersMoved === 1 ? 'user' : 'users'} moved. ${
+      ShouldISendRLMessage ? moveerMessage.TAKE_A_WHILE_RL_MESSAGE : ''
+    }`
   )
   if (ShouldISendRLMessage) database.updateSentRateLimitMessage(message, message.guild.id)
   database.addSuccessfulMove(message, usersMoved)

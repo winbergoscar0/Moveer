@@ -1,7 +1,6 @@
 const moveerMessage = require('../moveerMessage.js')
 const helper = require('../helpers/helper.js')
 const check = require('../helpers/check.js')
-const database = require('../helpers/database')
 
 async function move(args, message, rabbitMqChannel) {
   try {
