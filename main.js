@@ -30,22 +30,15 @@ let rabbitMqChannel
 
 if (config.discordBotListToken !== 'x') {
   // Only run if bot is public at discordbotlist.com
-  const DBL = require('dblapi.js')
-  const dbl = new DBL(config.discordBotListToken, client)
-  dbl.on('posted', () => {
-    client.shard
-      .fetchClientValues('guilds.cache.size')
-      .then((results) => {
-        console.log(
-          `Posted Server count to DBL. Member of (${results.reduce((prev, guildCount) => prev + guildCount, 0)}) guilds`
-        )
-      })
-      .catch(console.error)
-  })
-
-  dbl.on('error', (e) => {
-    log.warn(`DBL Error!:  ${e}`)
-  })
+  const { AutoPoster } = require('topgg-autoposter')
+  try {
+    AutoPoster(config.discordBotListToken, client).on('posted', () => {
+      console.log('Posted stats to Top.gg!')
+    })
+  } catch (err) {
+    log.error('error posting data to DBL')
+    log.error(err)
+  }
 }
 
 client.on('ready', async () => {
