@@ -274,6 +274,7 @@ function ifAuthorInsideAVoiceChannel(message, userVoiceRoomID) {
 
 const checkifPatreonGuildRepeat = async (message) => {
   // Check for patreon stuff
+  if (message.author.bot) return
   const guildInfo = await database.getPatreonGuildObject(message, message.guild.id)
   if (guildInfo.rowCount === 0) return
   if (guildInfo.rows[0].enabled === '0' || guildInfo.rows[0].repeatEnabled === 0) return
