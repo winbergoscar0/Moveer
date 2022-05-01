@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "amqplib": "^0.8.0",
-    "discord.js": "^13.0.1",
+    "discord.js": "^13.6.0",
     "node-schedule": "^2.0.0",
     "pg": "^8.7.1",
     "pino": "^6.13.0",
