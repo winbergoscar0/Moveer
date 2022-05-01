@@ -24,17 +24,14 @@ function ifChannelTextExpectText(message) {
   }
 }
 
-async function ifUserInsideBlockedChannel(message, usersToMove) {
-  return await usersToMove.reduce(async (test, user) => {
-    const voiceId = await user?.guild?.voiceStates?.cache.filter((userr) => userr.id === user.user.id).first().channelId
-    if (config.blockedVoiceChannels.includes(voiceId.toString())) {
+function ifUserInsideBlockedChannel(message, usersToMove) {
+  usersToMove.forEach((user) => {
+    if (config.blockedVoiceChannels.includes(user.voiceChannelId)) {
       moveerMessage.logger(message, 'One user in blocked voice channel')
       moveerMessage.sendMessage(message, moveerMessage.USER_INSIDE_BLOCKED_CHANNEL(user.user.id))
-      return
     }
-    await test.push(user)
-    return test
-  }, [])
+  })
+  return usersToMove.filter((user) => !config.blockedVoiceChannels.includes(user.voiceChannelId))
 }
 
 function ifVoiceChannelContainsMoveer(message, authorVoiceChannelName) {
