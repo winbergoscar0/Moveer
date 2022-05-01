@@ -66,17 +66,17 @@ client.on('ready', async () => {
 
 client.on('error', (err) => {
   console.log(err)
-  moveerMessage.reportMoveerError('error\n' + err)
+  moveerMessage.reportMoveerError('error\n' + err.stack)
 })
 
 client.on('shardDisconnect', (err, id) => {
   console.log(err, id)
-  moveerMessage.reportMoveerError(`shardDisconnect (${id})\n` + err)
+  moveerMessage.reportMoveerError(`shardDisconnect (${id})\n` + err.stack)
 })
 
 client.on('shardError', (err, id) => {
   console.log(err, id)
-  moveerMessage.reportMoveerError(`shardError (${id})\n` + err)
+  moveerMessage.reportMoveerError(`shardError (${id})\n` + err.stack)
 })
 
 client.on('warn', (wrn) => {
@@ -94,19 +94,24 @@ client.on('guildCreate', async (guild) => {
   const supportMessage =
     'I got multiple commands, but to get started try the !cmove command by following the guide below.\n1. Create a text channel and name it "moveeradmin".\n2. Ask your friends to join a voice channel.\n3. Inside the text channel "moveeradmin" write `!cmove <voicechannel name here> @yourfriendsname` -- The voice channel that you specify will be the one that they are moved to.\n4. Thats it! @yourfriend should have been moved now.\n \nI have got more commands for you to use! Write `!help` to see them all.\nLets get Moving!'
   let defaultChannel = ''
-  guild.channels.cache.forEach((channel) => {
-    if (
-      channel.type === 'GUILD_TEXT' &&
-      defaultChannel === '' &&
-      channel.permissionsFor(guild.me).has('SEND_MESSAGES') &&
-      channel.permissionsFor(guild.me).has('VIEW_CHANNEL')
-    ) {
-      defaultChannel = channel
-    }
-  })
-  defaultChannel === ''
-    ? log.info('Failed to find defaultchannel, not sending welcome message.')
-    : defaultChannel.send(welcomeMessage + supportMessage)
+  try {
+    guild.channels.cache.forEach((channel) => {
+      if (
+        channel.type === 'GUILD_TEXT' &&
+        defaultChannel === '' &&
+        channel.permissionsFor(guild.me).has('SEND_MESSAGES') &&
+        channel.permissionsFor(guild.me).has('VIEW_CHANNEL')
+      ) {
+        defaultChannel = channel
+      }
+    })
+    defaultChannel === ''
+      ? log.info('Failed to find defaultchannel, not sending welcome message.')
+      : defaultChannel.send(welcomeMessage + supportMessage)
+  } catch (err) {
+    console.log(err)
+    moveerMessage.reportMoveerError('"guildCreate" Alert was caused by:\n' + err.stack)
+  }
 })
 
 client.on('guildDelete', (guild) => {
@@ -149,15 +154,21 @@ client.on('raw', async (packet) => {
 
 // Listen for messages
 client.on('messageCreate', async (message) => {
-  if (!/[^A-Za-z 0-9]/g.test(message.content.charAt(0))) return
-  if (message.channel.type !== 'GUILD_TEXT') return
-  let guildData = await database.getGuildObject('welcome', message.guild.id)
-  guildData = guildData?.rows?.length > 0 ? guildData.rows[0] : null
-  if (!message.content.startsWith(guildData?.prefix || config.discordPrefix)) return
-  if (message.author.bot && guildData?.allowed === 0) return
-  const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
-  const command = args.shift().toLowerCase()
-  handleCommand(command, message, args, rabbitMqChannel)
+  try {
+    if (!/[^A-Za-z 0-9]/g.test(message.content.charAt(0))) return
+    if (message.channel.type !== 'GUILD_TEXT') return
+    let guildData = await database.getGuildObject('welcome', message.guild.id)
+    guildData = guildData?.rows?.length > 0 ? guildData.rows[0] : null
+    if (!message.content.startsWith(guildData?.prefix || config.discordPrefix)) return
+    if (message.author.bot && guildData?.allowed === 0) return
+    const args = message.content.slice(config.discordPrefix.length).trim().split(/ +/g)
+    const command = args.shift().toLowerCase()
+    handleCommand(command, message, args, rabbitMqChannel)
+  } catch (err) {
+    console.log(err)
+
+    moveerMessage.reportMoveerError('"messageCreate" Alert was caused by:\n' + err.stack)
+  }
 })
 
 client.login(token)
@@ -189,7 +200,7 @@ function createConsumer(queue, rabbitMqChannel) {
       } catch (err) {
         console.log(jsonMsg)
         console.log(err)
-        moveerMessage.reportMoveerError('Alert was caused by:\n' + err.stack)
+        moveerMessage.reportMoveerError('"createConsumer" Alert was caused by:\n' + err.stack)
         await rabbitMqChannel.ack(msg) // ack everything since this is master
       }
     },
