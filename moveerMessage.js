@@ -406,11 +406,17 @@ function sendMessage(message, sendMessage) {
     reportMoveerError('I was about to send a NULL message - Probably errors in code.. @everyone')
     return
   }
+
   message.channel
     .send(
       sendMessage.embed
         ? { embeds: [sendMessage.embed], reply: { messageReference: message.id } }
-        : { content: sendMessage, reply: { messageReference: message.id } }
+        : {
+            content:
+              sendMessage +
+              '\n\n\nDEPRECATED! - <@400724460203802624> now uses slash commands! Commands sent via text will stop working next week, the 26th of August. Please start using the slash commands instead!',
+            reply: { messageReference: message.id },
+          }
     )
     .catch((e) => {
       logger(message, e)
