@@ -1,14 +1,44 @@
-FROM node:16.6.1-stretch-slim
+## build runner
+FROM node:18.1.0 as build-runner
 
-# Create app directory
-WORKDIR /usr/src/app
+# Set temp directory
+WORKDIR /tmp/app
 
-# Install app dependencies
+# Move package.json
 COPY package*.json ./
-COPY config.js ./
-RUN npm install --only=prod
 
-# Bundle app source
-COPY . .
+# Install dependencies
+RUN npm install
 
-CMD [ "node", "bot" ]
+# Move source files
+COPY src ./src
+COPY tsconfig.json   .
+
+# Build project
+RUN npm run build
+
+## producation runner
+FROM node:18.1.0 as prod-runner
+
+# Set work directory
+WORKDIR /app
+
+# Copy package.json from build-runner
+COPY --from=build-runner /tmp/app/package.json /app/package.json
+
+# Install dependencies
+RUN npm install --only=production
+
+# Move build files
+COPY --from=build-runner /tmp/app/build /app/build
+
+# Import args from docker-compose
+ARG NODE_ENV=$NODE_ENV
+ARG BOT_CLIENT_ID=$BOT_CLIENT_ID
+ARG BOT_TOKEN=$BOT_TOKEN
+
+# Run deploy command
+RUN NODE_ENV=${NODE_ENV} BOT_TOKEN=${BOT_TOKEN} BOT_CLIENT_ID=${BOT_CLIENT_ID} npm run update-commands
+
+# Start bot
+CMD [ "node", "build/sharding.js" ]

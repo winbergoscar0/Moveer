@@ -1,32 +1,52 @@
 {
   "name": "moveer",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "description": "A discord bot, that can move users! ",
-  "main": "main.js",
-  "scripts": {
-    "start": "node main.js"
-  },
+  "keywords": [
+    "moveer",
+    "discord.js",
+    "bot",
+    "discord"
+  ],
   "author": "Oscar Andersson",
-  "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-config-node": "^2.0.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-standard": "^4.1.0",
-    "nodemon": "^2.0.12",
-    "prettier": "^2.3.2"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anderssonoscar0/Moveer"
+  },
+  "scripts": {
+    "update-commands": "node ./build/bin/deploy-commands.js",
+    "build": "rm -rf build && tsc",
+    "dev": "npm run build && node ./build/bot.js",
+    "start": "nodemon --exec node --loader ts-node/esm/transpile-only src/bot.ts",
+    "serve": "node build/main.js",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "amqplib": "^0.8.0",
-    "discord.js": "^13.6.0",
-    "node-schedule": "^2.0.0",
-    "pg": "^8.7.1",
-    "pino": "^6.13.0",
-    "pino-pretty": "^5.1.2",
-    "topgg-autoposter": "^2.0.0"
+    "@types/express": "^4.17.13",
+    "amqplib": "^0.10.0",
+    "discord.js": "^14.1.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "knex": "^2.1.0",
+    "pg": "^8.7.3",
+    "pino": "^8.1.0",
+    "topgg-autoposter": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.8.2",
+    "@types/node": "^18.0.0",
+    "@types/pino": "^7.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "eslint": "^8.20.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "nodemon": "^2.0.18",
+    "prettier": "^2.7.1",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
+  },
+  "engines": {
+    "node": ">=18.1.0",
+    "npm": ">=8.1.0"
   }
 }

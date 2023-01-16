@@ -6,56 +6,53 @@
 
 A bot that moves users from one voice channel to another. Including locked and hidden voice channels!
 
-## We currently have 8 commands that all move users in different ways.
+<br />
 
-### **!cmove:** ↓
+## Looking to create your own custom discord bot? Visit our [website](https://www.xena-dev.com/services) to learn more or join our [DISCORD](https://discord.gg/fJpypWzSyH) for professional and efficient bot development services. We offer tailor-made bots, ready to boost your server to the next level!
 
-Moves users spread across multiple voice channels to one without the need of joining a voice channel. <br>(Command must be sent inside a text channel named "moveeradmin")
-<br>Example command: `!cmove channel#1 @user1 @user2`.
+<br />
 
-### **!move:** ↓
+## No need to take our word for it, Moveer was created to solve a very simple problem over FOUR years ago. It is still kicking it with over 18k (\*active) server installs and thousands of commands sent every day.
 
-Moves @mentions of users inside the Moveer voice channel to you. User1 is required to be inside the “Moveer” voice channel.
-<br>Example command `!move @user1 @user2`
+<br />
+<br />
+<br />
 
-### **!gmove:** ↓
+## We currently have 6 commands that all move users in different ways.
 
-Moves users inside GmoveerX to you with one command. If the voice channel is named gmoveerPubg use the example command
-<br>Example command `!gmove pubg`
+### **cmove:** ↓
 
-### **!fmove:** (Perfect for Amoung Us gameplay) ↓
+Moves users spread across multiple voice channels to one without the need of joining a voice channel.
+<br>Example command: `/cmove channel#1 @user1 @user2`.
 
-Moves users inside one voice channel to another. Moves users inside gameplay to mute. <br>(Command must be sent inside a text channel named "moveeradmin")
-<br>Example command `!fmove gameplay mute`
+### **fmove:** (Perfect for Amoung Us gameplay) ↓
 
-### **!rmove:** ↓
+Moves users inside one voice channel to another. Moves users inside gameplay to mute.
+<br>Example command `/fmove gameplay mute`
 
-Moves users with a certain role to you. For example `!rmove dps` moves all members with "dps" role to you.
-<br>Example command `!rmove "super admins"`
+### **rmove:** ↓
 
-### **!tmove:** ↓
+Moves users with a certain role to you. For example `/rmove dps` moves all members with "dps" role to you.
+<br>Example command `/rmove "super admins"`
 
-Moves users with a certain role to specific channel. For example `!tmove channel1 dps` moves all members with "dps" role to channel1.
-<br>Example command `!tmove channel1 "super admins"`
+### **tmove:** ↓
 
-### **!ymove:** ↓
+Moves users with a certain role to specific channel. For example `/tmove channel1 dps` moves all members with "dps" role to channel1.
+<br>Example command `/tmove channel1 "super admins"`
 
-Spreads user across voice channels. For example `!ymove "before games" "games" 5` moves all user from "before games" and spread them, randomlywith 5 users in each voice, across channels in the category "games"
-<br>Example command `!ymove "before games" "games" 5`
+### **ymove:** ↓ (Perfect for breakout rooms and Blood on the Clocktower)
 
-### **!zmove:** ↓
+Spreads user across voice channels. For example `/ymove "before games" "games" 5` moves all user from "before games" and spread them, randomlywith 5 users in each voice, across channels in the category "games"
+<br>Example command `/ymove "before games" "games" 5`
 
-Best used to move everyone back to a single channel after !ymove is used. For example `!zmove "games" "after games"` will move all users inside the "games" category to the "after games" voice channel.
-<br>Example command `!zmove "games" "after games"`
+### **zmove:** ↓
+
+Best used to move everyone back to a single channel after `ymove` is used. For example `/zmove "games" "after games"` will move all users inside the "games" category to the "after games" voice channel.
+<br>Example command `/zmove "games" "after games"`
 
 # Important notes:
 
-1. If your names contains spaces use " around it. example: `!fmove "channel 1" "channel 2"`
-2. `!fmove`, `!cmove` and `!rmove` are all admin commands and requires the command to be sent inside a text channel named "moveeradmin" (or add a secondary channel, see note 5)
-3. `!gmove` and `!move` commands sent inside "moveeradmin" moves people from any channel and removes the requirement to be inside "Moveer" or "Gmoveer". Please note that the !gmove will require the full name of the voicechannel.
-4. If you want to block users from getting moved from a specific channel, example your AFK channel while using `!tmove` or `!rmove`. Contact the moderators in the discord below!
-5. If you want to add a moveeradmin channel (with your own name) use the command `!addma` by writing `!addma #<ChannelName>`. Be sure the #tag the textchannel.
-6. Want to move more then 10 users instantly? Instead of waiting for discord to move the rest? Contact a moderator inside the support discord!
+1. Want to move more then 10 users instantly? Instead of waiting for discord to move the rest? Contact a moderator inside the support discord!
 
 For more information use the !help command inside discord or join us with the link below ↓
 
@@ -71,4 +68,6 @@ The bot ONLY requires "Use members" and "CONNECT" when inviting. The reason for 
 
 ## Show your support
 
-Give a ⭐️ if you like Moveer
+- Give a ⭐️ if you like Moveer
+- [Buy me a coffee](https://www.buymeacoffee.com/Moveer)
+- [Support me on patreon](https://www.patreon.com/moveer)

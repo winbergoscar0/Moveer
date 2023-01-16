@@ -1,8 +1,68 @@
-version: "3"
+version: '3'
 services:
-  moveer:
-    build: .
+  tsmoveer:
+    container_name: moveer_ts
+    restart: unless-stopped
+    build:
+      context: .
+      args:
+        - NODE_ENV=${NODE_ENV}
+        - BOT_CLIENT_ID=${BOT_CLIENT_ID}
+        - BOT_TOKEN=${BOT_TOKEN}
+    command: node build/sharding.js
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+      - PGHOST=${PGHOST}
+      - PGPASSWORD=${PGPASSWORD}
+      - PGUSER=${PGUSER}
+      - PGDATABASE=${PGDATABASE}
+      - discordHookToken=${discordHookToken}
+      - discordHookIdentifier=${discordHookIdentifier}
+      - rabbitMQConnection=${rabbitMQConnection}
+      - BOT_CLIENT_ID=${BOT_CLIENT_ID}
+      - TOP_GG_TOKEN=${TOP_GG_TOKEN}
+      - NODE_ENV=${NODE_ENV}
+
+    depends_on:
+      - rabbitmq
+      - postgres
+    networks:
+      app_subnet:
+        ipv4_address: 172.16.1.20
+
+  postgres:
+    image: postgres:14.4-alpine
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_DB: ${PGDATABASE}
+      TZ: Europe/Stockholm
+    volumes:
+      - /opt/dcontainers/postgres:/var/lib/postgresql/data
+    networks:
+      app_subnet:
+        ipv4_address: 172.16.1.50
+  rabbitmq:
+    image: rabbitmq:3.10.5-management
+    hostname: rabbitmq
     environment:
       - TZ=Europe/Stockholm
+    container_name: rabbitMq
     restart: unless-stopped
-    container_name: "moveer"
+    ports:
+      - 15672:15672
+      - 5672:5672
+    networks:
+      app_subnet:
+        ipv4_address: 172.16.1.51
+    volumes:
+      - /opt/dcontainers/rabbitmq:/var/lib/rabbitmq
+      - /opt/dcontainers/rabbitmq.conf:/etc/rabbitmq/rabbitmq.config
+
+networks:
+  app_subnet:
+    external: true
