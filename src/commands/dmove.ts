@@ -72,7 +72,7 @@ async function runCommand(
   ) as CategoryChannel;
 
   const usersInEachChannel = interaction.options.getInteger(
-    'users-in-each-channel',
+    'users-from-each-channel',
     true,
   );
   // End Parse options
@@ -85,14 +85,14 @@ async function runCommand(
 
   if (usersOne.size < usersInEachChannel) {
     interaction.editReply({
-      content: `Not enough users inside ${usersOne}`,
+      content: `Not enough users inside ${fromVoiceChannelOne}`,
     });
     return;
   }
 
   if (usersTwo.size < usersInEachChannel) {
     interaction.editReply({
-      content: `Not enough users inside ${usersTwo}`,
+      content: `Not enough users inside ${fromVoiceChannelTwo}`,
     });
     return;
   }
