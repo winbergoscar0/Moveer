@@ -1,6 +1,7 @@
 import { Command } from '../data-types/command';
 import { ckick } from './ckick';
 import { cmove } from './cmove';
+import { dmove } from './dmove';
 import { fkick } from './fkick';
 import { fmove } from './fmove';
 import { move } from './move';
@@ -23,4 +24,5 @@ export const moveerCommands: Array<Command> = [
   ymove,
   zkick,
   zmove,
+  dmove,
 ];
