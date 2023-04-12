@@ -72,7 +72,7 @@ async function runCommand(
   ) as CategoryChannel;
 
   const usersInEachChannel = interaction.options.getInteger(
-    'users-from-each-channel',
+    'users-in-each-channel',
     true,
   );
   // End Parse options
