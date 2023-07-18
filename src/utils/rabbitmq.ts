@@ -31,7 +31,7 @@ export class RabbitMq implements MoveerRabbitMq {
   }
 
   public async publishMoveMessage(params: PublishMessageParams): Promise<void> {
-    const { isPatreon, guildMember, guild, toVoiceChannel } = params;
+    const { guildMember, guild, toVoiceChannel } = params;
 
     const rabbitMqMessage: RabbitMqMessage = {
       guildId: guild.id,
@@ -42,7 +42,8 @@ export class RabbitMq implements MoveerRabbitMq {
     // Fallback to 0 if unable to find shardId
     const shardId = this.client.shard?.ids[0].toString() ?? '0';
 
-    const queue = isPatreon ? guild.id : shardId;
+    // TODO - Patreon
+    const queue = shardId;
 
     this.rabbitMqChannel.assertQueue(queue, {
       durable: true,
@@ -55,10 +56,11 @@ export class RabbitMq implements MoveerRabbitMq {
         persistent: true,
       },
     );
-    logger.info(rabbitMqMessage, 'Published message');
+    logger.info(rabbitMqMessage, `Published message to queue: ${queue}`);
   }
 
   public createConsumer(queue: string): void {
+    logger.info(`Creating consumer on queue: ${queue}}`);
     this.rabbitMqChannel.assertQueue(queue, {
       durable: true,
     });
