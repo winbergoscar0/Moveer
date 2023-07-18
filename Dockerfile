@@ -18,7 +18,7 @@ COPY tsconfig.json   .
 RUN npm run build
 
 ## producation runner
-FROM --platform=linux/amd64 node:18.6.1 as prod-runner
+FROM --platform=linux/amd64 node:18.16.1 as prod-runner
 
 # Set work directory
 WORKDIR /app
