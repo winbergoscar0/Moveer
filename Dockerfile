@@ -1,5 +1,5 @@
 ## build runner
-FROM node:18.1.0 as build-runner
+FROM --platform=linux/amd64 node:18.16.1 as build-runner
 
 # Set temp directory
 WORKDIR /tmp/app
@@ -18,7 +18,7 @@ COPY tsconfig.json   .
 RUN npm run build
 
 ## producation runner
-FROM node:18.1.0 as prod-runner
+FROM --platform=linux/amd64 node:18.6.1 as prod-runner
 
 # Set work directory
 WORKDIR /app

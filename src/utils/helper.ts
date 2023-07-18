@@ -42,6 +42,12 @@ export class MoveerHelper {
     let usersMoved = 0;
     let totalUsersMoved = 0;
 
+    const isPatreon =
+      interaction.guildId != null
+        ? (await this.database.getGuildInfo(interaction.guildId))
+            ?.activePatreon ?? false
+        : false;
+
     for (const { toVoiceChannel, usersToMove } of configurations) {
       for (const user of usersToMove) {
         const assert = assertHasMovingPermission(
@@ -59,6 +65,7 @@ export class MoveerHelper {
         }
 
         this.rabbitMq.publishMoveMessage({
+          isPatreon,
           guild: user.guild,
           guildMember: user,
           toVoiceChannel,

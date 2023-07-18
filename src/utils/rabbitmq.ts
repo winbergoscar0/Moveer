@@ -15,6 +15,7 @@ interface RabbitMqMessage {
 }
 
 interface PublishMessageParams {
+  isPatreon: boolean;
   guildMember: GuildMember;
   guild: Guild;
   toVoiceChannel: VoiceChannel;
@@ -30,13 +31,19 @@ export class RabbitMq implements MoveerRabbitMq {
   }
 
   public async publishMoveMessage(params: PublishMessageParams): Promise<void> {
+    const { isPatreon, guildMember, guild, toVoiceChannel } = params;
+
     const rabbitMqMessage: RabbitMqMessage = {
-      guildId: params.guild.id,
-      userId: params.guildMember.id,
-      voiceChannelId: params.toVoiceChannel.id,
+      guildId: guild.id,
+      userId: guildMember.id,
+      voiceChannelId: toVoiceChannel.id,
     };
 
-    const queue = params.guild.id;
+    // Fallback to 0 if unable to find shardId
+    const shardId = this.client.shard?.ids[0].toString() ?? '0';
+
+    const queue = isPatreon ? guild.id : shardId;
+
     this.rabbitMqChannel.assertQueue(queue, {
       durable: true,
     });

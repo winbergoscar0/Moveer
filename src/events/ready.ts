@@ -16,9 +16,7 @@ export const ready = (client: Client, rabbitMq: MoveerRabbitMq): void => {
       `${client.user.username} is online - ShardId: (${client.shard?.ids})`,
     );
 
-    // Create consumers for each guild
-    client.guilds.cache.forEach((guild) => {
-      rabbitMq.createConsumer(guild.id);
-    });
+    const shardId = client.shard?.ids[0].toString() ?? '0';
+    rabbitMq.createConsumer(shardId);
   });
 };

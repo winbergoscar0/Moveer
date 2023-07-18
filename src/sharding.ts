@@ -10,6 +10,10 @@ export class ShardBot {
 
     manager.on('shardCreate', (shard) => {
       logger.info(`Launched shard ${shard.id}`);
+
+      shard.on('error', (error) => {
+        logger.error({ error }, `Shard ${shard.id} errored`);
+      });
     });
 
     manager.spawn();
