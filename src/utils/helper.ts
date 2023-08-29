@@ -64,12 +64,16 @@ export class MoveerHelper {
           continue;
         }
 
-        this.rabbitMq.publishMoveMessage({
-          isPatreon,
-          guild: user.guild,
-          guildMember: user,
-          toVoiceChannel,
-        });
+        try {
+          await user.voice.setChannel(toVoiceChannel);
+        } catch (cause) {
+          logger.error({ cause, user, toVoiceChannel }, 'Failed to move user');
+          errorMessages.push(
+            `Failed to move ${user} to ${toVoiceChannel} - Missing permissions?`,
+          );
+          continue;
+        }
+
         usersMoved++;
         totalUsersMoved++;
       }
