@@ -49,6 +49,12 @@ export class RabbitMq implements MoveerRabbitMq {
       durable: true,
     });
 
+    this.rabbitMqChannel.checkQueue(queue, (err, result) => {
+      if (result.messageCount > 100) {
+        reportMoveerError(`Queue ${queue} is getting full!!!!`);
+      }
+    });
+
     this.rabbitMqChannel.sendToQueue(
       queue,
       Buffer.from(JSON.stringify(rabbitMqMessage)),
