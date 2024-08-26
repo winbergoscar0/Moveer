@@ -60,6 +60,7 @@ export class RabbitMq implements MoveerRabbitMq {
       Buffer.from(JSON.stringify(rabbitMqMessage)),
       {
         persistent: true,
+        expiration: '600000', // 10 minutes
       },
     );
     logger.info(rabbitMqMessage, `Published message to queue: ${queue}`);
@@ -118,8 +119,8 @@ export class RabbitMq implements MoveerRabbitMq {
             'Got unknown error while moving user:\n\n' + (err as Error).stack,
           );
         }
-        // ack everything since this is master
 
+        // ack everything since this is master
         this.rabbitMqChannel.ack(msg);
       },
       { noAck: false },
