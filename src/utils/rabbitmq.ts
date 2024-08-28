@@ -100,11 +100,11 @@ export class RabbitMq implements MoveerRabbitMq {
           }
 
           await guildMember.voice.setChannel(voiceChannelId).catch((err) => {
-            if (err.message === 'Target user is not connected to voice.') {
-              logger.error(
-                err,
-                `(${this.client.shard?.ids}) - Failed to move ${userId} - User not connected to voice`,
-              );
+            if (
+              err.message === 'Target user is not connected to voice.' ||
+              err.message === 'Missing Permissions'
+            ) {
+              return;
             } else {
               logger.error(err, 'Failed to move user');
               reportMoveerError(
