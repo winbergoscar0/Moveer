@@ -20,6 +20,11 @@ const handleSlashCommand = async (
   interaction: ChatInputCommandInteraction,
   utils: MoveerHelper,
 ): Promise<void> => {
+  if (interaction.channel == null) {
+    interaction.reply('This command can only be used in a server channel');
+    return;
+  }
+
   const slashCommand = moveerCommands.find(
     (command: Command) => command.name === interaction.commandName,
   );
