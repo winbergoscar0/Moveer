@@ -6,18 +6,6 @@
 
 A bot that moves users from one voice channel to another. Including locked and hidden voice channels!
 
-<br />
-
-## Looking to create your own custom discord bot? Visit our [website](https://www.xena-dev.com/services) to learn more or join our [DISCORD](https://discord.gg/fJpypWzSyH) for professional and efficient bot development services. We offer tailor-made bots, ready to boost your server to the next level!
-
-<br />
-
-## No need to take our word for it, Moveer was created to solve a very simple problem over FOUR years ago. It is still kicking it with over 18k (\*active) server installs and thousands of commands sent every day.
-
-<br />
-<br />
-<br />
-
 ## We currently have 6 commands that all move users in different ways.
 
 ### **cmove:** ↓
