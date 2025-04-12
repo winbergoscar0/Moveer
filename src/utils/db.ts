@@ -68,12 +68,9 @@ export class MoveerDatabase implements MoveerDatabase {
     try {
       await this.database('logs').insert(insertMap);
     } catch (err) {
-      reportMoveerError(
-        'Error while inserting log message into our storage\n\n' +
-          (err as Error).stack,
-      );
-      // TODO - Remove me
+      // Sometimes a guild is not in the database, so we need to insert it first
       await this.insertNewGuild(log[0].guildId as string);
+      await this.database('logs').insert(insertMap);
     }
   }
 
